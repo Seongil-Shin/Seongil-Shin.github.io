@@ -7,7 +7,7 @@ remote_theme: jekyll-theme-chirpy
 baseurl: ""
 
 # the HTML language tag › https://www.w3.org/International/questions/qa-choosing-language-tags
-lang: ko
+lang: en-US
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
 timezone: Asia/Seoul

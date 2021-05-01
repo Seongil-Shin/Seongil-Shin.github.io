@@ -159,3 +159,5 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+gems:
+  - jekyll-seo-tag

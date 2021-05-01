@@ -1,6 +1,4 @@
 # The Site Configuration
-encoding: UTF-8
-
 # Import the theme
 remote_theme: jekyll-theme-chirpy
 

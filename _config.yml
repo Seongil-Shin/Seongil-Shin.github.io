@@ -25,13 +25,13 @@ description: >- # used by seo meta and the atom feed
   and focuses on text presentation.
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: "https://seongil-shin.github.io"
+url: ""
 
 github:
   username: Seongil-Shin # change to your github username
 
-#twitter:
-# username: twitter_username # change to your twitter username
+twitter:
+  username: twitter_username # change to your twitter username
 
 social:
   # Change to your full name.
@@ -67,7 +67,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: light # [light|dark]
+theme_mode: # [light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url

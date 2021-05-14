@@ -6,8 +6,6 @@ categories: [react]
 tags: [react, cors, cookie]
 ---
 
-# [REACT]\[CORS] 배포 환경에서, 외부 api 와 연결할 때 쿠키가 생성되지 않는 문제
-
 '배포' 환경에서 CORS 위반으로 쿠키가 생성되지 않을때 다음 2가지 해결방법이 있다.
 
 1. app.js 또는 index.js 에서 axios.defaults.withCredentials = true; 설정 후 axios 호출을 할 때 모든 주소를 적기.

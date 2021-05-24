@@ -8,7 +8,7 @@ tags: [hackathon, review, junction]
 
 ## 결과
 
-![image-20210524174313618](../assets/img/KakaoTalk_20210523_193727337.png)
+![image-20210524174313618](/assets/img/KakaoTalk_20210523_193727337.png)
 
 AWS game tech 트랙 우승!
 

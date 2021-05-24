@@ -49,7 +49,7 @@ Junction 해커톤을 하며 lottie 애니메이션을 접하게 되었다.
 2. Toggle source/editor 를 클릭한다.
 
 3. ADBE Vector Graphic - Stroke 를 검색하고, 같은 객체에 들어있는 k 배열을 찾는다.
-
+   ![image-20210524174313618](/assets/img/lottie costumise.PNG)
 4. 0~2번째 원소는 각각 RGB 값을 담당한다. 계산방법은 다음과 같다
 
    #123456 코드가 있으면, 이것을 앞에서부터 2개씩 끊고 다음과 같이 계산

@@ -2,7 +2,7 @@
 title: Junctions/Seoul 2021 해커톤
 author: 신성일
 date: 2021-05-26 21:38:44 +0900
-categories: [portfolio, front end]
+categories: [projects]
 tags: []
 ---
 

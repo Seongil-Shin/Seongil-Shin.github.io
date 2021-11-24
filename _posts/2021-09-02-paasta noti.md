@@ -2,7 +2,7 @@
 title: expo push notification
 author: 신성일
 date: 2021-09-02 16:00:00 +0900
-categories: [react-native, expo]
+categories: [study, react-native]
 tags: [expo]
 ---
 

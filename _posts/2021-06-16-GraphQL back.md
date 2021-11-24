@@ -2,7 +2,7 @@
 title: Graph ql back
 author: 신성일
 date: 2021-06-19 12:35:44 +0900
-categories: [back end]
+categories: [study, back-end]
 tags: [GraphQL]
 ---
 

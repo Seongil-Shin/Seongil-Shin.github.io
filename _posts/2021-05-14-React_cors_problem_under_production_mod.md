@@ -2,7 +2,7 @@
 title: REACT/CORS 배포 환경에서, 외부 API 와 연결할때 쿠키가 생성되지 않는 문제
 author: 신성일
 date: 2021-05-14 16:00:00 +0900
-categories: [react]
+categories: [study, react]
 tags: [react, cors, cookie]
 ---
 

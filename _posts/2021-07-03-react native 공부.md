@@ -2,7 +2,7 @@
 title: React native 기초
 author: 신성일
 date: 2021-07-03 19:30:44 +0900
-categories: [application, front end]
+categories: [study, react-native]
 tags: [React native]
 ---
 

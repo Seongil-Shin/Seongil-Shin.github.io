@@ -25,18 +25,6 @@ tags: [project, expo]
 
 - [expo_app](https://expo.dev/@callmeshin75/st-algorithm)
 
-## UI UX
-
-<img src="../assets/img/2021-11-25-st-algorithm/Screenshot_1637750381.png" alt="Screenshot_1637750381" style="zoom: 25%;" />
-
-<img src="../assets/img/2021-11-25-st-algorithm/Screenshot_1637750872.png" alt="Screenshot_1637750872" style="zoom:25%;" />
-
-<img src="../assets/img/2021-11-25-st-algorithm/Screenshot_1637751957.png" alt="Screenshot_1637751957" style="zoom:25%;" />
-
-<img src="../assets/img/2021-11-25-st-algorithm/Screenshot_1637752084.png" alt="Screenshot_1637752084" style="zoom:25%;" />
-
-## 새롭게 배운 점
-
 ### custom hook
 
 - 웹에서의 반응형/ 웹, 앱에서의 다크모드 구현을 위해 처음으로 custom hook 을 구현하여 사용하였다.
@@ -70,3 +58,13 @@ tags: [project, expo]
 ## 결과
 
 - 이 서비스로 학과 내 공모전에 참가하여 2위를 수상하였다.
+
+## UI UX
+
+![img_1](/assets/img/2021-11-25-st-algorithm/Screenshot_1637750381.png)
+
+![img_2](/assets/img/2021-11-25-st-algorithm/Screenshot_1637750872.png)
+
+![img_3](/assets/img/2021-11-25-st-algorithm/Screenshot_1637751957.png)
+
+![img_4](/assets/img/2021-11-25-st-algorithm/Screenshot_1637752084.png)

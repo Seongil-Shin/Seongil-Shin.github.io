@@ -19,9 +19,8 @@ title: Shin's blog # the main title
 tagline: 공부한 거 정리한 블로그입니다. # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  A minimal, portfolio, sidebar,
-  bootstrap Jekyll theme with responsive web design
-  and focuses on text presentation.
+  프론트엔드 개발자 신성일의 블로그
+  React, ReactNative, Flutter
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: ""
@@ -29,8 +28,8 @@ url: ""
 github:
   username: Seongil-Shin # change to your github username
 
-twitter:
-  username: twitter_username # change to your twitter username
+# twitter:
+# username: twitter_username # change to your twitter username
 
 social:
   # Change to your full name.
@@ -76,7 +75,7 @@ theme_mode: # [light|dark]
 img_cdn: ""
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg
+avatar: https://drive.google.com/file/d/1d7NFr7fBhorZvlzO1jwLg6XsUR_3CGw6/view?usp=sharing
 
 # boolean type, the global switch for ToC in posts.
 toc: true

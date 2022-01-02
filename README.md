@@ -4,11 +4,6 @@
 
 - 지킬(jekyll)을 사용하였으며, Chirpy 테마를 사용하였습니다.
 
-  
-
 ## Link
 
 https://seongil-shin.github.io/
-
-
-

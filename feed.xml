@@ -1,0 +1,3034 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shin's blog</title>
+    <description>프론트엔드 개발자 신성일의 블로그 React, ReactNative, Flutter</description>
+    <link>https://seongil-shin.github.io/</link>
+    <atom:link href="https://seongil-shin.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 02 Aug 2022 00:20:51 +0900</pubDate>
+    <lastBuildDate>Tue, 02 Aug 2022 00:20:51 +0900</lastBuildDate>
+    <generator>Jekyll v4.2.2</generator>
+    
+      <item>
+        <title>코테대비 SQL 문법</title>
+        <description>&lt;h2 id=&quot;정렬&quot;&gt;정렬&lt;/h2&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_INS&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_ID&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ASC&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_ID&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;DESC&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NAME&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ASC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;DATETIME&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;DESC&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;조건&quot;&gt;조건&lt;/h2&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NAME&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_INS&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INTAKE_CONDITION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;Sick&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INTAKE_CONDITION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;Aged&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SEX_UPON_INTAKE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;Spayed Female&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SEX_UPON_INTAKE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;Neutered Male&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SEX_UPON_OUTCOME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;Spayed Female&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;OR&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SEX_UPON_OUTCOME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;Neutered Male&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;제한&quot;&gt;제한&lt;/h2&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;DATETIME&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ASC&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;LIMIT&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;sum-max-min&quot;&gt;SUM, MAX, MIN&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-SQL&quot;&gt;SELECT MAX(DATETIME)
+FROM ANIMAL_INS;
+
+SELECT MIN(DATETIME)
+FROM ANIMAL_INS;
+
+SELECT COUNT(*)
+FROM ANIMAL_INS;
+
+SELECT COUNT(DISTINCT NAME)
+FROM ANIMAL_INS;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;그룹화&quot;&gt;그룹화&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-SQL&quot;&gt;SELECT ANIMAL_TYPE, COUNT(*)
+FROM ANIMAL_INS
+GROUP BY ANIMAL_TYPE
+ORDER BY ANIMAL_TYPE ASC
+
+
+SELECT NAME, COUNT(NAME)
+FROM ANIMAL_INS
+GROUP BY NAME
+HAVING COUNT(NAME)&amp;gt;=2
+ORDER BY NAME ASC
+
+SELECT HOUR(DATETIME) AS HOUR, COUNT(*)
+FROM ANIMAL_OUTS
+GROUP BY HOUR(DATETIME)
+HAVING HOUR&amp;gt;=9 AND HOUR&amp;lt;20
+ORDER BY HOUR ASC
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;is-null&quot;&gt;IS NULL&lt;/h2&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_ID&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_INS&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NAME&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;IS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NAME&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;IS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_TYPE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NAME&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;IS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;No name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SEX_UPON_INTAKE&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANIMAL_INS&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;join&quot;&gt;JOIN&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/img/2022-08-01-코테 대비 sql 문법/OUTER-JOIN_더알아보기.png&quot; alt=&quot;OUTER-JOIN_더알아보기&quot; style=&quot;zoom:50%;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SELECT  * FROM A a [JOIN 문] B b ON a.key=b.key&lt;/code&gt; 는 동일&lt;/li&gt;
+  &lt;li&gt;어디를 남기느냐에 따라 LEFT JOIN / FULL OUTER JOIN / RIGHT OUTER JOIN&lt;/li&gt;
+  &lt;li&gt;겹치는 걸 안남기면, 안남는 부분의 키가 NULL
+    &lt;ul&gt;
+      &lt;li&gt;FULL 일 경우 둘 중 하나가 NULL&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;string-date&quot;&gt;&lt;strong&gt;String, Date&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-SQL&quot;&gt;WHERE A.NAME IN (&quot;Lucy&quot;, &quot;Ella&quot;, &quot;Pickle&quot;, &quot;Rogan&quot;, &quot;Sabrina&quot;, &quot;Mitty&quot;)
+
+SELECT ANIMAL_ID, NAME, DATE_FORMAT(DATETIME, &quot;%Y-%m-%d&quot;) as 날짜
+
+SELECT DATE('2021-08-21 12:34:56') as 날짜, 
+       MONTH('2021-08-21 12:34:56') as 월, 
+       DAY('2021-08-21 12:34:56') as 일, 
+       HOUR('2021-08-21 12:34:56') as 시간, 
+       MINUTE('2021-08-21 12:34:56') as 분, 
+       SECOND('2021-08-21 12:34:56') as 초;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;like&quot;&gt;LIKE&lt;/h2&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;--A로 시작하는 문자를 찾기--&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;테이블&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'A%'&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;--A로 끝나는 문자 찾기--&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;테이블&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'%A'&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;--A를 포함하는 문자 찾기--&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;테이블&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'%A%'&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;--A로 시작하는 두글자 문자 찾기--&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;테이블&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'A_'&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;--첫번째 문자가 'A''가 아닌 모든 문자열 찾기--&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;테이블&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'[^A]'&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;--첫번째 문자가 'A'또는'B'또는'C'인 문자열 찾기--&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;테이블&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'[ABC]'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;테이블&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컬럼명&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'[A-C]'&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 01 Aug 2022 14:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/%EC%BD%94%ED%85%8C-%EB%8C%80%EB%B9%84-sql-%EB%AC%B8%EB%B2%95/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/%EC%BD%94%ED%85%8C-%EB%8C%80%EB%B9%84-sql-%EB%AC%B8%EB%B2%95/</guid>
+        
+        <category>sql</category>
+        
+        
+        <category>study</category>
+        
+      </item>
+    
+      <item>
+        <title>CSS 최적화</title>
+        <description>&lt;h2 id=&quot;css-최적화가-필요한-이유&quot;&gt;&lt;strong&gt;CSS 최적화가 필요한 이유&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;css는-렌더링을-막는다&quot;&gt;&lt;strong&gt;CSS는 렌더링을 막는다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;CSS의 존재만으로도, CSS가 파싱되기 전까지 브라우저는 렌더링이 지연된다. 만약 브라우저가 CSS가 없는 페이지를 그대로 노출하면, 스타일적용이 되지않은 페이지가 나타나기 때문이다. 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FOUC&lt;/code&gt;라고 불린다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;css는-html-파싱도-막을-수-있다&quot;&gt;&lt;strong&gt;CSS는 HTML 파싱도 막을 수 있다&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;브라우저가 CSS가 파싱되기 전까지 콘텐츠를 보여주지 않더라고, HTML의 로딩된 부분만을 일단 보여줄 수 있다. 그러나 스크립트의 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;async&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;defer&lt;/code&gt; 가 없다면 파싱을 막게 된다. 스크립트는 잠재적으로 페이지를 조작할 여자기 있기때문에 브라우저는 스크립트 실행에 매우 주의를 기울이기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/2022-07-31-css 최적화/imageurl=%2Fimages%2Fblog%2Fcss-performance%2Fparser-blocking-script.png&quot; alt=&quot;https://web-now-rbviiass9-calibreapp.vercel.app/_next/image?url=%2Fimages%2Fblog%2Fcss-performance%2Fparser-blocking-script.png&amp;amp;w=1920&amp;amp;q=75&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;스크립트가 페이지의 스타일에 영향을 줄 수 있기 때문에, 만약 브라우저가 CSS 관련 작업을 진행중이라면, 이 작업이 완료될 때까지 기다렸다가 스크립트를 실행할 것이다. 스크립트가 실행되기 전까지 문서 파싱을 할 수 없기 때문에, CSS는 더이상 렌더링을 차단하는 요소로 작용하지 않는다. 문서의 외부 스타일시트 및 스크립트 순서에 따라서 때로는 HTML 파싱도 중지할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/2022-07-31-css 최적화/imageurl=%2Fimages%2Fblog%2Fcss-performance%2Fparser-blocking-css.png&quot; alt=&quot;https://web-now-rbviiass9-calibreapp.vercel.app/_next/image?url=%2Fimages%2Fblog%2Fcss-performance%2Fparser-blocking-css.png&amp;amp;w=1920&amp;amp;q=75&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;따라서 파싱이 차단되는 상황을 피하기 위해서는 CSS를 최대한 빨리 불러와야하고, 리소스를 최적의 순서로 불러와야한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;css-최적화&quot;&gt;&lt;strong&gt;CSS 최적화&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;css-사이즈-최소화&quot;&gt;&lt;strong&gt;CSS 사이즈 최소화&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;CSS minify&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;사용하지 않는 CSS 제거&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;CSS 우선순위 정하기&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;critical css 를 인라인으로 처리하여, CSS 로딩하는 시간을 아끼기&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/filamentgroup/criticalCSS&quot;&gt;CriticalCSS&lt;/a&gt;와 같은 자동화 툴이 있음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;non-critical CSS는 비동기로 불러오기&lt;/p&gt;
+
+    &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;non-critical.css&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;media=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;print&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;onload=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;this.media='all'&quot;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;media=&quot;print&quot;&lt;/code&gt;는 사용자가 페이지를 프린트하려고 하는 경우에만 불러오는 스타일시트로, 렌더링에는 영향을 미치지 않는다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;onload=&quot;this.media='all'&quot;&lt;/code&gt;는 스타일시트 로드가 완료되면 미디어 속성을 다시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;all&lt;/code&gt;로 바꾸면서 스타일시트가 적용되도록 하는 것이다.&lt;/p&gt;
+
+        &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;효과적인-css-애니메이션&quot;&gt;&lt;strong&gt;효과적인 CSS 애니메이션&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;페이지에 애니메이션이 있는 요소가 있는 경우, &lt;a href=&quot;https://calibreapp.com/blog/investigate-animation-performance-with-devtools#animation-performance&quot;&gt;브라우저는 종종 문서 내 요소의 위치와 크기를 재계산&lt;/a&gt;한다. 예를 들어 어떤 요소의 너비를 바꾸게 되면, 그 자식 요소들까지 영향을 미치면서 페이지 내부에서 큰 레이아웃 변경이 발생할 수 있다. 이 레이아웃의 크기가 커질 수록 성능에 안좋은 영향을 미칠 것이다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;height&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;width&lt;/code&gt; 대신 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;transform: scale()&lt;/code&gt; 사용하기&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;top&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;right&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bottom&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;left&lt;/code&gt; 대신 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;transform :translate()&lt;/code&gt;를 사용한다.&lt;/li&gt;
+  &lt;li&gt;배경에 blur를 먹이고 싶다면, opacity 대신 blur된 이미지를 불러오는게 낫다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;contain-속성&quot;&gt;&lt;strong&gt;contain 속성&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;contain은 브라우저에 요소와 하위 요소가 그 문서 트리와 무관한 것으로 간주된다는 것을 알려주는 속성이다. 페이지의 하위트리와 나머지 페이를 분리한다. 그런다음, 브라우저는 페이지에서 독립된 부분의 렌더링을 최적화하여 성능을 향상 시킬 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;contain&lt;/code&gt;은 페이지 내부에서 독립적으로 작동하는 위젝 등에서 효과적이다. 위젯 내부의 변경사항이 바깥으로 전파되는 것을 막을 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;variable-font로-폰트파일-크기-줄이기&quot;&gt;&lt;strong&gt;variable font로 폰트파일 크기 줄이기&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://variablefonts.io&quot;&gt;Variable Font&lt;/a&gt;는 모든 너비, weight, style에 대해서 별도의 폰트파일이 아니라 하나의 파일에  여러가지 다양한 폰트를 통합해줄 수 있도록 한다. CSS와 단일 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@font-face&lt;/code&gt; 참조로 지정된 글꼴의 다양한 변형에 액세스할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이는 글꼴의 여러 변형이 필요한 파일 크기를 획기적으로 줄일 수 있다. 일반, 볼드, 기울임꼴 폰트 버전을 각각 로딩하는 대신 모든 정보가 포함된 하나의 단일 파일을 로딩할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;css-선택자-속도는-걱정안해도-된다&quot;&gt;&lt;strong&gt;CSS 선택자 속도는 걱정안해도 된다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;브라우저는 셀렉터는 오른쪽에서 왼쪽으로 읽기에 자식에서부터 부모로 거쳐서 올라가게 된다. 예를들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nav a {}&lt;/code&gt;는 먼저 a를 찾고, 그 중 부모가 nav 인것을 찾는다. 따라서 선택자는 짧은게 더 빠르다.&lt;/p&gt;
+
+&lt;p&gt;하지만, 브라우저가 선택자를 매칭시키는 속도는 매우 빠르기에 걱정할 필요가 없다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://yceffort.kr/2021/03/improve-css-performance&lt;/p&gt;
+</description>
+        <pubDate>Sun, 31 Jul 2022 22:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/css-%EC%B5%9C%EC%A0%81%ED%99%94/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/css-%EC%B5%9C%EC%A0%81%ED%99%94/</guid>
+        
+        
+        <category>study</category>
+        
+        <category>css</category>
+        
+      </item>
+    
+      <item>
+        <title>클래스형 컴포넌트 vs 함수형 컴포넌트</title>
+        <description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;클래스형-컴포넌트&quot;&gt;&lt;strong&gt;클래스형 컴포넌트&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-react highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Hello&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;defaultProps&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;이름없음&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+   
+  &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;isSpecial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isSpecial&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;*&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+        안녕하세요 &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;class 키워드로 시작&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Component를 상속 받음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;render() 함수로 JSX 반환&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;props를 조회할 때 this 키워드 사용&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;defaultProps 설정 시 클래스 내부에 static 키워드와 함께 선언&lt;/p&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;h3 id=&quot;상태&quot;&gt;&lt;strong&gt;상태&lt;/strong&gt;&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-react highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Counter&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;handleIncrease&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;handleDecrease&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;h1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;h1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onClick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;handleIncrease&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;+1&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onClick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;handleDecrease&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;-1&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;state로 상태를 관리&lt;/li&gt;
+  &lt;li&gt;state를 선언할 때는 constructor 안에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.state&lt;/code&gt; 로 설정&lt;/li&gt;
+  &lt;li&gt;상태를 업데이트할 때는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.setState&lt;/code&gt; 로 업데이트&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;life-cycle&quot;&gt;Life Cycle&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;마운트 단계&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;constructor&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;생성자 메서드. 컴포넌트가 만들어지면 가장 먼저 실행되는 메서드.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;getDerivedStateFromProps&lt;/p&gt;
+
+    &lt;div class=&quot;language-react highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getDerivedStateFromProps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nextProps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prevState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nextProps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prevState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nextProps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;props로 받아온 것을 state에 넣어주고 싶을 때 사용함.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static&lt;/code&gt; 키워드가 필요하고, 함수 내부에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this 객체에 접근할 수 없다&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;render
+    &lt;ul&gt;
+      &lt;li&gt;컴포넌트 렌더 메서드&lt;/li&gt;
+      &lt;li&gt;부수효과를 일으키면 안됨. 서버통신/브라우저 쿠키 받아오기 등의 부수효과는 render 메서드 안에서는 하지 않는다. 부수효과가 필요하면 다른 생명주기 함수에서 사용.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;componentDidMount
+    &lt;ul&gt;
+      &lt;li&gt;render의 첫 반환이 돔에 반영된 직후에 호출됨.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;업데이트 단계&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;getDerivedStateFromProps
+    &lt;ul&gt;
+      &lt;li&gt;컴포넌트의 props나 state가 바뀌었을때 호출됨.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;shouldComponenetUpdate
+    &lt;ul&gt;
+      &lt;li&gt;컴포넌트 최적화시 많이 사용된다.&lt;/li&gt;
+      &lt;li&gt;컴포넌트를 리렌더링할지 말지 결정함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;render
+    &lt;ul&gt;
+      &lt;li&gt;컴포넌트 반환&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;getSnapshotBeforeUpdate
+    &lt;ul&gt;
+      &lt;li&gt;렌더링 결과가 실제 돔에 반영되기 직전에 호출된다.&lt;/li&gt;
+      &lt;li&gt;이전 돔 요소의 상태값을 가져오기 좋음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;componentDidUpdate
+    &lt;ul&gt;
+      &lt;li&gt;업데이트된 컴포넌트가 실제 돔에 반영된 직후 호출된다.&lt;/li&gt;
+      &lt;li&gt;새로 반영된 돔의 상태값을 가장 빠르게 가져올 수 있는 메서드이다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;언마운트 단계&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;componentWillUnmount
+    &lt;ul&gt;
+      &lt;li&gt;컴포넌트가 화면에서 사라지기 직전에 호출된다.&lt;/li&gt;
+      &lt;li&gt;등록했던 이벤트나 라이브러리 호출을 제거.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;오류 발생시&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;componentDidCatch
+    &lt;ul&gt;
+      &lt;li&gt;render 함수에서 에러가 났을때, 에러가 발생할 수 있는 컴포넌트의 부모 컴포넌트에서 작성해야한다.&lt;/li&gt;
+      &lt;li&gt;사용자에게 에러화면을 보여주거나, 서버에 로깅할때 사용한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;함수형-컴포넌트&quot;&gt;&lt;strong&gt;함수형 컴포넌트&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-react highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;useState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;isSpecial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;useState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isSpecial&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;*&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+      안녕하세요 &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Hello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;JSX를 return문을 사용해서 반환&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hook&lt;/code&gt;을 통해 상태를 관리하고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;생명주기함수&lt;/code&gt;를 사용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;기존에 함수형 컴포넌트는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;state&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;생명주기함수&lt;/code&gt;를 사용할 수 없었다. 하지만, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hook&lt;/code&gt;을 통해 가능하게 됐다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;hook-생명주기&quot;&gt;&lt;strong&gt;Hook 생명주기&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;useEffect&lt;/code&gt; hook을 통해 관리할 수있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-react highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nx&quot;&gt;useEffect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// componentWillUnMount()&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/* componentDidUpdate() */&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// dependencies를 안넣으면 리렌더링 될때마다 호출됨.&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;마운트 될 때&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;컴포넌트가 실제 돔에 반영된 이후, 함수형 컴포넌트 내 모든 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;useEffect&lt;/code&gt;가 실행됨.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;업데이트 될때&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;useEffect  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dependencies&lt;/code&gt; 에 넣은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;state&lt;/code&gt;나 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;props&lt;/code&gt;가 업데이트 되었을때 useEffect 호출&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;언마운트 될 때&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;useEffect 내 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;return&lt;/code&gt; 문이 실행됨.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;useLayoutEffect&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;useEffect는 컴포넌트가 render 와 paint 된 후 실행된다. 즉 실제 돔에 컴포넌트가 나타난 다음에 호출되어, useEffect 내에 dom에 영향을 주는 코드가 있을 경우 사용자 입장에서는 화면이 깜빡일 수 있다.&lt;/li&gt;
+  &lt;li&gt;useLayoutEffect는 컴포넌트가 render 된 이후 실행되고, 그 이후에 paint 된다. 이 작업은 동기적으로 이루어지며, paint 되기 전에 실행되기에 dom을 조작하는 코드가 존재하더라도 사용자는 깜빡임을 경험하지 않는다. 이때 dom을 조작하는 코드에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;state 업데이트&lt;/code&gt;도 포함된다.&lt;/li&gt;
+  &lt;li&gt;내부의 코드가 모두 실행된 후 컴포넌트가 실제 돔에 반영되기에, 로직이 복잡할 경우 사용자가 레이아웃을 보는데까지 시간이 오래걸린다. 따라서 useEffect의 사용이 권장된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;차이정리&quot;&gt;&lt;strong&gt;차이정리&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;클래스형 컴포넌트&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.state&lt;/code&gt;를 통해 상태를 관리한다.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;생명주기함수&lt;/code&gt;를 작성할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;함수형 컴포넌트&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hook&lt;/code&gt;을 통해 상태와 생명주기를 관리한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;장단점-비교&quot;&gt;&lt;strong&gt;장단점 비교&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;함수형-컴포넌트-1&quot;&gt;&lt;strong&gt;함수형 컴포넌트&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;클래스형 컴포넌트보다 메모리 자원을 덜 사용한다.&lt;/li&gt;
+  &lt;li&gt;코드가 간결하다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://velog.io/@seong-dodo/React-%ED%81%B4%EB%9E%98%EC%8A%A4%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-vs-%ED%95%A8%EC%88%98%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8&lt;/p&gt;
+
+&lt;p&gt;https://devowen.com/298&lt;/p&gt;
+
+&lt;p&gt;https://born-dev.tistory.com/27&lt;/p&gt;
+
+&lt;p&gt;https://koras02.tistory.com/178?category=967574&lt;/p&gt;
+</description>
+        <pubDate>Sun, 31 Jul 2022 21:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/%ED%81%B4%EB%9E%98%EC%8A%A4%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/%ED%81%B4%EB%9E%98%EC%8A%A4%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8/</guid>
+        
+        <category>react</category>
+        
+        
+        <category>study</category>
+        
+        <category>react</category>
+        
+      </item>
+    
+      <item>
+        <title>React에서 Key를 사용하는 이유</title>
+        <description>&lt;p&gt;리액트로 개발을 하다가 리스트를 만들면, 다음과 같이 key를 사용하라는 안내문이 뜬다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/2022-07-28-react-key/key_error.png&quot; alt=&quot;key_error&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;평소엔 무시하고 key를 그냥 넣었지만, 왜 그런지 갑자기 궁금해져 찾아보았다.&lt;/p&gt;
+
+&lt;h2 id=&quot;recursing-on-children&quot;&gt;Recursing On Children&lt;/h2&gt;
+
+&lt;p&gt;해당 내용은 리액트 공식문서에 &lt;a href=&quot;https://reactjs.org/docs/reconciliation.html#recursing-on-children&quot;&gt;Recursing On Children&lt;/a&gt;으로 나와있다.&lt;/p&gt;
+
+&lt;p&gt;리액트 리렌더링 과정에서 리스트를 처리할때, 리액트는 기본적으로 실제 DOM의 리스트와 virtual DOM의 변경된 리스트를 비교한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;// 전
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;first&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;second&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+
+// 후
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;first&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;second&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;third&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;예를 들어, 위와 같이 기존 리스트의 마지막에 새로운 요소가 추가되었다고 해보자. 이때 리액트는 &lt;a href=&quot;https://ko.reactjs.org/docs/reconciliation.html#the-diffing-algorithm&quot;&gt;비교알고리즘&lt;/a&gt;을 통해 리스트를 차례대로 비교한다. 먼저 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;li&amp;gt;first&amp;lt;/li&amp;gt;&lt;/code&gt;이 서로 같다는 걸 확인하고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;li&amp;gt;second&amp;lt;/li&amp;gt;&lt;/code&gt;이 같다는 걸 확인한다. 그리고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;li&amp;gt;third&amp;lt;/li&amp;gt;&lt;/code&gt;이 다르다는 걸 확인하고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;li&amp;gt;third&amp;lt;/li&amp;gt;&lt;/code&gt; 을 트리에 추가하는 리렌더링을 수행한다.&lt;/p&gt;
+
+&lt;p&gt;이와 같이 맨 마지막에 요소를 추가하는 경우, 변경된 요소만 추가하기에 문제 없다. 하지만 문제는 다음과 같은 경우이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;Duke&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;Villanova&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;Connecticut&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;Duke&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;Villanova&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위와 같이 요소를 맨 위에 추가했을 경우 문제가 된다. 첫번째 예시처럼 비교를 했을때, 세 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;li&amp;gt;&lt;/code&gt; 모두 다르기에, 리액트는 세 자식을 모두 리렌더링 시킨다.&lt;/p&gt;
+
+&lt;h2 id=&quot;keys&quot;&gt;Keys&lt;/h2&gt;
+
+&lt;p&gt;Recursing on children 에서 봤던 문제를 해결하기 위해 리액트는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;key&lt;/code&gt; 속성을 지원한다. 자식들이 key를 가지고 있다면, 리액트는 key를 통해 기존 트리와 이후 트리의 자식들이 일치하는지 확인한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2015&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Duke&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2016&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Villanova&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2014&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Connecticut&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2015&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Duke&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2016&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Villanova&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이렇게 키를 추가한다면, 리액트는 키가 같은 자식은 이전과 같은 자식이라고 인지하고 리렌더링하지 않는다. 오직 키가 변경된 요소만 리렌더링 하여 매우 효율적이 된다.&lt;/p&gt;
+
+&lt;h2 id=&quot;주의점&quot;&gt;주의점&lt;/h2&gt;
+
+&lt;p&gt;key는 형제 사이에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;유일&lt;/code&gt;해야한다. 즉, 같은 리스트 안에서 key는 유일해야 한다는 말이다.&lt;/p&gt;
+
+&lt;p&gt;key를 추가하라는 안내문이 뜬다는 이유로 나를 포함한 많은 이들이 다음과 같은 실수를 저지른다.&lt;/p&gt;
+
+&lt;div class=&quot;language-react highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;todo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ToDo&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;todo&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;))}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이처럼 인덱스를 key로 사용하면, 만약 새로운 요소를 리스트의 맨 앞에 추가했을 경우 리스트의 key는 새로 추가된 요소부터 0 ~ n 의 값을 가진다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Duke&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Villanova&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Connecticut&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Duke&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Villanova&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;리액트는 key를 통해 리렌더 해야 할 요소를 뽑아낸다. 그런데 이 예시에서는 새로 맨 앞에 추가된 요소가 이전 리스트에 존재했던 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;key=&quot;0&quot;&lt;/code&gt;을 갖는다. 이로 인해 리액트는 새로 추가된 요소를 리렌더링 하지 않고, 오히려 기존에 있던 맨 마지막 요소를 리렌더링 한다.(기존 리스트에선 2라는 key는 없었기에)&lt;/p&gt;
+
+&lt;p&gt;이와 같이 각 index를 key로 사용하면 의도하지 않는 방식으로 동작할 수 있다. &lt;a href=&quot;https://ko.reactjs.org/redirect-to-codepen/reconciliation/index-used-as-key&quot;&gt;예시&lt;/a&gt; &lt;a href=&quot;https://ko.reactjs.org/redirect-to-codepen/reconciliation/no-index-used-as-key&quot;&gt;예시 해결&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;리스트에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;key&lt;/code&gt;를 지정해주지 않으면 리액트에서는 기본적으로 index를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;key&lt;/code&gt;로 사용한다. 따라서 특별한 경우가 아니라면 key는 유일한 값으로 지정해주자.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;특별한 경우&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;리스트가 변화되지 않을 경우&lt;/li&gt;
+    &lt;li&gt;성능에 신경쓸만큼 긴 리스트가 아닌데, 식별자를 생성하기 어려운 경우&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Thu, 28 Jul 2022 22:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/react-key/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/react-key/</guid>
+        
+        <category>react</category>
+        
+        <category>key</category>
+        
+        
+        <category>study</category>
+        
+        <category>react</category>
+        
+      </item>
+    
+      <item>
+        <title>JS 코테 대비 메소드 정리</title>
+        <description>&lt;h2 id=&quot;문법&quot;&gt;문법&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;for … of : 반복가능한 객체 (Array, String, Set)&lt;/li&gt;
+  &lt;li&gt;for … in : 객체. 키를 뽑아냄.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;set&quot;&gt;Set&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Set.prototype.&lt;strong&gt;add&lt;/strong&gt;(value)&lt;/li&gt;
+  &lt;li&gt;Set.prototype.clear()&lt;/li&gt;
+  &lt;li&gt;Set.prototype.delete(value)&lt;/li&gt;
+  &lt;li&gt;Set.prototype.forEach((value, key, set) =&amp;gt; {})
+    &lt;ul&gt;
+      &lt;li&gt;값, 키, set을 받음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Set.ptototype.has(value)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;map&quot;&gt;Map&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Map.prototype.&lt;strong&gt;set&lt;/strong&gt;(key, value)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Map.prototype.get(key)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Map.prototype.delete(key)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Map.prototype.has(key)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Map.prototype.forEach((value, key, map) =&amp;gt; {})&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;array&quot;&gt;Array&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Array.prototype.pop&lt;/strong&gt;()
+    &lt;ul&gt;
+      &lt;li&gt;마지막 요소를 제거하고 그 요소를 반환함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Array.prototype.reverse()&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;배열을 반전시킴&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Array.prototype.shift()&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;배열의 첫번째 요소를 제거하고, 제거된 요소를 반환함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Array.prototype.unshift()&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;배열의 맨 앞쪽에 추가하고, 새로운 길이를 반환함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Array.prototype.slice(begin?, end?)
+    &lt;ul&gt;
+      &lt;li&gt;begin부터 end까지 잘라서 반환. end가 length보다 길면 length까지만 반환&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Array.prototype.sort(compareFunction)&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;compareFunction 반환값
+        &lt;ul&gt;
+          &lt;li&gt;&amp;lt; 0 : a를 b보다 낮은 색인으로 정렬&lt;/li&gt;
+          &lt;li&gt;= 0 : 변경하지 않음&lt;/li&gt;
+          &lt;li&gt;&amp;gt; 0 : b를 a보다 낮은 색인으로 정렬&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Array.prototype.splice(start, deleteCount?, item1?, ….)&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;start부터 deleteCount만큼 삭제하고, 해당 위치에 item…을 추가&lt;/li&gt;
+      &lt;li&gt;원본을 변경시킴.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;string&quot;&gt;String&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;String.prototype.includes(word)
+    &lt;ul&gt;
+      &lt;li&gt;string 안에 word가 존재하는지 검사&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;String.prototype.slice(start, end?)
+    &lt;ul&gt;
+      &lt;li&gt;start 부터 end까지 잘라서 반&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;reverse : str.split(“”).reverse().join(“”);&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;number&quot;&gt;Number&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Number.MAX_VALUE&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Number.parseInt&lt;/strong&gt;(string)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;math&quot;&gt;Math&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Math.ceil()&lt;/li&gt;
+  &lt;li&gt;Math.floor()&lt;/li&gt;
+  &lt;li&gt;Math.trunc() : 소수부분을 제거하고 정수부분을 반환. (음수, 양수 상관없이)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;object&quot;&gt;Object&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Object.entries(object)&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;[키, value] 형태로 배열을 반환&lt;/p&gt;
+
+        &lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;object1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;somestring&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;entries&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;lower_bound-upper_bound-원리&quot;&gt;lower_bound, upper_bound 원리&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;lower_bound&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;mid의 값이 k 미만일때 : [mid + 1, end] 를 탐색&lt;/li&gt;
+  &lt;li&gt;그 외 : mid가 lower bound가 될 수 있으므로, 결과 변수에 기존값과 mid를 비교해 더 작은 값을 저장하고, lower bound가 될 수 있는 더 작은 값이 있는지 [start, mid - 1]를 탐색한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;upper_bound&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;mid의 값이 k 이하일때 : [mid + 1, end] 탐색&lt;/li&gt;
+  &lt;li&gt;그 외 : mid가 upper_bound 가 될 수 있으므로, 결과 변수에 기존 값과 mid를 비교해 더 작은 값을 저장하고, 더 작은 구간 [start, mid - 1]을 탐색한다.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 21 Jul 2022 22:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/js-%EC%BD%94%ED%85%8C-%EB%8C%80%EB%B9%84/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/js-%EC%BD%94%ED%85%8C-%EB%8C%80%EB%B9%84/</guid>
+        
+        
+        <category>알고리즘</category>
+        
+      </item>
+    
+      <item>
+        <title>면접 대비 요약</title>
+        <description>&lt;p&gt;면접이 코앞에 다가왔을 때 보는 페이지&lt;/p&gt;
+
+&lt;h1 id=&quot;프론트엔드&quot;&gt;프론트엔드&lt;/h1&gt;
+
+&lt;h2 id=&quot;virtual-dom&quot;&gt;Virtual DOM&lt;/h2&gt;
+
+&lt;p&gt;리액트의 작동방식은 상태변화 시, 그 컴포넌트와 하위 컴포넌트를 모두 교체하기에 많은 DOM 변화가 일어난다.&lt;/p&gt;
+
+&lt;p&gt;이때 리액트에서는 DOM을 추상화한 객체인 Virtual DOM을 변경하고, 변경이 완료되면 실제 DOM과의 차이점을 확인한다음 한번의 리렌더로 해결한다.&lt;/p&gt;
+
+&lt;p&gt;Virtual DOM은 메모리에 존재하여 메모리를 차지한다는 단점이 있다.&lt;/p&gt;
+
+&lt;p&gt;리액트도 DOM API를 사용하여 뷰를 변화시키기에, DOM API보다 더 빠르진 않다. Virtual DOM은 리액트를 빠르게 하기 위한 수단.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://seongil-shin.github.io/posts/virtual-Dom&quot;&gt;링크&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;react-key&quot;&gt;React key&lt;/h2&gt;
+
+&lt;p&gt;리액트에서 리스트를 만들 시, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;key&lt;/code&gt;를 사용하라는 안내문이 뜬다.&lt;/p&gt;
+
+&lt;p&gt;그 이유는 리스트에 변화가 생겨 리렌더링이 일어날 시, 변화 전후에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;key&lt;/code&gt;가 같은 요소는 서로 같은 요소로 받아들여 리렌더링에서 제외시키기 때문에 성능적으로 큰 이점이 있다.&lt;/p&gt;
+
+&lt;p&gt;따라서 리스트가 고정되어 변경이 일어나지 않는 경우가 아니라면,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;key&lt;/code&gt;를 인덱스로 사용하자 말자&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://seongil-shin.github.io/posts/react-key/&quot;&gt;링크&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;클래스형-컴포넌트-vs-함수형-컴포넌트&quot;&gt;&lt;strong&gt;클래스형 컴포넌트 vs 함수형 컴포넌트&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;기존에는 함수형 컴포넌트에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;state&lt;/code&gt;나 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;생명주기함수&lt;/code&gt; 사용이 불가능했다.&lt;/p&gt;
+
+&lt;p&gt;하지만 hook의 등장으로 두가지 모두 함수형 컴포넌트에서도 사용이 가능해졌다.&lt;/p&gt;
+
+&lt;p&gt;생명주기 hook으로는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;useEffect&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;useLayoutEffect&lt;/code&gt;가 있다. useEffect는 컴포넌트가 실제 돔에 반영 된 이후 호출되고, useLayoutEffect는 컴포넌트가 실제 돔에 반영되기 직전에 동기적으로 호출된다.&lt;/p&gt;
+
+&lt;p&gt;함수형 컴포넌트는 코드가 간결하고, 클래스형에 비해 메모리를 덜 사용한다는 장점이 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;css-최적화&quot;&gt;&lt;strong&gt;CSS 최적화&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;CSS는 렌더링을 막고, HTML 파싱도 막을 수 있다. 따라서 최적화가 필요하다.&lt;/p&gt;
+
+&lt;p&gt;CSS 사이즈를 줄이고, 꼭 필요한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Critical CSS&lt;/code&gt;를 인라인으로 선언하고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;non-Critical CSS&lt;/code&gt;는 비동기로 불러올 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;애니메이션을 최적화&lt;/strong&gt;하기 위해선, 레이아웃을 변경하는 대신 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;transform&lt;/code&gt;을 사용하는 것이 더 빠르다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;레이아웃이 변경되면, 하위 요소들에까지 영향이 퍼지면서, 페이지 내부에서 큰 레이아웃 변경이 발생할 수 있기 때문에&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;height&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;width&lt;/code&gt; 대신 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;transform: scale()&lt;/code&gt; 사용하기&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;top&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;right&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bottom&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;left&lt;/code&gt; 대신 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;transform :translate()&lt;/code&gt;를 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;contain 속성으로 어떤 요소와 그 하위요소가 전체 문서트리와 무관하다는 것을 알려주는 방법도 있다.&lt;/p&gt;
+
+&lt;p&gt;variable font로 폰트파일 크기를 줄일 수도 있다.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 19 Jul 2022 14:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/summary/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/summary/</guid>
+        
+        <category>summary</category>
+        
+        
+        <category>study</category>
+        
+        <category>면접질문</category>
+        
+      </item>
+    
+      <item>
+        <title>virtual DOM</title>
+        <description>&lt;h1 id=&quot;virtual-dom이란&quot;&gt;Virtual DOM이란?&lt;/h1&gt;
+
+&lt;p&gt;DOM을 추상화한 가상의 객체이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;dom-이란&quot;&gt;DOM 이란?&lt;/h2&gt;
+
+&lt;p&gt;HTML 문서를 파싱하여 문서의 구성요소들을 객체로 구조화하여 나타낸 것.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/2022-07-17-virtual Dom/img.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;HTML Elements, 속성, CSS style, Events, Methods 를 구조화해서 나타낸 객체고, 이 객체를 이용해서 웹페이지 구성요소를 제어할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Virtual DOM&lt;/strong&gt;은 이러한 DOM을 추상화한 가상의 객체이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;virtual-dom-이-해결하고자-하는-문제&quot;&gt;Virtual DOM 이 해결하고자 하는 문제&lt;/h2&gt;
+
+&lt;p&gt;React 작동 방식은 상태가 변경된 컴포넌트는 그 컴포넌트부터 자식 컴포넌트까지 통채로 새 상태의 컴포넌트로 교체하는 방식으로 동작한다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이런식의 교체는 많은 PC자원을 소모하게 된다. 이는 브라우저의 렌더링 방식 때문이다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;HTML을 파싱하여 DOM 객체를 생성하고, CSS를 파싱하여 스타일 규칙을 만든다.&lt;/li&gt;
+  &lt;li&gt;이 두개를 합쳐 실제로 웹 브라우저에 보여질 요소를 표현한 “렌더트리”를 만든다.&lt;/li&gt;
+  &lt;li&gt;이 렌더 트리를 기준으로 레이아웃을 배치하고, 색을 칠하는 등의 작업을 한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;만약 변경해야할 사항이 100개라면, 100번 위와 같은 과정을 반복하게 된다.&lt;/p&gt;
+
+&lt;h2 id=&quot;어떻게-해결했는가&quot;&gt;어떻게 해결했는가?&lt;/h2&gt;
+
+&lt;p&gt;Virtual DOM이라는 DOM을 추상화한 가상의 객체를 메모리에 만들어 놓고, DOM과 유사한 역할을 담당하게 한다.&lt;/p&gt;
+
+&lt;p&gt;만약 변경사항이 발생할 경우, DOM을 직접 수정하는 것이 아니라 중간단계로 Virtual DOM을 수정하고 Virtual DOM을 통해서 DOM을 수정하게 한다. 이를 통해 Virtual DOM에 변경내역을 한 번에 모아서(버퍼링) 실제 DOM과 변경된 Virtual DOM의 차이를 판단한 후, 구성요소의 변경이 필요한 부분만 찾아 그에 따른 렌더링을 한번만 하도록 하여 해결하였다.&lt;/p&gt;
+
+&lt;p&gt;즉, 리액트에서 상태변화가 발생했을 경우 교체해야할 컴포넌트를 먼저 Virtual DOM에서 교체한다음 실제 DOM과 비교하여 rerender 해야할 부분만 rerender한다는 뜻이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;한계&quot;&gt;한계&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;0.1초마다 변경되는 화면을, Virtual DOM에 0.5초씩 모아서 렌더링할 수 있을까?
+    &lt;ul&gt;
+      &lt;li&gt;안된다. 동시에 변경되는 것에 한해서만 렌더링됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Virtual DOM은 무조건 빠른가?
+    &lt;ul&gt;
+      &lt;li&gt;아니다. 반복렌더링 하지 않도록 해줘야한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Virtual DOM은 메모리에 있기에 메모리의 사용이 늘어난다.&lt;/li&gt;
+  &lt;li&gt;Virtual DOM을 조작하는 것도 엄청나게 많은 컴포넌트를 조작하게 된다면 오버헤드가 생기기마련이다. Virtual DOM 제어가 직접 DOM제어에 비해 상대적으로 비용이 적게 들 뿐이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;오해&quot;&gt;오해&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;React는 virtual DOM을 사용하기에 DOM API로 직접 엘리먼트를 수정하는 것보다 빠르다?
+    &lt;ul&gt;
+      &lt;li&gt;아니다. React 도 결국 DOM API로 엘리먼트를 리렌더하기에 DOM API로 직접 수정하는 것보다 빠르지 않다.&lt;/li&gt;
+      &lt;li&gt;다만, 100번의 DOM API 사용을, Virtual DOM으로 모아 1번의 DOM API 사용으로 줄여주기에, virtual DOM 없이 리액트를 사용하는 것보다 더 빠른 것이다.&lt;/li&gt;
+      &lt;li&gt;즉, Virtual DOM은 리액트를 빠르게 하는 수단이다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;출처&quot;&gt;출처&lt;/h1&gt;
+
+&lt;p&gt;https://jeong-pro.tistory.com/210&lt;/p&gt;
+
+&lt;p&gt;https://stackoverflow.com/questions/61245695/how-exactly-is-reacts-virtual-dom-faster&lt;/p&gt;
+</description>
+        <pubDate>Sun, 17 Jul 2022 14:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/virtual-Dom/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/virtual-Dom/</guid>
+        
+        <category>react</category>
+        
+        <category>virtual dom</category>
+        
+        
+        <category>study</category>
+        
+        <category>react</category>
+        
+      </item>
+    
+      <item>
+        <title>React 18로 업데이트 방법, 문제점 정리</title>
+        <description>&lt;p&gt;기존에 React 17을 사용하던 Forkie Player 프로젝트를 React 18로 업데이트 하는 기록&lt;/p&gt;
+
+&lt;h2 id=&quot;업데이트-하는-이유&quot;&gt;업데이트 하는 이유&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;automatic batching&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;동영상이 끝났을때 다음 영상으로 넘어가거나, 현재 영상의 시작부분으로 돌아가기 위해선 동영상의 timeupdate, ready, pause, ended 등등의 상태에 대응할 필요가 있다.&lt;/li&gt;
+      &lt;li&gt;이때 이벤트 핸들러 안에서 여러 상태업데이트를 할때, automatic batching이 없을때는 서로 다른 타이밍에 발생하는 업데이트를 대응하기가 까다로웠다.&lt;/li&gt;
+      &lt;li&gt;react 18로 업데이트하면서 automatic batching이 적용되고 이러한 문제점이 사라지길 기대하며 업데이트를 하였다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Suspense&lt;/code&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;현재 forkie에서는 SSR를 사용하지 않기 때문에, SSR을 위해 도입한 것은 아니다.&lt;/li&gt;
+      &lt;li&gt;하지만 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;검색&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;플레이리스트 수정&lt;/code&gt; 등을 할때 Loading일 경우 fallback을 하도록 하는 좀 더 깔끔한 코드를 원했기 때문에 react 18을 도입하였다&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;항상 신기술을 원하는 개발자의 마음…
+    &lt;ul&gt;
+      &lt;li&gt;새로운 것이 나오면 &lt;strong&gt;어쨌든 더 좋지 않겠어?&lt;/strong&gt; 라는 마음으로 설치하게 되어버린다.&lt;/li&gt;
+      &lt;li&gt;만약 새로운 툴에 문제가 있다면 설치하지 않는 것이 좋으나, 페이스북에서 공들이고있는 React이고, 상당히 긴 알파/베타 기간을 거친 걸로 알고 있는데, 충분히 stable하다고 생각되어서 업데이트를 결정하였다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;업데이트-방법&quot;&gt;업데이트 방법&lt;/h2&gt;
+
+&lt;p&gt;공식문서에 나온대로 업데이트 하면 된다.&lt;/p&gt;
+
+&lt;p&gt;https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;업데이트-과정-중-문제점&quot;&gt;업데이트 과정 중 문제점&lt;/h2&gt;
+
+&lt;h3 id=&quot;typescript-에러&quot;&gt;typescript 에러&lt;/h3&gt;
+
+&lt;p&gt;다른 분이 작성한 &lt;a href=&quot;https://velog.io/@seungmini/TypeScript%EC%97%90-React18-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0&quot;&gt;문서&lt;/a&gt;를 보며 해결하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;패키지-호환성문제&quot;&gt;패키지 호환성문제&lt;/h3&gt;
+
+&lt;p&gt;타입스트립트를 사용하지 않을 경우 큰 문제는 없다. 하지만, 타입스크립트를 사용할 경우 패키지와 사용하는 리액트 버전이 차이가 나기에 타입 에러가 발생할 수도 있다.&lt;/p&gt;
+
+&lt;p&gt;자주 업데이트가 되는 패키지의 경우 이미 react 18을 대응하여 업데이트를 해놨을테니 해당 버전으로 업데이트를 하면된다.&lt;/p&gt;
+
+&lt;p&gt;하지만 문제가 되는 경우가 두가지 있다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;새로운 버전에 큰 변화가 있어 앱에서 해당 패키지를 사용하는 부분을 함께 수정해야하는 경우&lt;/li&gt;
+  &lt;li&gt;자주 업데이트되는 패키지가 아니어서, react 18을 대응한 버전이 없을 경우&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;위 두가지 문제를 해결하기 위해선 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;force-resolution&lt;/code&gt;을 하여야한다. 패키지 매니저로 npm을 사용하는 경우와 yarn을 사용하는 경우 다르게 대응하여야한다. 이 글은 yarn을 기준으로 적었다.&lt;/p&gt;
+
+&lt;p&gt;yarn 에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;package.json&lt;/code&gt;에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resolution&lt;/code&gt; 을 추가함으로써 해결할 수 있다고 &lt;a href=&quot;https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/&quot;&gt;공식문서&lt;/a&gt;에서 말하고 있다.&lt;/p&gt;
+
+&lt;p&gt;forkie에서 적용한 예시는 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;forkie-player_web_renewal&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;dependencies&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;@types/react&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^18.0.10&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;@types/react-dom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^18.0.5&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;react&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^18.1.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;react-dom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^18.1.0&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;resolutions&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;react&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^18.1.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;react-dom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^18.1.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;@types/react&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^18.0.10&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;@types/react-dom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^18.0.5&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이후 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yarn install&lt;/code&gt;을 하면 된다.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 03 Jun 2022 14:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/react18%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/react18%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8/</guid>
+        
+        
+        <category>projects</category>
+        
+        <category>forkie</category>
+        
+      </item>
+    
+      <item>
+        <title>velog 메모</title>
+        <description>&lt;h2 id=&quot;리액트-리렌더링&quot;&gt;리액트 리렌더링&lt;/h2&gt;
+
+&lt;p&gt;https://velog.io/@eunbinn/when-does-react-render-your-component&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;children으로 넘어온 컴포넌트는 사용되는 컴포넌트가 리렌더링되도, 리렌더링의 영향을 받지 않는다.&lt;/li&gt;
+  &lt;li&gt;리렌더링은 현재 컴포넌트에서 변화된 것이 없어도, 자식으로 전파된다.
+    &lt;ul&gt;
+      &lt;li&gt;but 현재 컴포넌트에 useMemo를 사용하면, 변화가 없을시 자식으로도 전파되지 않음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;useMemo도 써야할 때를 알아야한다. (구조변경 등의 방법으로 리렌더링을 막을 수 있음)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 24 Apr 2022 23:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/velog-%EB%A9%94%EB%AA%A8/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/velog-%EB%A9%94%EB%AA%A8/</guid>
+        
+        
+        <category>study</category>
+        
+        <category>react</category>
+        
+      </item>
+    
+      <item>
+        <title>함수형 프로그래밍 (이해하기 쉽게)</title>
+        <description>&lt;h2 id=&quot;액션-계산-데이터&quot;&gt;액션, 계산, 데이터&lt;/h2&gt;
+
+&lt;p&gt;순수함수 vs 부수효과를 대체한 개념들.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;데이터&lt;/code&gt; : 이벤트에 대한 사실. 액션에 의해 변화됨&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;액션&lt;/code&gt; : 데이터를 변화시킬 수 있음. 실행시점이나 횟수에 의존하여 언제하느냐에 따라 결과가 달라지면 액션이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;계산&lt;/code&gt; : 입력값을 통해 출력을 만들어내는 것. 같은 입력에 대해 항상 같은 출력값만 내놓아야한다. 외부 세계에 영향을 주면 안됨.&lt;/p&gt;
+
+&lt;p&gt;함수형 프로그래밍 예시)&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;// 함수형 프로그래밍 관점에서 분리해보자.&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;// 데이터&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;useState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;// 계산&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;increase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;// 액션&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;onClick&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;increase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  
+  &lt;span class=&quot;c1&quot;&gt;// 선언적 패턴&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;button&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;onClick&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onClick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/button&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;액션과 계산을 분리해야함. 계산은 외부세계에 영향을 주지 않고, 같은 입력에 같은 출력이 나오는 함수(순수함수)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;더 좋은 예시) 계산함수를 아래처럼 변경&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;increase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;offset&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;암묵적 입출력을 없애도록 함.&lt;/li&gt;
+  &lt;li&gt;언제든 재사용이 가능하며 테스트하기에도 용이하다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;불변성---카피온라이트-방어적복사&quot;&gt;불변성 - 카피온라이트, 방어적복사&lt;/h2&gt;
+
+&lt;h3 id=&quot;카피온라이트얕은-복사&quot;&gt;카피온라이트(얕은 복사)&lt;/h3&gt;
+
+&lt;p&gt;버튼 클릭시 배열의 값을 하나씩 늘려간다고 해보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;increase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;자바스크립트에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pass by reference&lt;/code&gt;로 동작하기 때문에, 위처럼 코드를 짜게 되면 원본이 변화한다. 따라서 다음과 같이 원본을 복사하여 사용하여야 불변성을 지킬 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;increase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// array를 조작하기 전에 복사해서 사용한다.&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//or&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;increase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;방어적복사&quot;&gt;방어적복사&lt;/h3&gt;
+
+&lt;p&gt;만약 계산이나 액션 중에 우리가 수정할 수 없는 라이브러리를 사용한다면 어떻게 불변성을 지킬 수 있을까?&lt;/p&gt;
+
+&lt;p&gt;이때는 방어적 복사를 사용한다.&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;structuredClone()&lt;/code&gt; 이라는 최근 JS에 추가된 API를 사용하여 구현할 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;someCalcuation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;structuredClone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 완전한 clone을 만들어 낸다.&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;someActionLibray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// clone값을 변경해도 원본은 변하지 않는다.&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;참고) structuredClone 지원 브라우저 목록&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/img/2022-05-17-함수형프로그래밍/image.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;IE에서는 polyfill 에서 지원&lt;/p&gt;
+
+&lt;h2 id=&quot;선언적-패턴과-계층형-구조&quot;&gt;선언적 패턴과 계층형 구조&lt;/h2&gt;
+
+&lt;h3 id=&quot;계층적-구조&quot;&gt;계층적 구조&lt;/h3&gt;
+
+&lt;p&gt;데이터, 액션, 계산으로 구조를 나누면 자연스럽게 코드 구조에 계층이 생기게 되고, &lt;strong&gt;좋은 설계와 쉬운 리팩토링이 보장됨.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/img/2022-05-17-함수형프로그래밍/image-16527766713942.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;액션으로 갈수록 코드는 무엇을 할지에 대한 기획서에 가까운 코드가 되고, 데이터에 가까워질수록 데이터 중심적 코드를 작성하게 되고, 상대적으로 재사용성이 높고 테스트하고 쉬운 코드가 나오게 된다.&lt;/p&gt;
+
+&lt;p&gt;이렇게 계층을 나누고, 각 계층을 침범하지 않도록 코드를 짜다보면 자연스럽게 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;추상화벽&lt;/code&gt;이 만들어지면서 벽 상단으로의 코드변화가 하단에는 영항을 미치지 않고, 하단의 변화도 상위에 영항을 주지 않도록 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이렇게되면 상위에서는 무엇을 할지 기술하는 &lt;strong&gt;선언적 패턴&lt;/strong&gt;으로 코드를 작성할 수 있고, 하위에서는 &lt;strong&gt;테스트 하기 쉬운 코드 조각&lt;/strong&gt;들로 이루어질 수 있다.&lt;/p&gt;
+
+&lt;h2 id=&quot;함수형-프로그래밍을-돕는-라이브러리들&quot;&gt;함수형 프로그래밍을 돕는 라이브러리들&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://lodash.com/&quot;&gt;lodash&lt;/a&gt; : 데이터의 필수적인 구조를 쉽게 다룰 수 있게끔 도와줌. &lt;a href=&quot;https://velog.io/@kysung95/%EC%A7%A4%EB%A7%89%EA%B8%80-lodash-%EC%95%8C%EA%B3%A0-%EC%93%B0%EC%9E%90&quot;&gt;설명&lt;/a&gt; lodash/fp 로 함수형 프로그래밍을 지원하는듯&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://selfrefactor.github.io/rambda/#/&quot;&gt;rambda&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://rxjs.dev/&quot;&gt;rxjs&lt;/a&gt; : 이벤트 기반 프로그래밍에서 함수형 프로그래밍을 이용해 선언적으로 이벤트를 처리할 수 있도록 해줌. &lt;a href=&quot;https://min9nim.vercel.app/2020-04-24-rxjs/&quot;&gt;설명&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;redux&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://immutable-js.com/&quot;&gt;immutable&lt;/a&gt; : Map, List 등의 새로운 객체를 제공하여, 변화가 일어나는 구조체는 새로만들고 나머지는 재사용하는 방식으로 불변성을 지킨다. &lt;a href=&quot;https://pks2974.medium.com/immutable-js-%EA%B0%84%EB%8B%A8%EC%A0%95%EB%A6%AC-bbd5ad20bbdf&quot;&gt;설명&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://date-fns.org/&quot;&gt;date-fns&lt;/a&gt; : 날짜 관련 라이브러리.  함수형프로그래밍을 지원하는 모듈이 있음.&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
+
+&lt;p&gt;https://velog.io/@teo/functional-programming&lt;/p&gt;
+</description>
+        <pubDate>Wed, 30 Mar 2022 14:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/%ED%95%A8%EC%88%98%ED%98%95%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/%ED%95%A8%EC%88%98%ED%98%95%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/</guid>
+        
+        <category>functional programming</category>
+        
+        
+        <category>cs</category>
+        
+        <category>basic</category>
+        
+      </item>
+    
+      <item>
+        <title>view</title>
+        <description>&lt;h2 id=&quot;view&quot;&gt;&lt;strong&gt;View&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;다른 테이블을 기반으로 만들어진 가상 테이블. 논리적으로만 존재하는 테이블.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;장점&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;질의문을 쉽게 작성할 수 있음&lt;/li&gt;
+  &lt;li&gt;데이터 보안유지에 도움이 됨.&lt;/li&gt;
+  &lt;li&gt;데이터 관리가 편해짐&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;특징&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ALTER 문으로 뷰를 재정의하는 것은 불가능&lt;/li&gt;
+  &lt;li&gt;기본 테이블 삭제 시 같이 삭제된다. 독자적인 인덱스를 가질 수 없음.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;뷰생성-&quot;&gt;**뷰생성 **&lt;/h3&gt;
+
+&lt;p&gt;CREATE VIEW 뷰_이름[(속성_리스트)] AS SELECT 문  [WITH CHECK OPTION]&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;AS SELECT 문 : 뷰를 정의. ORDER BY는 사용불가&lt;/li&gt;
+  &lt;li&gt;WITH CHECK OPTION : 뷰에 삽입이나 수정연산을 할 때, SELECT 문에서 제시한 뷰의 정의조건을 위반하면 수행되지 않도록하는 제약조건을 지정&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;뷰-insert-update-delete문&quot;&gt;&lt;strong&gt;뷰 INSERT, UPDATE, DELETE문&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;뷰에대한 연산은 실제론 기본 테이블에 대해 수행되므로 제한적으로 이루어짐&lt;/li&gt;
+  &lt;li&gt;변경 불가능한 뷰
+    &lt;ul&gt;
+      &lt;li&gt;기본 테이블의 기본키를 포함하고 있지 않는 뷰&lt;/li&gt;
+      &lt;li&gt;집계합수, DISTINCT, GROUP BY, 조인을 사용하여 정의한 기본테이블의 부분이 아닌 뷰&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;뷰-삭제&quot;&gt;&lt;strong&gt;뷰 삭제&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;DROP VIEW 뷰_이름&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;삭제할 뷰를 참조하는 제약조건이 존재하면 삭제되지 않음.&lt;/li&gt;
+  &lt;li&gt;관련된 제약조건을 먼저 삭제해야함.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 02 Mar 2022 23:25:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/view/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/view/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>database</category>
+        
+      </item>
+    
+      <item>
+        <title>IPv6</title>
+        <description>&lt;h2 id=&quot;ipv6&quot;&gt;&lt;strong&gt;IPv6&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;128비트 사용.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Multicast 대신에 Broadcast를 함.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ICMPv6&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;ARP, IGMP 기능흡수
+        &lt;ul&gt;
+          &lt;li&gt;ARP : IP주소를 MAC 주소로 변환하는 프로토콜&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;IPv4 에서 IPv6로의 전환 정책&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Dual stack : 두가지 다 지원하도록 하여, 두가지 주소를 모두 사용할 수 있도록 하는 것&lt;/li&gt;
+      &lt;li&gt;tunneling : 종단 사이에 IPv4를 쓰는 홉이 있을때, 그 중간 단계에서만 IPv6를 터널링으로 IPv4로 감싸 통신&lt;/li&gt;
+      &lt;li&gt;header translation : 종단에서만 IPv4를 사용하면, IPv6를 해석하여 IPv4로 변경한 다음에 전달&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 02 Mar 2022 14:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/ipv6/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/ipv6/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>network</category>
+        
+      </item>
+    
+      <item>
+        <title>deadlock 발생 조건</title>
+        <description>&lt;h2 id=&quot;deadlock-발생-조건&quot;&gt;&lt;strong&gt;deadlock 발생 조건&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;아래 4가지 조건을 모두 만족하면 데드락 발생가능성이 있음&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;상호배제(Mutual Exclusion)
+    &lt;ul&gt;
+      &lt;li&gt;한 리소스는 한번에 한 프로세스만이 사용할 수 있음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Hold and wait&lt;/li&gt;
+  &lt;li&gt;No preemption&lt;/li&gt;
+  &lt;li&gt;Circular wait&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;deadlock-방지법&quot;&gt;deadlock 방지법&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Prevention
+    &lt;ul&gt;
+      &lt;li&gt;교착 상태가 발생할 수 있는 요구조건을 만족시키지 않게 함으로써 방지&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Avoidance
+    &lt;ul&gt;
+      &lt;li&gt;교착상태 발생 가능성이 있는 자원할당을 하지 않음&lt;/li&gt;
+      &lt;li&gt;ex) 은행가 알고리즘&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Detection and recovery
+    &lt;ul&gt;
+      &lt;li&gt;교착상태가 발생하면 감지하여 고침&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Wed, 02 Mar 2022 14:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/deadlock/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/deadlock/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>os</category>
+        
+      </item>
+    
+      <item>
+        <title>17088 등차수열 변환</title>
+        <description>&lt;h2 id=&quot;알고리즘&quot;&gt;&lt;strong&gt;알고리즘&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;첫번째와 두번째 원소 사이의 공차를 구함&lt;/li&gt;
+  &lt;li&gt;두번째 원소부터 마지막원소까지의 공차를 만족하는 경우만으로 dfs를 진행함
+    &lt;ol&gt;
+      &lt;li&gt;마지막원소까지 공차를 만족하는 모든 경우의 수를 구하고, 그 중 최소 연산으로 만족하는 경우의 수를 반환함.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;위 과정을 첫번째 원소와 두번째 원소 사이의 공차의 경우의수만큼 진행하고, 그 중에서 최소 연산의 수를 구한다.
+    &lt;ol&gt;
+      &lt;li&gt;각 원소별로, (-1, 0, 1) 세 개의 연산을 할 수 있으므로 공차의 경우의 수는 9개.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;삽질&quot;&gt;&lt;strong&gt;삽질&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;다이나믹을 적용할 수 있을거라 생각했다.
+    &lt;ul&gt;
+      &lt;li&gt;현재 depth의 원소가 depth와 이전 depth에서 어떤 연산을 적용받은 결과인지로, 현재 depth의 상태가 결정된다고 생각하였기에.&lt;/li&gt;
+      &lt;li&gt;하지만, 현재 depth의 상태는 depth와 현재 원소의 값으로 결정되었다.&lt;/li&gt;
+      &lt;li&gt;하지만 원소의 값은 최대 10억이므로 다이나믹에 사용하기엔 무리가 있었다&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;현재 depth에서, 현재 depth와 다음 depth에 모두 연산을 적용하였다.
+    &lt;ul&gt;
+      &lt;li&gt;양쪽을 모두 연산 시켜줘야 모든 경우를 탐색하는 것이라 생각했기에 그리하였는데, 당연히 정답코드에 비해 매 깊이마다 3배의 계산을 하게 되므로 시간초과가 났다&lt;/li&gt;
+      &lt;li&gt;하지만 이는 매우 많은 중복계산을 불러일으키고, 매 깊이에서 다음 depth의 연산만 해줘도 충분히 모든 경우를 탐색할 수 있었다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;&lt;strong&gt;코드&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#define INF 2000000000
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;diff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100010&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;diff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+		&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;cin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;diff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+		&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]));&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Wed, 02 Mar 2022 14:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/17088-%EB%93%B1%EC%B0%A8%EC%88%98%EC%97%B4%EB%B0%98%ED%99%98/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/17088-%EB%93%B1%EC%B0%A8%EC%88%98%EC%97%B4%EB%B0%98%ED%99%98/</guid>
+        
+        
+        <category>알고리즘</category>
+        
+        <category>beackjoon</category>
+        
+      </item>
+    
+      <item>
+        <title>서브네팅</title>
+        <description>&lt;h2 id=&quot;서브네팅&quot;&gt;&lt;strong&gt;서브네팅&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;사용가능한 IP 주소 범위를 분할하여 사용하는 것&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;특징&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2의 배수로, 같은 크기로 분할&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;주소할당&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;서브넷 마스크는 다음과 같음&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;네트워크 주소사용부분 모두 1 + 호스트 주소 사용부분 모두 0&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;각 서브넷에서는 다음과 같이 2개의 주소는 예약되어있음&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;네트워크 주소 : (기존 네트워크 부 + 분할부분 매핑 주소) + (남은 호스트부분 모두 0)&lt;/li&gt;
+  &lt;li&gt;브로드캐스트 주소 : (기존 네트워크 부 + 분할 매핑 주소) + (남은 호스트 부분 모두 1)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;따라서 서브넷에서 사용가능한 주소 범위는, 네트워크 주소와 브로드캐스트 주소를 제외한 나머지 부분이다. 그 나머지 부분은 다음과 같이 구성&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;라우터 주소 : 1개 예약&lt;/li&gt;
+  &lt;li&gt;컴퓨터 주소 할당 : 나머지&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;즉, 한 서브넷에서 컴퓨터 주소 할당에 사용가능한 주소는 네트워크주소, 브로드캐스트 주소, 라우터 주소를 제외한 나머지 부분이다.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 27 Feb 2022 21:34:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/subnetting/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/subnetting/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>network</category>
+        
+      </item>
+    
+      <item>
+        <title>관계 데이터 모델</title>
+        <description>&lt;h2 id=&quot;관계-데이터-모델&quot;&gt;&lt;strong&gt;관계 데이터 모델&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;용어&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;릴레이션 : 하나의 개체에 관한 데이터를 2차원 테이블로 저장한 것.
+    &lt;ul&gt;
+      &lt;li&gt;릴레이션 스키마 : 릴레이션의 이름과 속성이름으로 정의. 정적. 내포&lt;/li&gt;
+      &lt;li&gt;릴레이션 인스턴스 : 릴레이션에 존재하는 튜플들의 집합. 동적. 외연&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;도메인 : 하나의 속성이 가질 수 있는 모든 값의 집합. 적합성 판단의 기준이 됨&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;데이터베이스의-구성&quot;&gt;데이터베이스의 구성&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;데이터베이스 스키마 : 데이터베이스의 전체구조. 릴레이션 스키마의 모음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;데이터베이스 인스턴스 : 데이터베이스를 구성하는 릴레이션 인스턴스의 모음&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;릴레이션의-특성&quot;&gt;&lt;strong&gt;릴레이션의 특성&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;튜플의 유일성&lt;/li&gt;
+  &lt;li&gt;튜플의 무순서&lt;/li&gt;
+  &lt;li&gt;속성의 무순서&lt;/li&gt;
+  &lt;li&gt;속성의 원자성&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;키&quot;&gt;&lt;strong&gt;키&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;슈퍼키 : 유일성을 만족하는 속성들의 집합&lt;/li&gt;
+  &lt;li&gt;후보키 : 유일성과 최소성을 만족하는 속성들의 집합&lt;/li&gt;
+  &lt;li&gt;외래키 : 기본키로 사용할 수 있음.
+    &lt;ul&gt;
+      &lt;li&gt;참조하는 기본키 속성과 이름은 달라도 되지만 도메인은 같아야한다.&lt;/li&gt;
+      &lt;li&gt;null 값을 가질 수 있다.&lt;/li&gt;
+      &lt;li&gt;한 릴레이션에 여러 개의 외래키가 있어도 된다.&lt;/li&gt;
+      &lt;li&gt;같은 릴레이션의 기본키를 참조할 수도 있다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;무결성-제약조건&quot;&gt;&lt;strong&gt;무결성 제약조건&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;데이터의 무결성을 보장하기 위한 규칙&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;개체 무결성 제약조건 : 기본키를 구성하는 모든 속성은 널 값을 가질 수 없다&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;참조 무결성 제악조건 : 외래키는 참조할 수 없는 값을 가질 수 없다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 25 Feb 2022 22:30:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/data/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/data/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>database</category>
+        
+      </item>
+    
+      <item>
+        <title>반정규화</title>
+        <description>&lt;h2 id=&quot;반정규화&quot;&gt;&lt;strong&gt;반정규화&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;시스템의 성능 향상, 개발 및 운영의 편의성을 위해 정규화된 데이터 모델을 통합, 중복, 분리하는 과정으로 의도적으로 정규화 원칙을 위배하는 행위.&lt;/p&gt;
+
+&lt;p&gt;과도한 반정규화는 성능 저하를 불러일으킴.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;시스셈의 성능과 관리효율성은 증가하지만, 데이터의 일관성 및 정합성을 저하될 수 있음.
+    &lt;ul&gt;
+      &lt;li&gt;따라서 사전에 데이터의 일관성 및 정합성을 우선할지, 데이터베이스의 성능과 단순화를 우선으로 할지 결정해야함&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;방법&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;테이블 통합, 테이블 분할, 중복 테이블 추가, 중복 속성 추가&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;테이블-통합&quot;&gt;&lt;strong&gt;테이블 통합&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;두개의 테이블이 조인되는 경우가 많아 하나의 테이블로 합쳐 사용하는 것이 성능향상에 도움이 될 경우 수행한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;두개의 테이블에서 발생하는 프로세스가 동일하게 자주 처리되는 경우, 두 개의 테이블을 이용하여 항상 조회를 수행하는 경우 테이블 통합을 고려.&lt;/li&gt;
+  &lt;li&gt;1:1 관계 테이블 통합, 1:N 관계 테이블 통합, 슈퍼타입/서브타입 테이블 통합이 있음.&lt;/li&gt;
+  &lt;li&gt;고려사항
+    &lt;ul&gt;
+      &lt;li&gt;데이터 검색은 간편하지만, 레코드 증가로 인해 처리량 증가&lt;/li&gt;
+      &lt;li&gt;데이터 통합으로 인해 입력, 수정, 삭제 규칙이 복잡해질 수 있음&lt;/li&gt;
+      &lt;li&gt;Not Null, Default, Check 등의 제약조건을 설계하기 어려움&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;테이블-분할&quot;&gt;&lt;strong&gt;테이블 분할&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;테이블을 수직 또는 수평으로 분할하는 것&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;수평분할&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;레코드를 기준으로 테이블을 분할&lt;/li&gt;
+  &lt;li&gt;레코드 별로 사용빈도의 차이가 큰 경우 사용빈도에 따라 테이블을 분할함&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;수직 분할&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;하나의 테이블에 속성이 너무 많을 경우 속성을 기준으로 테이블을 분할함&lt;/li&gt;
+  &lt;li&gt;종류
+    &lt;ul&gt;
+      &lt;li&gt;갱신 위주의 속성 분할 : 갱신이 자주 일어나는 속성들을 수직 분할하여 이용&lt;/li&gt;
+      &lt;li&gt;자주 조회되는 속성분할 : 자주 조회되는 속성이 극 히 일부일 경우 그 속성들을 수직분할하여 사용&lt;/li&gt;
+      &lt;li&gt;크기가 큰 속성 분할 : 이미지나 2GB 이상 저장도리 수 있는 텍스트 형식으로 된 속성들을 수직분할함.&lt;/li&gt;
+      &lt;li&gt;보안을 적용해야하는 속성 분할&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;고려사항&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기본키의 유일성 관리가 어려워짐&lt;/li&gt;
+  &lt;li&gt;데이터의 양이 적거나 사용빈도가 낮으면 굳이 해야하나 고려&lt;/li&gt;
+  &lt;li&gt;데이터 검색에 중점을 두어 테이블 분할 여부 결정&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;중복-테이블-추가&quot;&gt;&lt;strong&gt;중복 테이블 추가&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;여러 테이블에서 데이터를 추출해서 사용해야하거나 다른 서버에 저장된 테이블을 이용해야하는 경우 중복 테이블을 추가하여 작업의 효율성을 향상 시킬 수 있음.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;중복 테이블을 추가하는 경우
+    &lt;ul&gt;
+      &lt;li&gt;정규화로 인해 수행 속도가 느려지는 경우&lt;/li&gt;
+      &lt;li&gt;많은 범위의 데이터를 자주 처리해야하는 경우&lt;/li&gt;
+      &lt;li&gt;특정 범위의 데이터만 자주 처리하는 경우&lt;/li&gt;
+      &lt;li&gt;처리 범위를 줄이지 않고는 수행 속도를 개선할 수 없는 경우&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;중복 테이블을 추가하는 방법
+    &lt;ul&gt;
+      &lt;li&gt;집계 테이블 추가 : 집계 데이터를 위한 테이블을 생성하고, 각 원본 테이블에 트리거를 설정하여 사용. 트리거 오버헤드에 유의해야함&lt;/li&gt;
+      &lt;li&gt;진행 테이블 추가 : 이력 관리 등의 목적으로 추가하는 테이블로, 적절한 데이터 양의 유지와 활용도를 높이기 위해 기본키를 적절히 설정.&lt;/li&gt;
+      &lt;li&gt;특정 부분만을 포함하는 테이블의 추가 : 데이터가 많은 테이블의 특정 부분만을 사용하는 경우, 해당 부분만으로 새로운 테이블을 생성&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;중복속성-추가&quot;&gt;&lt;strong&gt;중복속성 추가&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;조인해서 데이터를 처리할 떄, 데이터를 조회하는 경로를 단축하기 위해 자주 사용하는 속성을 하나 더 추가하는 것.&lt;/p&gt;
+
+&lt;p&gt;중복 속성을 추가하면 데이터의 무결성 확보가 어렵고, 디스크 공간이 추가로 필요하다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;중복속성을 추가하는 경우
+    &lt;ul&gt;
+      &lt;li&gt;조인이 자주 발생하는 속성&lt;/li&gt;
+      &lt;li&gt;접근 경로가 복잡한 속성&lt;/li&gt;
+      &lt;li&gt;액세스의 조건으로 자주 사용되는 속성&lt;/li&gt;
+      &lt;li&gt;기본키의 형태가 적절하지 않거나 여러개의 속성으로 구성된 경우&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;고려사항
+    &lt;ul&gt;
+      &lt;li&gt;테이블 중복과 속성의 중복 고려&lt;/li&gt;
+      &lt;li&gt;데이터 일관성 및 무결성에 유의&lt;/li&gt;
+      &lt;li&gt;SQL 그룹 함수를 이용하여 처리할 수 있어야함.&lt;/li&gt;
+      &lt;li&gt;저장 공간의 지나친 낭비 고려&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://lipcoder.tistory.com/337&lt;/p&gt;
+</description>
+        <pubDate>Fri, 25 Feb 2022 22:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/denormalized/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/denormalized/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>database</category>
+        
+      </item>
+    
+      <item>
+        <title>응집도와 결합도</title>
+        <description>&lt;h2 id=&quot;응집도&quot;&gt;&lt;strong&gt;응집도&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;모듈 내부의 기능적인 집중 정도. 높을 수록 좋다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;우연적 응집도 &amp;lt; 논리적 응집도 &amp;lt; 시간적 응집도 &amp;lt; 절차적 응집도 &amp;lt; 교환적 응집도 &amp;lt; 순차적 응집도 &amp;lt; 기능적 응집도&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;기능적 응집도(Functional Cohesion) : 모듈 내부의 모든 기능이 단일한 목적을 위해 수행되는 경우&lt;/p&gt;
+
+&lt;p&gt;순차적 응집도(Sequential Cohesion) : 모듈 내에서 한 활동으로 부터 나온 출력값을 다른 활동이 사용할 경우&lt;/p&gt;
+
+&lt;p&gt;교환적 응집도(Communication Cohesion) : 동일한 입력과 출력을 사용하여 다른 기능을 수행하는 활동들이 모여있을 경우&lt;/p&gt;
+
+&lt;p&gt;절차적 응집도(Procedural Cohesion) : 모듈이 다수의 관련 기능을 가질 떄 모듈 안의 구성요소들이 그 기능을 순차적으로 수행할 경우&lt;/p&gt;
+
+&lt;p&gt;시잔적 응집도(Temporal Cohesion) : 연관된 기능이라기 보단 특정 시간에 처리되어야 하는 활동들을 한 모듈에서 처리할 경우&lt;/p&gt;
+
+&lt;p&gt;논리적 응집도(Logical Cohesion) : 유사한 성격을 갖거나 특정 형태로 분류되는 처리 요소들이 한 모듈에서 처리되는 경우&lt;/p&gt;
+
+&lt;p&gt;우연적 응집도(Coincidental Cohesion) : 모듈 내부의 각 구성요소들이 연관이 없을 경우 -&amp;gt; 서로 영향을 안준다. 즉 뭉쳐는 있는데 딱히 이유는 없다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;결합도&quot;&gt;&lt;strong&gt;결합도&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;결합도는 모듈과 모듈간의 상호 의존 정도. 낮을 수록 좋음&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;자료 결합도 &amp;lt; 스탬프 결합도 &amp;lt; 제어 결합도 &amp;lt; 외부 결합도 &amp;lt; 공통 결합도 &amp;lt; 내용 결합도&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;자료 결합도(Data Coupling) : 모듈간의 인터페이스 전달되는 파라미터를 통해서만 모듈간의 상호 작용이 일어나는 경우. 깔끔한 Call by value&lt;/p&gt;
+
+&lt;p&gt;스탬프 결합도(Stamp Coupling) : 모듈간의 인터페이스로 배열이나 오브젝트, 스트럭쳐등이 전달되는 경우.&lt;/p&gt;
+
+&lt;p&gt;제어 결합도(Control Coupling) : 단순히 처리를 해야할 대상인 값만 전달되는게 아니라 어떻게 처리를 해야 한다는 제어 요소(DCD, Flag등)이 전달되는 경우.&lt;/p&gt;
+
+&lt;p&gt;외부 결합도(External Coupling) : 어떤 모듈에서 반환한 값을 다른 모듈에서 참조해서 사용하는 경우&lt;/p&gt;
+
+&lt;p&gt;공통 결합도(Common Coupling) : 파라미터가 아닌 모듈 밖에 선언되어 있는 전역 변수를 참조하고 전역변수를 갱신하는 식으로 상호작용하는 경우&lt;/p&gt;
+
+&lt;p&gt;내용 결합도(Content Coupling) : 다른 모듈 내부에 있는 변수나 기능을 다른 모듈에서 사용 하는 경우&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://raisonde.tistory.com/entry/%EA%B2%B0%ED%95%A9%EB%8F%84Coupling%EA%B3%BC-%EC%9D%91%EC%A7%91%EB%8F%84Cohension&lt;/p&gt;
+</description>
+        <pubDate>Thu, 24 Feb 2022 23:47:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/%EC%9D%91%EC%A7%91%EB%8F%84/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/%EC%9D%91%EC%A7%91%EB%8F%84/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>basic</category>
+        
+      </item>
+    
+      <item>
+        <title>스키마</title>
+        <description>&lt;h3 id=&quot;내부-스키마&quot;&gt;&lt;strong&gt;내부 스키마&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;데이터베이스가 실제로 저장되는 방법을 정의한 것.&lt;/p&gt;
+
+&lt;h3 id=&quot;개념-스키마&quot;&gt;&lt;strong&gt;개념 스키마&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;데이터베이스 전체의 논리적 구조를 정의한 것. 데이터베이스 하나에 하나만 존재.&lt;/p&gt;
+
+&lt;p&gt;개체, 관계, 제약조건, 보안정책 등을 정의한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;외부-스키마&quot;&gt;&lt;strong&gt;외부 스키마&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;사용자에게 필요한 데이터베이스를 정의한 것&lt;/p&gt;
+</description>
+        <pubDate>Thu, 24 Feb 2022 00:24:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/scheme/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/scheme/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>database</category>
+        
+      </item>
+    
+      <item>
+        <title>블랙박스/화이트박스 테스트</title>
+        <description>&lt;h2 id=&quot;블랙박스-테스트&quot;&gt;&lt;strong&gt;블랙박스 테스트&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;소프트웨어의 내부 구조나 작동 원리는 &lt;strong&gt;모르는 상태에서 동작을 검사&lt;/strong&gt;하는 방식&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;기법&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;동등 분할 기법  : 프로그램 입력 도메인을 테스트 케이스가 산출될 수 있는 데이터 클래스로 분류하는 방법&lt;/li&gt;
+  &lt;li&gt;경계값 분석 기법 : 입력 조건의 중간 값보다 경계값에서 에러가 발생될 확률이 높으므로&lt;/li&gt;
+  &lt;li&gt;오류 예측 기법 : 놓치기 쉬운 오류들을 감각 및 경험으로 찾아보는 방법&lt;/li&gt;
+  &lt;li&gt;원인 결과 그래프 기법 : 입력 데이터 간 관계가 출력에 미치는 영향을 그래프로 표현하여 오류를 발견&lt;/li&gt;
+  &lt;li&gt;의사결정 테이블 테스팅 : 논리적 조건이나 상황에서 입력 조건과 결과를 참, 거짓으로 표현하여 조합을 만들고, 테스트 케이스를 작성&lt;/li&gt;
+  &lt;li&gt;상태 전이 테스팅 : 시스템에 반영되는 이전의 상태가 무엇인지 상태간 전이, 상태를 변화시키는 이벤트와 입력값을 파악&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;화이트박스-테스트&quot;&gt;&lt;strong&gt;화이트박스 테스트&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;내부 동작을 &lt;strong&gt;알고 디테일하게 검사&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;기법&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;문장 검증 : 프로그램의 &lt;strong&gt;모든 문장이 적어도 한번씩 수행&lt;/strong&gt;되는 검증 기준&lt;/li&gt;
+  &lt;li&gt;선택 검증 : 선택하는 부분만 검증&lt;/li&gt;
+  &lt;li&gt;경로 검증 : 수행가능한 모든 경로 검사&lt;/li&gt;
+  &lt;li&gt;조건 검증 : if 문장이나 while 문장내 조건식을 조사하는 기준&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://www.crocus.co.kr/1681&lt;/p&gt;
+</description>
+        <pubDate>Wed, 23 Feb 2022 00:18:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/blackbox-whitebox/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/blackbox-whitebox/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>software engineering</category>
+        
+      </item>
+    
+      <item>
+        <title>전위식/후위식</title>
+        <description>&lt;h3 id=&quot;전위식&quot;&gt;&lt;strong&gt;전위식&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;연산자를 먼저 표시하고 연산에 필요한 피연산자를 나중에 표시&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;(A + B) * (C - D)
+((A + B) * (C - D))
+*(+(AB)-(CD))
+*+AB-CD
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;후위식&quot;&gt;&lt;strong&gt;후위식&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;피연산자를 먼저 표시하고, 연산자를 나중에 표시&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;(A+B) * (C-D)
+((A+B) * (C-D))
+((AB)+(CD)-)*
+AB+CD-*
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Wed, 23 Feb 2022 00:04:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/prefix-postfix/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/prefix-postfix/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>algorithm</category>
+        
+      </item>
+    
+      <item>
+        <title>통합 테스트</title>
+        <description>&lt;h2 id=&quot;통합-테스트&quot;&gt;&lt;strong&gt;통합 테스트&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;상향식-통합-테스트&quot;&gt;&lt;strong&gt;상향식 통합 테스트&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;프로그램의 하위 모듈에서 상위모듈로 통합하면서 테스트하는 기법.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;하위 모듈을 &lt;strong&gt;클러스터&lt;/strong&gt;로 결합&lt;/li&gt;
+  &lt;li&gt;더미 모듈인 &lt;strong&gt;드라이버&lt;/strong&gt; 작성&lt;/li&gt;
+  &lt;li&gt;통합된 클러스터 단위로 테스트&lt;/li&gt;
+  &lt;li&gt;테스트 완료 후 클러스터는 프로그램 구조의 상위로 이동해 결합하고, 드라이버는 실제 모듈로 대체 됨.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;하향식-통합-테스트&quot;&gt;&lt;strong&gt;하향식 통합 테스트&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;프로그램의 상위모듈에서 하위모듈로 통합하면서 테스트하는 기법&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;주요 제어 모듈은 작성된 프로그램을 사용. 주요 제어 모듈의 종속 모듈은 &lt;strong&gt;Stub&lt;/strong&gt;으로 대체&lt;/li&gt;
+  &lt;li&gt;DFS, BFS로 하위 모듈인 &lt;strong&gt;Stub&lt;/strong&gt;을 한번에 하나씩 실제 모듈로 교체함.&lt;/li&gt;
+  &lt;li&gt;모듈이 통합 될때마다 테스트 실시&lt;/li&gt;
+  &lt;li&gt;새로운 오류가 발생하지 않음을 보증하기 위해 회귀 테스트 실시&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;혼합식-통합-테스트&quot;&gt;&lt;strong&gt;혼합식 통합 테스트&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;하위 수준에서는 상향식 통합, 상위 수준에서는 하향식 통합을 사용해 최적의 테스트를 지원함.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;샌드위치&lt;/strong&gt; 식 통합 테스트 방법&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
+
+&lt;p&gt;https://m.blog.naver.com/wook2124/222108726160&lt;/p&gt;
+</description>
+        <pubDate>Tue, 22 Feb 2022 23:59:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/integration-test/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/integration-test/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>software engineering</category>
+        
+      </item>
+    
+      <item>
+        <title>럼바우 분석기법</title>
+        <description>&lt;h2 id=&quot;럼바우-분석기법&quot;&gt;&lt;strong&gt;럼바우 분석기법&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;모델링 기법중 하나로 그래픽으로 표현한 분석기법&lt;/p&gt;
+
+&lt;p&gt;객체 모델링 기법이라고도 한다.&lt;/p&gt;
+
+&lt;p&gt;3단계로 구성&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;객체 모델링&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;동적 모델링&lt;/li&gt;
+  &lt;li&gt;기능 모델링&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-객체-모델링object-modeling&quot;&gt;&lt;strong&gt;1. 객체 모델링(object modeling)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;객체 다이어그램&lt;/strong&gt;을 표시함.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;정보 모델링이라고도 하며, 시스템에서 요구되는 객체를 찾아내어 속성과 연산 식별 및 객체들 간의 관계를 규정하여 클래스 다이어그램으로 표현한 것&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-동적-모델링&quot;&gt;&lt;strong&gt;2. 동적 모델링&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;상태 다이어그램을 통해 시간의 흐름에 따라 객체들을 모델링한다.&lt;/p&gt;
+
+&lt;p&gt;객체들관계 관계에는 제어흐름, 상호작용, 동적순서 등의 관계가 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-기능-모델링&quot;&gt;&lt;strong&gt;3. 기능 모델링&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;자료흐름도를 이용&lt;/strong&gt;하여 프로세스 간 자료를 중심으로 한 모델링&lt;/p&gt;
+
+&lt;p&gt;어떤 데이터를 입력 -&amp;gt; 어떤 결과가 나올 것인가를 표현한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;자료 흐름도&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;자료 흐름, 처리과정을 도형으로 작성한 다이어그램&lt;/li&gt;
+  &lt;li&gt;자료가 처리될 때마다 새로운 이름을 부여한다.&lt;/li&gt;
+  &lt;li&gt;자료 흐름도 최하위 처리는 소단위 명세서를 가짐.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;자료 사전(Data Dictionary)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;자료흐름도의 자료를 설명하는 사전(메타데이터)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://velog.io/@kipsong/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%EB%9F%BC%EB%B0%94%EC%9A%B0Rumbaugh-%EB%B6%84%EC%84%9D%EA%B8%B0%EB%B2%95&lt;/p&gt;
+</description>
+        <pubDate>Tue, 22 Feb 2022 01:50:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/rumbaugh/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/rumbaugh/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>software engineering</category>
+        
+      </item>
+    
+      <item>
+        <title>UML</title>
+        <description>&lt;h2 id=&quot;umlunified-modeling-language&quot;&gt;&lt;strong&gt;UML(Unified Modeling Language)&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;통합 모델링 언어를 사용하여 시스템 상호작용, 업무 흐름, 시스템 구조, 컴포넌트 관계 등을 그린 도면.&lt;/p&gt;
+
+&lt;p&gt;프로그래밍을 단순화 시켜 표현하여 의사소통 하기 좋고, 대규모 프로젝트에서는 로드맵을 만들거나 개발을 위한 시스템 구축의 기본을 마련한다.&lt;/p&gt;
+
+&lt;p&gt;요구사항 모델링에 사용되는 기법 중 하나&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;구성요소&quot;&gt;&lt;strong&gt;구성요소&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;사물 (things)
+    &lt;ul&gt;
+      &lt;li&gt;구조사물 : 시스템의 개념적, 물리적 요소를 표현. (ex : 클래스, usecase, 컴포넌트)&lt;/li&gt;
+      &lt;li&gt;행동사물 : 시간과 공간에 따른 요소들의 행위를 표현 (ex : 상호작용, 상태머신)&lt;/li&gt;
+      &lt;li&gt;그룹사물 : 요소들을 그룹으로 묶어서 표현 (ex : 패키지)&lt;/li&gt;
+      &lt;li&gt;주해사물 : 부가적인 설명이나 제약조건 등을 표현 (ex : 노트)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;관계 (relationship)
+    &lt;ul&gt;
+      &lt;li&gt;연관관계&lt;/li&gt;
+      &lt;li&gt;집합관계&lt;/li&gt;
+      &lt;li&gt;포함관계&lt;/li&gt;
+      &lt;li&gt;일반화 관계&lt;/li&gt;
+      &lt;li&gt;의존관계&lt;/li&gt;
+      &lt;li&gt;실체화 단계&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;다이어그램 (diagram)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;다이어그램-종류&quot;&gt;&lt;strong&gt;다이어그램 종류&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Use Case 다이어그램 : 요구 분석 과정에서 시스템과 외부와의 상호작용을 묘사함.&lt;/li&gt;
+  &lt;li&gt;Activity 다이어그램 : 업무의 흐름을 모델링하거나 객체의 생명주기를 표현함&lt;/li&gt;
+  &lt;li&gt;Sequence 다이어그램 : 객체간의 메시지 전달을 시간적 흐름에서 분석함&lt;/li&gt;
+  &lt;li&gt;Collaboration(or communication) 다이어그램 : 객체와 객체가 주고받는 메세지 중심의 작성&lt;/li&gt;
+  &lt;li&gt;Class 다이어그램 :  시스템 내 클래스의 &lt;strong&gt;정적 구조&lt;/strong&gt;를 표현하고 클래스와 클래스, 클래스의 속성 사이의 관계를 나타냄&lt;/li&gt;
+  &lt;li&gt;Component 다이어그램  : 소프트웨어 구조를 그림&lt;/li&gt;
+  &lt;li&gt;Deployment 다이어그램 : 기업 환경의 구성과 컴포넌트들 간의 관계를 그림&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;모델-종류&quot;&gt;&lt;strong&gt;모델 종류&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;기능적 모델&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;사용자 측면에서 본 시스템 기능, UML에서는 Use Case 다이어그램을 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;정적 모델&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;객체, 속성, 연관관계, 오퍼레이션의 시스템 구조를 나타내며, UML에서는 Class 다이어그램을 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;동적 모델&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;시스템의 내부 동작을 말하며, UML에서는 Sequence, state, activity 다이어그램을 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;use-case-다이어그램&quot;&gt;&lt;strong&gt;Use case 다이어그램&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;시스템과 외부와의 상호작용을 묘사. 프로젝트에 대한 요구사항을 정의하고, 세부기능을 분석하며 개발 범위를 정할때 작성함.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;구성 요소&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;시스템 : 만들고자하는 프로그램을 나타냄&lt;/li&gt;
+  &lt;li&gt;액터 : 시스템의 외부에 있고, 시스템과 상호작용하는 사람&lt;/li&gt;
+  &lt;li&gt;use case : 사용자 입장에서 바라본 시스템의 기능.&lt;/li&gt;
+  &lt;li&gt;관계
+    &lt;ul&gt;
+      &lt;li&gt;연관 : use case와 액터간의 상호작용이 있음을 표현&lt;/li&gt;
+      &lt;li&gt;포함 : 하나의 use case가 다른 use case의 실행을 전제로 할때 형성되는 관계&lt;/li&gt;
+      &lt;li&gt;확장 : 확장 대상 use case를 수행할 때, 특정 조건에 따라 확장 기능 use case를 수행하는 경우에 적용&lt;/li&gt;
+      &lt;li&gt;일반화 : 유사한 use case 또는 액터를 모아 추상화한 use case 또는 액터와 연결시켜 그룹을 만들어 이해도를 높이기 위한 관계&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;클래스-다이어그램&quot;&gt;&lt;strong&gt;클래스 다이어그램&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;시스템에서 사용되는 객체타입을 정의함. 그들 간에 존재하는 정적인 관꼐를 다양한 방식으로 표현한 다이어그램.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;구조&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/2022-02-22-UML/image-20220222012714142.png&quot; alt=&quot;image-20220222012714142&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이름, 속성, 연산으로 구성되어있음.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;관계&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;의존(dependancy) : 하나의 모델 요소가 다른 모델 요소를 사용하는 관계&lt;/li&gt;
+  &lt;li&gt;일반화(generalization) : 여러 클래스가 가진 공통적인 특징을 추출하여 공통적인 클래스를 일반화하는 관계&lt;/li&gt;
+  &lt;li&gt;연관(association) : 클래스로부터 생성된 인스턴스들 간의 관계&lt;/li&gt;
+  &lt;li&gt;집합 연관(aggregation) : 전체와 부분을 나타내는 모델 요소. 단, 전체와 부분은 서로 독립적&lt;/li&gt;
+  &lt;li&gt;복합 연관(composition) : 전체와 부분을 타나내는 모델 요소. 연관관계를 맺고 있는 클래스의 생명주기가 같음.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;인터랙션-다이어그램&quot;&gt;&lt;strong&gt;인터랙션 다이어그램&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;시스템이 수행하는 과정을 시각화하기 위한 다이어그램.&lt;/p&gt;
+
+&lt;p&gt;Use case 다이어그램의 actor와 개념 클래스 다이어그램의 객체 사이의 상호작용을 표현&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;종류&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;시퀀스 다이어그램&lt;/li&gt;
+  &lt;li&gt;communication 다이어그램&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;패키지-다이어그램&quot;&gt;&lt;strong&gt;패키지 다이어그램&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;패키지는 클래스와 같은 여러 모델 요소들을 그룹화하여 표현하기 위한 수단이며, 패키지 다이어그램은 시스템의 서로 다른 패키지들 사이의 의존 관계를 표현하기 위한 다이어그램&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;구성 요소&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;패키지 : 여러 클래스의 묶음&lt;/li&gt;
+  &lt;li&gt;의존관계 : 하나의 패키지가 다른 패키지를 사용하는 관계&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;상태-다이어그램&quot;&gt;&lt;strong&gt;상태 다이어그램&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;객체가 가질 수 있는 모든 가능한 상태를 표현하며, 특정 객체에 대하여 사건 발생에 따른 상태 천이 과정을 묘사한 다이어그램. 진입 및 탈출 조건, 상태 전이에 필요한 사건에 대한 표현이 가능하며, 설계 단계에서 객체의 동적인 행동을 표현하는데 주로 사용된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;구성 요소&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;상태&lt;/li&gt;
+  &lt;li&gt;시작상태&lt;/li&gt;
+  &lt;li&gt;종료상태&lt;/li&gt;
+  &lt;li&gt;전이&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;액티비티-다이어그램&quot;&gt;&lt;strong&gt;액티비티 다이어그램&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;객체의 로직이나 조건에 따른 처리 흐름을 순서에 따라 정의한 다이어그램. use case의 실체화, 알고리즘의 표현, 비지니스 프로세스의 정의 등에 사용이 가능함.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;구성요소&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;활동 : 행위나 작업 등 무언가를 하고 있는 상태&lt;/li&gt;
+  &lt;li&gt;시작 상태 : 여러 클래스가 가진 공통적인 특징을 추출하여 공통적인 클래스를 일반화하는 관계&lt;/li&gt;
+  &lt;li&gt;종료 상태 : 클래스로부터 생성된 인스턴스들 간의 관계&lt;/li&gt;
+  &lt;li&gt;선택점 : 전체와 부분을 나타내는 모델 요소, 전체와 부분은 서로 독립적&lt;/li&gt;
+  &lt;li&gt;전이 : 전체와 부분을 나타내는 모델요소, 연관 관계를 맺고 있는 클래스의 생명주기가 같음&lt;/li&gt;
+  &lt;li&gt;구분선 : 모듈의 수정없이 소프트웨어 확장을 위한 인터페이스의 실체화&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://m.blog.naver.com/icbanq/221781238065&lt;/p&gt;
+
+&lt;p&gt;https://googry.tistory.com/2&lt;/p&gt;
+</description>
+        <pubDate>Tue, 22 Feb 2022 01:15:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/UML/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/UML/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>software engineering</category>
+        
+      </item>
+    
+      <item>
+        <title>객체지향 분석론</title>
+        <description>&lt;h2 id=&quot;coad-yourdon&quot;&gt;&lt;strong&gt;Coad Yourdon&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;E-R 다이어그램을 사용&lt;/strong&gt;하여 객체의 행위를 모델링.&lt;/p&gt;
+
+&lt;p&gt;객체 식별, 구조 식별, 주제정의, 속성과 인스턴스 연결 정의, 연산과 메시지 연결 정의 등의 과정으로 주로 &lt;strong&gt;관계&lt;/strong&gt;를 분석 하는 기법&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;booch&quot;&gt;&lt;strong&gt;Booch&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;미시적, 거시적&lt;/strong&gt; 개발 프로세스를 모두 사용하는 분석 방법.&lt;/p&gt;
+
+&lt;p&gt;클래스와 객체들을 분석 및 식별하고 클래스의 속성과 연산을 정의&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;jacobson&quot;&gt;&lt;strong&gt;Jacobson&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;UseCase&lt;/strong&gt;를 사용하여 분석.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;wirfs-brock-방법&quot;&gt;&lt;strong&gt;Wirfs-Brock 방법&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;분석과 설계간 구분이 없으며, &lt;strong&gt;고객 명세서를 평가&lt;/strong&gt;해서 설계작업까지 연속적으로 수행하는 기법&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&amp;amp;blogId=agopwns&amp;amp;logNo=220998991245&lt;/p&gt;
+</description>
+        <pubDate>Tue, 22 Feb 2022 01:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/oop-analysis/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/oop-analysis/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>software engineering</category>
+        
+      </item>
+    
+      <item>
+        <title>CASE</title>
+        <description>&lt;h2 id=&quot;casecomputer-aided-software-engineering&quot;&gt;&lt;strong&gt;CASE(Computer Aided Software Engineering)&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;소프트웨어 개발 시 사용되는 &lt;strong&gt;분석 자동화 도구&lt;/strong&gt;. 소프트웨어 개발 과정의 일부나 전체를 자동화하는 도구이다.&lt;/p&gt;
+
+&lt;p&gt;CAD 기기와 유사한 것이라고 생각하면 됨.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;요구분석 -&amp;gt; 설계 -&amp;gt; 구현 -&amp;gt; 검사 및 디버깅&lt;/code&gt; 과정을 CASE를 활용하여 자동화함&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;case의-장점&quot;&gt;&lt;strong&gt;CASE의 장점&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;개발 속도가 빨라짐.&lt;/li&gt;
+  &lt;li&gt;하나의 tool을 활용함으로써, 표준화된 개발 환경을 구축할 수 있음. 따라서 커뮤니케이션이 용이해짐.&lt;/li&gt;
+  &lt;li&gt;오류 수정이 쉬워지고, 이로인해 소프트웨어의 품질 향상이 기대된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;case의-기능&quot;&gt;&lt;strong&gt;CASE의 기능&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;그래픽 지원&lt;/li&gt;
+  &lt;li&gt;소프트웨어 생명주기 전반적인 단계의 연결&lt;/li&gt;
+  &lt;li&gt;다양한 소프트웨어 개발 모형을 지원&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;상위-case&quot;&gt;&lt;strong&gt;상위 CASE&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;계획과 분석 설계 단계를 지원. 다이어그램 그리기, 명세서 작성 등의 기능을 제공&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;모델 사이 모순 검사 기능&lt;/li&gt;
+  &lt;li&gt;모델의 오류 검증 기능&lt;/li&gt;
+  &lt;li&gt;자료 흐름도 작성 기능&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;정보저장소&quot;&gt;&lt;strong&gt;정보저장소&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;CASE 환경의 여러 도구들이 상호연관 되어 동작할 수 있도록 도와주는 구심체 역할을 하는 데이터 저장소. 저장소가 없으면 각 기능간의 데이터 연결이 안되고, 따라서 그때그때 데이터를 다시 입력해줘야함.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;각 도구들과 생명주기 활동, 사용자들, 응용소프트웨어들 사이의 통신과 소프트웨어 시스템의 정보 공유를 향상시킴.&lt;/li&gt;
+  &lt;li&gt;시스템의 유지보수가 용이해짐.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://velog.io/@kipsong/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-CASEComputer-Aided-Software-Engineering&lt;/p&gt;
+</description>
+        <pubDate>Tue, 22 Feb 2022 01:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/case/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/case/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>software engineering</category>
+        
+      </item>
+    
+      <item>
+        <title>GoF</title>
+        <description>&lt;h2 id=&quot;gofgang-of-four&quot;&gt;&lt;strong&gt;GoF(Gang of Four)&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;GoF에서는 23가지 디자인패턴을 3가지 유형으로 분류함.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;생성 패턴(Creation pattern)
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;객체를 생성&lt;/strong&gt;하는데 관련된 패턴들&lt;/li&gt;
+      &lt;li&gt;객체가 생성되는 과정의 유연성을 높이고, 코드의 유지를 쉽게함&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;구조 패턴(Structural Pattern)
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;프로그램 구조&lt;/strong&gt;에 관련된 패턴들&lt;/li&gt;
+      &lt;li&gt;프로그램 내의 자료구조나 인터페이스 구조 등 프로그램의 구조를 설계하는데 활용할 수 있는 패턴들&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;행동 패턴(Behavioral Pattern)
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;반복적으로 사용되는 객체들의 상호작용&lt;/strong&gt;을 패턴화 해놓은 것들&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/img/2022-02-22-Gof/gof_types.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;주요 패턴&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;생성 패턴
+    &lt;ul&gt;
+      &lt;li&gt;클래스 : 팩토리 메서드 패턴&lt;/li&gt;
+      &lt;li&gt;객체 :  프로토타입 패턴, 싱글톤 패턴, 빌더 패턴&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;구조 패턴
+    &lt;ul&gt;
+      &lt;li&gt;객체 : 어댑터 패턴, 컴포지트 패턴, 데코레이터 패턴, 퍼사드패턴, 프록시 패턴&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;행동 패턴
+    &lt;ul&gt;
+      &lt;li&gt;객체 : 옵저버 패턴, 커맨드 패턴, 책임 연쇄 패턴, 중재자 패턴, 방문자 패턴&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 22 Feb 2022 01:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/Gof/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/Gof/</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>design pattern</category>
+        
+      </item>
+    
+      <item>
+        <title>운영체제 소개</title>
+        <description>
+</description>
+        <pubDate>Mon, 21 Feb 2022 02:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/cs-week2/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/cs-week2/</guid>
+        
+        <category>os</category>
+        
+        
+        <category>cs</category>
+        
+        <category>os</category>
+        
+      </item>
+    
+      <item>
+        <title>운영체제 소개</title>
+        <description>&lt;h2 id=&quot;운영체제-정의&quot;&gt;&lt;strong&gt;운영체제 정의&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;컴퓨터-시스템의-4가지-요소&quot;&gt;&lt;strong&gt;컴퓨터 시스템의 4가지 요소&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;유저&lt;/li&gt;
+  &lt;li&gt;어플리케이션&lt;/li&gt;
+  &lt;li&gt;OS&lt;/li&gt;
+  &lt;li&gt;하드웨어&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;운영체제&quot;&gt;&lt;strong&gt;운영체제&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;유저 관점 : 어플리케이션을 수행함. 컴퓨터 사용을 편리하게 해줌&lt;/li&gt;
+  &lt;li&gt;시스템 관점 : 자원할당자. 어플리케이션과 i/o 장치의 수행을 다루는 프로그램 컨트롤러&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;커널&quot;&gt;&lt;strong&gt;커널&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;OS에 속하며, 컴퓨터에서 항상 수행되는 프로그램.&lt;/p&gt;
+
+&lt;p&gt;하드웨어의 자원을 자원이 필요한 프로세스에게 나눠주고, 프로세스 제어, 메모리 제어, 시스템 콜 등을 수행하는 부분이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;컴퓨터-시스템-수행&quot;&gt;&lt;strong&gt;컴퓨터 시스템 수행&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;컴퓨터-시스템-조직&quot;&gt;&lt;strong&gt;컴퓨터 시스템 조직&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;cpu, disk(buffer), memory, usb(buffer), graphic adapter(buffer)&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;각 I/O 장치들은, 각 장치 내부의 디바이스 컨트롤러가 있고, 이 디바이스 컨트롤러가 각 장치를 직접 다룸.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;또 로컬버퍼를 가지고 있으며 이것은 시스템 버스에 연결돼있음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;디바이스 컨트롤러는 데이터를 디바이스에서 로컬 버퍼로, 또 로컬버퍼에서 디바이스로 옮김&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;cpu는 메인 메모리를 통해 각 디바이스의 로컬 버퍼로 데이터를 보내거나 받음.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;cpu와 각 I/O 디바이스는 각자의 작업을 독립적으로 수행함.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;디바이스 컨트롤러는 인터럽트를 통해 CPU에게 작업의 끝을 알림.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;interrupt-handling&quot;&gt;&lt;strong&gt;Interrupt handling&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;키보드를 치는 작은 하나하나의 작업도 인터럽트이다. CPU는 인터럽트가 올때마다 하던일을 멈추고, ISR로 인터럽트를 처리함.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ISR : Interrupt service routine
+    &lt;ul&gt;
+      &lt;li&gt;디스크 인터럽트가 발생&lt;/li&gt;
+      &lt;li&gt;벡터 테이블(주소테이블)로 이동하고, 해당하는 ISR이 위치한 곳의 주소를 참조하여 이동함.&lt;/li&gt;
+      &lt;li&gt;ISR을 수행하고 다시 원래 장소로 이동하여 다음 명령을 수행함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 21 Feb 2022 02:00:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/cs-os/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/cs-os/</guid>
+        
+        <category>os</category>
+        
+        
+        <category>cs</category>
+        
+        <category>os</category>
+        
+      </item>
+    
+      <item>
+        <title>Arrow function</title>
+        <description>&lt;h2 id=&quot;화살표함수&quot;&gt;&lt;strong&gt;화살표함수&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;기존의 function 표현방식보다 간결하게 함수를 표현할 수 있다. 화살표함수는 항상 익명이며, 자신의 this, arguments, super, new.target을 바인딩하지 않는다. 따라서 생성자로는 사용할 수 없다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;화살표함수 도입 영향 : 짧은 함수, 상위 스코프 this&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;짧은-함수&quot;&gt;&lt;strong&gt;짧은 함수&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;materials&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Hydrogen&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Helium&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Lithium&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Beryllium&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;materials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;material&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;material&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// [8, 6, 7, 9]&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;materials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;material&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;material&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// [8, 6, 7, 9]&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;materials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// [8, 6, 7, 9]&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;상위스코프-this&quot;&gt;&lt;strong&gt;상위스코프 this&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;age&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;setInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// |this|는 person 객체를 참조&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;일반 함수에서 this는 전역객체를 this로 정의한다. 하지만 화살표 함수 this는 상위 스코프의 this와 동일한 값을 갖는다. 따라서 위 예제에서 setInterval로 전달된 this는 Person의 this를 가리키며, Person 객체의 age에 접근한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;출처&quot;&gt;&lt;strong&gt;출처&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;https://github.com/JaeYeopHan/Interview_Question_for_Beginner/tree/master/JavaScript#promise&lt;/p&gt;
+</description>
+        <pubDate>Fri, 18 Feb 2022 12:50:00 +0900</pubDate>
+        <link>https://seongil-shin.github.io/posts/arrowfunction/</link>
+        <guid isPermaLink="true">https://seongil-shin.github.io/posts/arrowfunction/</guid>
+        
+        <category>javascript</category>
+        
+        
+        <category>cs</category>
+        
+        <category>javascript</category>
+        
+      </item>
+    
+  </channel>
+</rss>

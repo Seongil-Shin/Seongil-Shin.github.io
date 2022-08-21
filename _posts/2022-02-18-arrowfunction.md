@@ -48,8 +48,58 @@ var p = new Person();
 
 <br/>
 
+## **화살표함수를 사용하면 안되는 순간**
+
+**메소드**
+
+```js
+const cat = {
+  name: 'meow';
+  callName: () => console.log(this.name);
+}
+
+cat.callName();	// undefined
+```
+
+이 경우 화살표함수의 상위 스코프는 전역 this가 된다. 따라서 메소드로 화살표함수를 사용하면 안된다.
+
+메소드의 경우, 호출한 객체의 this로 바인딩되니 일반 함수를 사용하자
+
+## 생성자
+
+```js
+const Foo = () => {};
+const foo = new Foo()	// TypeError: Foo is not a constructor
+```
+
+화살표함수를 생성자로 사용할 수는 없다.
+
+**addEventListener()의 콜백함수**
+
+```js
+const button = document.getElementById('myButton');
+
+button.addEventListener('click', () => {
+  console.log(this);	// Window
+  this.innerHTML = 'clicked';
+});
+
+button.addEventListener('click', function() {
+   console.log(this);	// button 엘리먼트
+   this.innerHTML = 'clicked';
+});
+```
+
+addEventListener의 콜백함수에서 this 는 이벤트리스너가 호출된 엘리먼트로 바인딩된다.
+
+하지만 화살표함수를 사용할 경우 상위스코프로 바인딩되므로, 전역 this가 사용되게 된다.
+
+<br/>
+
 <br/>
 
 ## **출처**
 
 https://github.com/JaeYeopHan/Interview_Question_for_Beginner/tree/master/JavaScript#promise
+
+https://velog.io/@padoling/JavaScript-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EC%99%80-this-%EB%B0%94%EC%9D%B8%EB%94%A9

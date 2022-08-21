@@ -8,6 +8,8 @@ tags: [react, react-query, cache]
 
 
 
+
+
 ## useQuery 설정
 
 React-Query 공식문서상 캐싱개념은 stale과 cachetime을 통해 이루어진다
@@ -20,6 +22,23 @@ useQuery의 옵션으로 `staletime`과 `cachetime`을 보낼 수 있다.
 
 <br/>
 
+**refetch  함수**
+
+- 캐싱결과는 조회하지 않고, ajax 요청을 날리는 메서드
+
+<br/>
+
+**refetch 되는 조건**
+
+1. 새로운 query instance가 마운트 될때
+2. 브라우저 화면을 이탈했다가 다시 focus할때
+3. 네트워크가 다시 연결될 때
+4. 특별히 설정한 refetch interval에 의한 경우
+
+이때 stale 상태일때만 refetch 된다. 따라서 staletime으로 stale 상태를 관리해주고, cachetime으로 메모리에 남아있을 시간을 지정해준다.
+
+<Br/>
+
 ## QueryClient
 
 캐싱과 관련된 내용을 담고있는 객체. useQueryClient 로 접근 가능하다.
@@ -31,8 +50,7 @@ const queryClient = new QueryClient({
     defaultOptions : {
         queries : {
             refetchOnWindowFocus:false,
-            refetchOnMount:false,
-            retry:false
+            refetchOnMount:false
         }
     }
 })
@@ -71,13 +89,33 @@ useQuery의 옵션으로 enabled:false를 설정해놓으면, 초기 마운트�
 
 refetch함수는 캐싱 데이터를 조회하지 않고 요청을 날린다.
 
-따라서 **초기 마운트시에는 캐싱된 데이터를 가져오되, 원할때는 새로운 데이터를 가져오고 싶을 때**는 enabled:false와 refetch 함수를 사용하면 된다.
+즉, enabled:false 일 경우 초기 마운트 시에는 데이터를 가져오지 않고 refetch 함수를 호출해도 캐시데이터를 조회하지 않으니,  **enabled:false 일경우 캐시 사용이 불가능**하다. 
 
 <br/>
 
 **enabled:true**
 
-다음과 같이 enabled 옵션을 특정한 상태일때만 true로 만들고, 그 외에는 false로 하여 초기 요청을 통한 retry로 오류를 생성하는 것을 막는다.
+초기 마운트 때, 정해진 동작을 할 것이고 따라서 캐시 데이터를 조회할 것이다. 저장된 캐시데이터가 stale하다면 캐시를 가져오고, 아니면 재요청을 할 것이다.
+
+<br/>
+
+
+
+## 참고
+
+useQuery의 옵션에 사용하는 `onError`, `onSuccess`, `onSettled` 등의 ajax 요청 결과로 동작하는 이벤트는 캐싱값을 가져올때는 동작하지 않는다.
+
+따라서 캐싱값을 사용할때는, 해당 데이터의 결과값은 변동된다는 사실을 이용하여 이 데이터를 이용한 조건부렌더링을 사용하여야한다.
+
+<br/>
+
+**enabled 속성 조작**
+
+enabled 속성을 조작하는 것으로 요청 동작을 막을 수 있다. 
+
+예를 들어 searchValue가 있어야 쿼리를 날리는 것이 의미있는 상황이라고 하자.
+
+그럼 다음과 같이 enabled 옵션을 searchValue가 ''이 아닌 상태일때만 true로 만들고, 그 외에는 false로 하여 초기 요청을 통한 retry로 오류를 생성하는 것을 막는다.
 
 ```react
 const {data, refetch, ...rest} = useQuery([page, "search"], ..., {
@@ -87,21 +125,7 @@ const {data, refetch, ...rest} = useQuery([page, "search"], ..., {
 
 그 뒤, 조건부로 enabled가 true로 변경되면서 요청을 날리게 되어 성공하면 data 프로퍼티에 그 값이 저장되고, 캐싱에도 저장될 것이다.
 
-<br/>
-
-
-
-https://darrengwon.tistory.com/1517
-
-key가 null or undefined일때는?
-
-## 참고
-
-useQuery의 옵션에 사용하는 `onError`, `onSuccess`, `onSettled` 등의 ajax 요청 결과로 동작하는 이벤트는 캐싱값을 가져올때는 동작하지 않는다.
-
-따라서 캐싱값을 사용할때는, 해당 데이터의 결과값은 변동된다는 사실을 이용하여 이 데이터를 이용한 조건부렌더링을 사용하여야한다.
-
-<br/>
+<br/> 
 
 ## 출처
 

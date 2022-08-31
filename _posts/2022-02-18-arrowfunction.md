@@ -2,7 +2,7 @@
 title: Arrow function
 author: 신성일
 date: 2022-02-18 12:50:00 +0900
-categories: [cs, javascript]
+categories: [study, javascript]
 tags: [javascript]
 ---
 
@@ -69,7 +69,7 @@ cat.callName();	// undefined
 
 ```js
 const Foo = () => {};
-const foo = new Foo()	// TypeError: Foo is not a constructor
+const foo = new Foo(); // TypeError: Foo is not a constructor
 ```
 
 화살표함수를 생성자로 사용할 수는 없다.
@@ -77,16 +77,16 @@ const foo = new Foo()	// TypeError: Foo is not a constructor
 **addEventListener()의 콜백함수**
 
 ```js
-const button = document.getElementById('myButton');
+const button = document.getElementById("myButton");
 
-button.addEventListener('click', () => {
-  console.log(this);	// Window
-  this.innerHTML = 'clicked';
+button.addEventListener("click", () => {
+  console.log(this); // Window
+  this.innerHTML = "clicked";
 });
 
-button.addEventListener('click', function() {
-   console.log(this);	// button 엘리먼트
-   this.innerHTML = 'clicked';
+button.addEventListener("click", function () {
+  console.log(this); // button 엘리먼트
+  this.innerHTML = "clicked";
 });
 ```
 

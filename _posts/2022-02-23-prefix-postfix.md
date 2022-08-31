@@ -1,8 +1,8 @@
 ---
-title : 전위식/후위식
-author : 신성일
-date : 2022-02-23 00:04:00 +0900
-categories : [cs, algorithm]
+title: 전위식/후위식
+author: 신성일
+date: 2022-02-23 00:04:00 +0900
+categories: [study, algorithm]
 tags: []
 ---
 
@@ -29,4 +29,3 @@ tags: []
 ((AB)+(CD)-)*
 AB+CD-*
 ```
-

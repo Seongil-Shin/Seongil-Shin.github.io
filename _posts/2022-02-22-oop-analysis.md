@@ -1,8 +1,8 @@
 ---
-title : 객체지향 분석론
-author : 신성일
-date : 2022-02-22 01:00:00 +0900
-categories : [cs, software engineering]
+title: 객체지향 분석론
+author: 신성일
+date: 2022-02-22 01:00:00 +0900
+categories: [study, software engineering]
 tags: []
 ---
 

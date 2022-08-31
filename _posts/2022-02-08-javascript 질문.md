@@ -1,12 +1,10 @@
 ---
-title : javascript 이벤트루프
-author : 신성일
-date : 2022-02-08 11:20:00 +0900
-categories : [cs,javascript]
-tags: [cs, javascript]
+title: javascript 이벤트루프
+author: 신성일
+date: 2022-02-08 11:20:00 +0900
+categories: [study, javascript]
+tags: [study, javascript]
 ---
-
-
 
 ## **이벤트 루프**
 
@@ -38,7 +36,7 @@ javascript로 작성한 코드를 해석하고 실행하는 인터프리터. 주
 
 #### **Call stack**
 
-자바스크립트는 단 하나의 call stack을 사용한다. 따라서 자바스크립트에서는 하나의 함수가 실행하면, 다른 어떤 task도 수행될 수가 없다. 
+자바스크립트는 단 하나의 call stack을 사용한다. 따라서 자바스크립트에서는 하나의 함수가 실행하면, 다른 어떤 task도 수행될 수가 없다.
 
 자바스크립트에서는 요청이 들어올때마다 해당 요청을 순차적으로 call stack에 담아 처리한다. 메소드가 실행될 때 call stack에 새로운 프레임이 생기고, push 되고, 메소드의 실행이 끝나면 해당 프레임은 pop되는 원리이다.
 
@@ -46,18 +44,18 @@ javascript로 작성한 코드를 해석하고 실행하는 인터프리터. 주
 
 ```javascript
 function foo(b) {
-    var a = 10;
-    return a + b;
+  var a = 10;
+  return a + b;
 }
 function bar(x) {
-    var y = 2;
-    return foo(x = y);
+  var y = 2;
+  return foo((x = y));
 }
-console.log(bar(1))
+console.log(bar(1));
 ```
 
 1. bar 가 스택에 들어간다.
-2. foo 가 스택에 들어간다. 
+2. foo 가 스택에 들어간다.
 3. foo 의 실행이 완료되고, pop된다.
 4. bar의 실행이 완료되고, pop된다.
 
@@ -75,13 +73,13 @@ console.log(bar(1))
 
 ```javascript
 function test1() {
-	setTimeout(function() {
-    	console.log('first');
-	},0)
-    test2();
+  setTimeout(function () {
+    console.log("first");
+  }, 0);
+  test2();
 }
 function test2() {
-	console.log("second")
+  console.log("second");
 }
 test1();
 ```
@@ -89,8 +87,8 @@ test1();
 위 코드는 다음 결과를 낸다.
 
 ```javascript
-second
-first
+second;
+first;
 ```
 
 자바스크립트에서 비동기로 호출되는 함수들은 call stack에 쌓이지 않고, task queue에 들어가기 때문이다. 따라서 위 작업은 다음 순서로 실행된다.
@@ -98,7 +96,7 @@ first
 1. setTimeout가 call stack에 쌓인다.
 2. setTimeout은 web api에서 실행될 수 있다. 따라서, setTimeout의 실행을 web API로 요청하고 setTimeout은 종료된다.
 3. 0초이기에 Web API는 콜백함수를 바로 task queue에 등록한다.
-4. 3번과 동시에, test2()가 call stack 안에 들어간다. 
+4. 3번과 동시에, test2()가 call stack 안에 들어간다.
 5. test2()가 종료되어 pop되고, test1()도 종료된 다음 pop된다.
 6. task queue에 있던 익명함수가 빠져나와 실행된다.
 
@@ -116,14 +114,14 @@ first
 위 질문에 대해 MDN은 다음의 가상 코드로 답을 한다.
 
 ```javascript
-while(queue.waitForMessage()) {
-    queue.processNextMessage();
+while (queue.waitForMessage()) {
+  queue.processNextMessage();
 }
 ```
 
 이런 식으로 이벤트루프는 현재 실행중인 태스크가 없는지와 태스크 큐에 이벤트가 있는지 반복적으로 확인한다.
 
-queue에 이벤트가 존재하면  while-loop 안으로 들어가서 해당하는 이벤트를 처리하거나 작업을 수행한다. 그리고 다시 queue로 돌아와 새로운 이벤트가 존재하는지 파악하는 것이다. 따라서 task queue에 있는 작업들은 한번에 하나씩 call stack으로 호출되어 처리된다.
+queue에 이벤트가 존재하면 while-loop 안으로 들어가서 해당하는 이벤트를 처리하거나 작업을 수행한다. 그리고 다시 queue로 돌아와 새로운 이벤트가 존재하는지 파악하는 것이다. 따라서 task queue에 있는 작업들은 한번에 하나씩 call stack으로 호출되어 처리된다.
 
 <br/>
 
@@ -135,13 +133,6 @@ queue에 이벤트가 존재하면  while-loop 안으로 들어가서 해당하�
 - microtask는 task보다 먼저 작업이 처리된다.
   - microtask : MutationObserver, Promise 가 해당
 - microtask가 처리된 이후, requestAnimationFrame이 호출되고 이후 브라우저 렌더링이 발생한다.
-
-
-
-
-
-
-
 
 ## **출처**
 

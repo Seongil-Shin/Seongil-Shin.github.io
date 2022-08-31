@@ -1,8 +1,8 @@
 ---
-title : 통합 테스트
-author : 신성일
-date : 2022-02-22 23:59:00 +0900
-categories : [cs, software engineering]
+title: 통합 테스트
+author: 신성일
+date: 2022-02-22 23:59:00 +0900
+categories: [study, software engineering]
 tags: []
 ---
 

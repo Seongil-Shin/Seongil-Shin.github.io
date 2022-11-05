@@ -2,7 +2,7 @@
 title: Graph ql back
 author: 신성일
 date: 2021-06-19 12:35:44 +0900
-categories: [study, back-end]
+categories: [study, graphql]
 tags: [GraphQL]
 ---
 
@@ -27,9 +27,9 @@ https://www.npmjs.com/package/graphql-yoga
 
   ```js
   import { GraphQLServer } from "graphql-yoga";
-
+  
   const server = new GraphQLServer({});
-
+  
   server.start(() => console.log("graph Ql server running"));
   ```
 

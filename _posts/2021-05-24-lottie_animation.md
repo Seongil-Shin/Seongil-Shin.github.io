@@ -2,7 +2,7 @@
 title: 로티(lottie) 애니메이션 적용
 author: 신성일
 date: 2021-05-24 21:38:44 +0900
-categories: [study, front-end]
+categories: [study, css]
 tags: [CSS, front end, lottie]
 ---
 

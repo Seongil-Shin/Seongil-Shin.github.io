@@ -2,7 +2,7 @@
 title: RESTful API
 author: 신성일
 date: 2022-01-16 23:00:00 +0900
-categories: [study, basic]
+categories: [study, web]
 tags: [study]
 ---
 

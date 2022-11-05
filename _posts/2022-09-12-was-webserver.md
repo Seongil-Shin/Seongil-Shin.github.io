@@ -2,7 +2,7 @@
 title : WAS vs 웹서버
 author : 신성일
 date : 2022-09-12 20:00:00 +0900
-categories : [study, back-end]
+categories : [study, web]
 tags: [was, server]
 ---
 

@@ -2,7 +2,7 @@
 title: Graph ql front
 author: 신성일
 date: 2021-06-19 12:35:44 +0900
-categories: [study, front-end]
+categories: [study, graphql]
 tags: [GraphQL]
 ---
 
@@ -109,7 +109,7 @@ if (loading) {
     const { loading, data } = useQuery(GET_MOVIE, {
       variables: { id: parseInt(id) },
     });
-
+  
     if (loading) {
       return "loading";
     }

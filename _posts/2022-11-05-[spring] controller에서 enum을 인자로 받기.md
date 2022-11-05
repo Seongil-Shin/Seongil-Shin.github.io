@@ -1,5 +1,5 @@
 ---
-title: [spring] controller에서 enum을 인자로 받기
+title: controller에서 enum을 인자로 받기
 author: 신성일
 date: 2022-11-05 18:32:26 +0900
 categories: [study, spring]

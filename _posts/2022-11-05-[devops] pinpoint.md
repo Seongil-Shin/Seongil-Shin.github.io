@@ -1,5 +1,5 @@
 ---
-title: [devops] pinpoint
+title: pinpoint
 author: 신성일
 date: 2022-11-05 18:23:26 +0900
 categories: [study, devops]

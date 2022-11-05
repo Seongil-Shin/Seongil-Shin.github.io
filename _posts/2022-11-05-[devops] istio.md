@@ -1,5 +1,5 @@
 ---
-title: [devops] istio
+title: istio
 author: 신성일
 date: 2022-11-05 18:21:26 +0900
 categories: [study, devops]

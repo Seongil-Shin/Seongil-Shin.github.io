@@ -1,5 +1,5 @@
 ---
-title: [spring] Pure DI - IoC가 없는 DI
+title: Pure DI - IoC가 없는 DI
 author: 신성일
 date: 2022-11-05 18:34:26 +0900
 categories: [study, spring]

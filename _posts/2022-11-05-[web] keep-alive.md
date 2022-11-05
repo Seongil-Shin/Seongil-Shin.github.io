@@ -1,5 +1,5 @@
 ---
-title: [web] Keep-Alive
+title: Keep-Alive
 author: 신성일
 date: 2022-11-05 18:51:26 +0900
 categories: [study, web]

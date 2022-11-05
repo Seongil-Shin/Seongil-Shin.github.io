@@ -6,10 +6,6 @@ categories: [study, web]
 tags: [was, server]
 ---
 
-##
-
-<br/>
-
 ## **WAS(Web Application Server)**
 
 -  DB 조회나 다양한 로직처리를 요구하는 **동적인 컨텐츠**를 제공하기 위해 만들어진 Application Server

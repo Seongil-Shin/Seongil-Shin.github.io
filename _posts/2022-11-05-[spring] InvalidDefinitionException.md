@@ -1,5 +1,5 @@
 ---
-title: [spring] InvalidDefinitionException
+title: InvalidDefinitionException
 author: 신성일
 date: 2022-11-05 18:36:26 +0900
 categories: [study, spring]

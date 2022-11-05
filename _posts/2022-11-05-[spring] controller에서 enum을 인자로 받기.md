@@ -1,7 +1,7 @@
 ---
 title: [spring] controller에서 enum을 인자로 받기
 author: 신성일
-date: 2022-11-05 18:19:26 +0900
+date: 2022-11-05 18:32:26 +0900
 categories: [study, spring]
 tags: [spring, enum, controller]
 ---
@@ -46,7 +46,7 @@ public ResponseEntity<ResponseWrapper<ArticleListDto>> searchArticles(
 하지만 SearchType을 요청을 ModelAttribute로 변환하는 과정에서 다음과 같은 오류가 났다.
 
 ```text
-Resolved [org.springframework.web.method.annotation.ModelAttributeMethodProcessor$1: org.springframework.validation.BeanPropertyBindingResult: 1 errors<EOL>Field error in object 'articleSearchQuery' on field 'type': rejected value [hashtag]; 
+Resolved [org.springframework.web.method.annotation.ModelAttributeMethodProcessor$1: org.springframework.validation.BeanPropertyBindingResult: 1 errors<EOL>Field error in object 'articleSearchQuery' on field 'type': rejected value [hashtag];
 ```
 
 [Spring's @RequestParam with Enum](https://stackoverflow.com/questions/39774427/springs-requestparam-with-enum) 질문의 답변을 보면 Converter를 구현하고 그것을 빈에 등록하면, 스프링 부트가 자동으로 컨버터를 로드하여 데이터를 변환할 때 쓴다고 한다.
@@ -60,4 +60,3 @@ public class SearchTypeConverter implements Converter<String, SearchType> {
 	}
 }
 ```
-

@@ -1,14 +1,10 @@
 ---
-title : React-query 에서 cache를 사용하는 방법
-author : 신성일
-date : 2022-08-19 21:00:00 +0900
-categories : [study, react]
+title: React-query 에서 cache를 사용하는 방법
+author: 신성일
+date: 2022-08-19 21:00:00 +0900
+categories: [study, react]
 tags: [react, react-query, cache]
 ---
-
-
-
-
 
 ## useQuery 설정
 
@@ -16,15 +12,15 @@ React-Query 공식문서상 캐싱개념은 stale과 cachetime을 통해 이루�
 
 useQuery의 옵션으로 `staletime`과 `cachetime`을 보낼 수 있다.
 
-- staletime : fetch를 통해 전달받은 데이터는 리액트 쿼리의 자료구조 내용중 캐시에 저장되는데, 이 캐시데이터의 '신선한 상태'가 언제까지 될지를 말해주는 옵션
-  - default = 0, 받아오는 즉시 stale하다고 판단하여 캐싱데이터와 무관하게 계속해서 fetching을 날림
-- cachetime : 캐시 구조에 저잘된 데이터는 메모리상에 존재하게 된다. 이때 메모리에 저장되어있는 캐시데이터가 언제까지 유지될지 말해주는 옵션. 
+-  staletime : fetch를 통해 전달받은 데이터는 리액트 쿼리의 자료구조 내용중 캐시에 저장되는데, 이 캐시데이터의 '신선한 상태'가 언제까지 될지를 말해주는 옵션
+   -  default = 0, 받아오는 즉시 stale하다고 판단하여 캐싱데이터와 무관하게 계속해서 fetching을 날림
+-  cachetime : 캐시 구조에 저잘된 데이터는 메모리상에 존재하게 된다. 이때 메모리에 저장되어있는 캐시데이터가 언제까지 유지될지 말해주는 옵션.
 
 <br/>
 
-**refetch  함수**
+**refetch 함수**
 
-- 캐싱결과는 조회하지 않고, ajax 요청을 날리는 메서드
+-  캐싱결과는 조회하지 않고, ajax 요청을 날리는 메서드
 
 <br/>
 
@@ -89,7 +85,7 @@ useQuery의 옵션으로 enabled:false를 설정해놓으면, 초기 마운트�
 
 refetch함수는 캐싱 데이터를 조회하지 않고 요청을 날린다.
 
-즉, enabled:false 일 경우 초기 마운트 시에는 데이터를 가져오지 않고 refetch 함수를 호출해도 캐시데이터를 조회하지 않으니,  **enabled:false 일경우 캐시 사용이 불가능**하다. 
+즉, enabled:false 일 경우 초기 마운트 시에는 데이터를 가져오지 않고 refetch 함수를 호출해도 캐시데이터를 조회하지 않으니, **enabled:false 일경우 캐시 사용이 불가능**하다.
 
 <br/>
 
@@ -98,8 +94,6 @@ refetch함수는 캐싱 데이터를 조회하지 않고 요청을 날린다.
 초기 마운트 때, 정해진 동작을 할 것이고 따라서 캐시 데이터를 조회할 것이다. 저장된 캐시데이터가 stale하다면 캐시를 가져오고, 아니면 재요청을 할 것이다.
 
 <br/>
-
-
 
 ## 참고
 
@@ -111,7 +105,7 @@ useQuery의 옵션에 사용하는 `onError`, `onSuccess`, `onSettled` 등의 aj
 
 **enabled 속성 조작**
 
-enabled 속성을 조작하는 것으로 요청 동작을 막을 수 있다. 
+enabled 속성을 조작하는 것으로 요청 동작을 막을 수 있다.
 
 예를 들어 searchValue가 있어야 쿼리를 날리는 것이 의미있는 상황이라고 하자.
 
@@ -125,7 +119,7 @@ const {data, refetch, ...rest} = useQuery([page, "search"], ..., {
 
 그 뒤, 조건부로 enabled가 true로 변경되면서 요청을 날리게 되어 성공하면 data 프로퍼티에 그 값이 저장되고, 캐싱에도 저장될 것이다.
 
-<br/> 
+<br/>
 
 ## 출처
 

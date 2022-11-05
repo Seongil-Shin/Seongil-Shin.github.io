@@ -1,7 +1,7 @@
 ---
 title: [spring] API 예외처리
 author: 신성일
-date: 2022-11-05 18:19:26 +0900
+date: 2022-11-05 18:17:26 +0900
 categories: [study, spring]
 tags: [spring, api, exception]
 ---
@@ -27,7 +27,7 @@ ResponseEntity를 사용해서 응답하기 때문세 메시지 컨버터가 동
 
 ### **BasicErrorController**
 
-BasicErrorController은 스프링부트에서 기본으로 오류를 처리해주는 컨트롤러이다. 따로 등록한 것이 없다면 스프링부트는 예외가 컨트롤러 밖으로 예외가 던져진 경우 `/error`를 호출한다. 그리고  `/error`는 BasicErrorController로 매핑되어 아래 메서드를 호출한다.
+BasicErrorController은 스프링부트에서 기본으로 오류를 처리해주는 컨트롤러이다. 따로 등록한 것이 없다면 스프링부트는 예외가 컨트롤러 밖으로 예외가 던져진 경우 `/error`를 호출한다. 그리고 `/error`는 BasicErrorController로 매핑되어 아래 메서드를 호출한다.
 
 ```java
 @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
@@ -38,26 +38,26 @@ response) {}
 public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {}
 ```
 
-- errorHtml : `produces=MediaType.TEXT_HTML_VALUE` 으로 매핑되어, 클라이언트 요청의 Accept 헤더 값이 `text/html`인 경우 호출하여 에러 view를 제공한다.
-- error : 그 외의 경우 호출되며 ResponseEntity로 HTTP Body에 JSON 데이터를 반환한다.
+-  errorHtml : `produces=MediaType.TEXT_HTML_VALUE` 으로 매핑되어, 클라이언트 요청의 Accept 헤더 값이 `text/html`인 경우 호출하여 에러 view를 제공한다.
+-  error : 그 외의 경우 호출되며 ResponseEntity로 HTTP Body에 JSON 데이터를 반환한다.
 
 error 발생 시 스프링부트가 ResponeEntity body에 넣어주는 정보는 다음과 같다
 
-- timestamp : 발생 시각
-- path : 클라이언트 요청 경로
-- status : 에러 상태
-- message : 에러 메세지
-- error : 에러 코드
-- exception : 발생한 예외
-- errors : 발생한 에러 
-- trace : 예외 trace
+-  timestamp : 발생 시각
+-  path : 클라이언트 요청 경로
+-  status : 에러 상태
+-  message : 에러 메세지
+-  error : 에러 코드
+-  exception : 발생한 예외
+-  errors : 발생한 에러
+-  trace : 예외 trace
 
 application.properties에서 다음과 같이 응답에 정보를 담을지 말지 선택할 수 있다.
 
-- `server.error.include-exception`
-- `server.error.include-message`
-- `server.error.include-stacktrace`
-- `server.error.include-binding-errors`
+-  `server.error.include-exception`
+-  `server.error.include-message`
+-  `server.error.include-stacktrace`
+-  `server.error.include-binding-errors`
 
 BasicErrorController은 HTML 에러 페이지지를 제공할 때는 매우 편리하다. 하지만 API 오류를 내보낼 때는 컨트롤러마다 다른 오류 처리 방법에 대응하기가 어렵다. 따라서 API 오류를 처리할 때는 `@ExceptionHandler`를 사용하는 것이 좋다.
 
@@ -80,7 +80,7 @@ public interface HandlerExceptionResolver {
 }
 ```
 
-- resolveException이 ModelAndView를 반환하는 이유는 Exception을 처리해서 정상 흐름처럼 변경하는 것이 목적이기 때문이다.
+-  resolveException이 ModelAndView를 반환하는 이유는 Exception을 처리해서 정상 흐름처럼 변경하는 것이 목적이기 때문이다.
 
 **HandlerExceptionResolver 구현**
 
@@ -104,33 +104,33 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
 
 **resolveException 반환 값에 따른 동작방식**
 
-- 빈 ModelAndVIew : `new ModelAndView()`를 반환하는 경우. 뷰를 렌더링하지 않고, 정상 흐름으로 서블릿이 리턴된다. 즉, API  오류 처리를 할 때 사용한다.
-- ModelAndVIew 지정 : ModelAndVIew에 View, Model 등의 정보를 지정해서 반환하면 뷰를 렌더링한다.
-- null : 다음 ExceptionResolver를 찾아서 실행한다. 다음이 없으면 예외처리가 안되고 기존에 발생한 예외를 서블릿 밖으로 던진다.
+-  빈 ModelAndVIew : `new ModelAndView()`를 반환하는 경우. 뷰를 렌더링하지 않고, 정상 흐름으로 서블릿이 리턴된다. 즉, API 오류 처리를 할 때 사용한다.
+-  ModelAndVIew 지정 : ModelAndVIew에 View, Model 등의 정보를 지정해서 반환하면 뷰를 렌더링한다.
+-  null : 다음 ExceptionResolver를 찾아서 실행한다. 다음이 없으면 예외처리가 안되고 기존에 발생한 예외를 서블릿 밖으로 던진다.
 
 **ExceptionResolver 활용**
 
-- 예외 상태 코드 변환
-  - 예외를 response.sendError() 호출로 변경해서 서블릿에서 상태코드에 따른 오류를 처리하도록 위임
-  - 이후 WAS는 서블릿 오류 페이지를 찾아서 내부 호출.
-- 뷰 템플릿 처리
-  - ModelAndView에 값을 채워서 예외에 따른 새로운 오류화면 뷰 렌더링해서 고객에게 제공
-- API 응답처리
-  - response.getWriter().println() 처럼 HTTP응답 바디에 직접 데이터를 넣어주는 것도 가능. 여기에 JSON으로 응답하면 API 응답 처리를 할 수 있다.
+-  예외 상태 코드 변환
+   -  예외를 response.sendError() 호출로 변경해서 서블릿에서 상태코드에 따른 오류를 처리하도록 위임
+   -  이후 WAS는 서블릿 오류 페이지를 찾아서 내부 호출.
+-  뷰 템플릿 처리
+   -  ModelAndView에 값을 채워서 예외에 따른 새로운 오류화면 뷰 렌더링해서 고객에게 제공
+-  API 응답처리
+   -  response.getWriter().println() 처럼 HTTP응답 바디에 직접 데이터를 넣어주는 것도 가능. 여기에 JSON으로 응답하면 API 응답 처리를 할 수 있다.
 
 **ExceptionResolver 등록**
 
-- WebMvcConfigurer의 extendHandlerExceptionResolvers를 통해 다음과 같이 등록하면 된다.
+-  WebMvcConfigurer의 extendHandlerExceptionResolvers를 통해 다음과 같이 등록하면 된다.
 
 ```java
 @Override
 public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver>
 resolvers) {
 	resolvers.add(new MyHandlerExceptionResolver());
-}          
+}
 ```
 
-- configureHandlerExceptionResolvers 로도 등록이 되지만, 스프링이 기본으로 등록하는 ExceptionResolver가 제거되므로 주의한다. extendHandlerExceptionResolvers는 확장.
+-  configureHandlerExceptionResolvers 로도 등록이 되지만, 스프링이 기본으로 등록하는 ExceptionResolver가 제거되므로 주의한다. extendHandlerExceptionResolvers는 확장.
 
 <br/>
 
@@ -139,11 +139,11 @@ resolvers) {
 스프링 부트가 기본으로 제공하는 ExceptionResolver와 우선순위는 다음과 같다.(HandlerExceptionResolverComposite에 다음과 같이 등록)
 
 1. ExceptionHandlerExceptionResolver
-   - @ExceptionHandler를 처리한다.
+   -  @ExceptionHandler를 처리한다.
 2. ResponseStatusExceptionResolver
-   - HTTP 상태 코드를 지정해준다.
+   -  HTTP 상태 코드를 지정해준다.
 3. DefaultHandlerExceptionResolver
-   - 스프링 내부 기본 예외를 처리한다.
+   -  스프링 내부 기본 예외를 처리한다.
 
 <br/>
 
@@ -155,13 +155,13 @@ resolvers) {
 
 ```java
 @RestController
-public class ApiExceptionV2Controller 
+public class ApiExceptionV2Controller
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorResult illegalExHandle(IllegalArgumentException e) {
         return new ErrorResult("BAD", e.getMessage());	//  @ResponseBody 적용됨
     }
-  
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public ResponseEntity<ErrorResult> exHandle(Exception e) {
@@ -196,15 +196,15 @@ public ResponseEntity<ErrorResult> userExHandle(UserException e) {}
 
 예외에 따라서 HTTP 상태 코드를 지정해주는 역할을 한다. 다음 두 가지 경우를 처리한다.
 
-- @ResponseStatus가 달려있는 예외
-- ResponseStatusException 예외
+-  @ResponseStatus가 달려있는 예외
+-  ResponseStatusException 예외
 
 **@ResponseStatus가 달려있는 예외**
 
 다음과 같이 예외에 `@ResponseStatus` 애노테이션을 적용하면 HTTP 상태코드를 변경해준다.
 
 ```java
-@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "찾을 수 없음") 
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "찾을 수 없음")
 public class NotFoundException extends RuntimeException {
 }
 ```
@@ -214,7 +214,7 @@ NotFoundException 예외가 컨트롤러 밖으로 넘어가면 ResponseStatusEx
 reason에는 MessageSource를 찾는 기능도 제공한다.
 
 ```java
-@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "error.notfound") 
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "error.notfound")
 ```
 
 ```properties
@@ -237,9 +237,9 @@ public String responseStatusEx2() {
 
 ### DefaultHandlerExceptionResolver
 
-스프링 내부에서 발생하는 스프링 예외를 해결한다. 
+스프링 내부에서 발생하는 스프링 예외를 해결한다.
 
-- ex) 파라미터 바인딩 실패시 발생하는 TypeMismatchException 예외를 처리하여 400으로 응답
+-  ex) 파라미터 바인딩 실패시 발생하는 TypeMismatchException 예외를 처리하여 400으로 응답
 
 <Br/>
 
@@ -260,7 +260,7 @@ public class ExControllerAdvice {
 
 ```
 
-@ControllerAdvice는 대상으로 지정한 여러 컨트롤러에 @ExceptionHandler, @InitBinder 기능을 부여해주는 역할을 한다. 대상을 지정하지 않으면 모든 컨트롤러에 적용한다. 
+@ControllerAdvice는 대상으로 지정한 여러 컨트롤러에 @ExceptionHandler, @InitBinder 기능을 부여해주는 역할을 한다. 대상을 지정하지 않으면 모든 컨트롤러에 적용한다.
 
 ```java
 @ControllerAdvice(annotations = RestController.class)
@@ -284,9 +284,9 @@ public class ExampleAdvice3 {}
 
 HTML 에러 화면을 보여줘야하는 경우
 
-- BasicErrorController 사용
+-  BasicErrorController 사용
 
 API 에러 응답을 보내야하는 경우
 
-- ExceptionHandlerExceptionResolver (@ExceptionHandler) 사용
-- @ControllerAdvise는 예외처리 코드와 정상코드를 분리시키고자 할 때 사용
+-  ExceptionHandlerExceptionResolver (@ExceptionHandler) 사용
+-  @ControllerAdvise는 예외처리 코드와 정상코드를 분리시키고자 할 때 사용

@@ -1,7 +1,7 @@
 ---
 title: [devops] pinpoint
 author: 신성일
-date: 2022-11-05 18:19:26 +0900
+date: 2022-11-05 18:23:26 +0900
 categories: [study, devops]
 tags: [devops, pinpoint]
 ---
@@ -18,11 +18,11 @@ tags: [devops, pinpoint]
 
 Pinpoint에는 n계층 아키텍처를 추적할 수 있는 다음과 같은 특징이 있다.
 
-- 분산된 애플리케이션의 메시지를 추적할 수 있는 분산 트랜잭션 추적
-- 애플리케이션 구성을 파악할 수 있는 애플리케이션 토폴로지 자동 발견
-- 대규모 서버군을 지원할 수 있는 수평 확장성
-- 코드 수준의 가시성을 제공해 문제 발생 지점과 병목 구간을 쉽게 발견
-- bytecode instrumentation 기법으로 코드를 수정하지 않고 원하는 기능을 추가
+-  분산된 애플리케이션의 메시지를 추적할 수 있는 분산 트랜잭션 추적
+-  애플리케이션 구성을 파악할 수 있는 애플리케이션 토폴로지 자동 발견
+-  대규모 서버군을 지원할 수 있는 수평 확장성
+-  코드 수준의 가시성을 제공해 문제 발생 지점과 병목 구간을 쉽게 발견
+-  bytecode instrumentation 기법으로 코드를 수정하지 않고 원하는 기능을 추가
 
 <br/>
 
@@ -44,25 +44,23 @@ Pinpoint에서는 Google Dapper 스타일의 추적 방법을 변형해 호출 �
 
 Span
 
-- RPC(remote procedure call) 추적을 위한 기본 단위다. 
-- RPC가 도착했을 때 처리한 작업을 나타내며 추적에 필요한 데이터가 들어 있다. 코드 수준의 가시성을 확보하기 위해, Span의 자식으로 SpanEvent라는 자료구조를 가지고 있다. 
-- Span은 TraceId를 가지고 있다.
+-  RPC(remote procedure call) 추적을 위한 기본 단위다.
+-  RPC가 도착했을 때 처리한 작업을 나타내며 추적에 필요한 데이터가 들어 있다. 코드 수준의 가시성을 확보하기 위해, Span의 자식으로 SpanEvent라는 자료구조를 가지고 있다.
+-  Span은 TraceId를 가지고 있다.
 
 Trace
 
-- Span의 집합으로, 연관된 RPC(Span)의 집합으로 구성된다. 
-- Span의 집합은 TransactionId가 같다. 
-- Trace는 SpanId와 ParentSpanId를 통해 트리 구조로 정렬된다.
+-  Span의 집합으로, 연관된 RPC(Span)의 집합으로 구성된다.
+-  Span의 집합은 TransactionId가 같다.
+-  Trace는 SpanId와 ParentSpanId를 통해 트리 구조로 정렬된다.
 
 TraceId
 
-- TransactionId와 SpanId, ParentId로 이루어진 키의 집합이다. 
-- TransactionId는 메시지의 아이디이며, SpanId와 ParentId는 RPC의 부모 자식 관계를 나타낸다.
-  \- TransactionId(TxId): 분산된 노드를 거쳐 다니는 메시지의 아이디로, 전체 서버군에서 중복되지 않아야 한다.
-  \- SpanId: RPC 메시지를 받았을 때 처리되는 작업(job)의 아이디를 정의한다. RPC가 노드에 도착했을 때 생성한다.
-  \- ParentSpanId(pSpanId): 호출한 부모의 SpanId를 나타낸다.
-
-
+-  TransactionId와 SpanId, ParentId로 이루어진 키의 집합이다.
+-  TransactionId는 메시지의 아이디이며, SpanId와 ParentId는 RPC의 부모 자식 관계를 나타낸다.
+   \- TransactionId(TxId): 분산된 노드를 거쳐 다니는 메시지의 아이디로, 전체 서버군에서 중복되지 않아야 한다.
+   \- SpanId: RPC 메시지를 받았을 때 처리되는 작업(job)의 아이디를 정의한다. RPC가 노드에 도착했을 때 생성한다.
+   \- ParentSpanId(pSpanId): 호출한 부모의 SpanId를 나타낸다.
 
 ## Pinpoint 강의
 
@@ -70,21 +68,21 @@ TraceId
 
 마이크로 서비스가 많아지면서 서비스의 흐름을 파악하기 어려워졌다. 이러한 상황에서 서비스 전반의 Observability를 확보하기 위해 다음 세가지가 필요해졌다.
 
-- Trace: 서비스에 request가 들어와서 나갈 때까지의 경로를 추적하는 정보  --> Pinpoint
-- Log : 수많은 서버에 나뉘어진 로그정보. --> NELO
-- Metric : 인프라나 인스턴스의 메트릭 정보 --> NPOT
+-  Trace: 서비스에 request가 들어와서 나갈 때까지의 경로를 추적하는 정보 --> Pinpoint
+-  Log : 수많은 서버에 나뉘어진 로그정보. --> NELO
+-  Metric : 인프라나 인스턴스의 메트릭 정보 --> NPOT
 
 APM(Application Performance Management)
 
-- 어플리케이션의 가용성과 성능을 관리하고 모니터링하는 시스템
-- pinpoint는 대규모 분산시스템에 적합한 APM 이다.
+-  어플리케이션의 가용성과 성능을 관리하고 모니터링하는 시스템
+-  pinpoint는 대규모 분산시스템에 적합한 APM 이다.
 
 APM 필요한 이유
 
-- 기존의 문제 해결 방법
-  - 문제 발생 -> A 시스템의 문제로 확인 -> 담당자 연결 -> A 시스템의 B 서버 문제로 확인 -> 담당자 연결 -> ... 반복
-- APM
-  - 문제 발생 -> APM(pinpoint) 확인 -> 담당자 연결
+-  기존의 문제 해결 방법
+   -  문제 발생 -> A 시스템의 문제로 확인 -> 담당자 연결 -> A 시스템의 B 서버 문제로 확인 -> 담당자 연결 -> ... 반복
+-  APM
+   -  문제 발생 -> APM(pinpoint) 확인 -> 담당자 연결
 
 **Pinpoint 소개**
 
@@ -97,34 +95,34 @@ APM 필요한 이유
 
 bytecode 주입
 
-- java, node와 같은 언어에서는 bytecode를 주입하여 pinpoint에 필요한 작업을 수행
-- 다른 언어에선 SDK를 제공하여 직업 pinpoint를 호출
+-  java, node와 같은 언어에서는 bytecode를 주입하여 pinpoint에 필요한 작업을 수행
+-  다른 언어에선 SDK를 제공하여 직업 pinpoint를 호출
 
 overload
 
-- pinpoint로 발생하는 성능저하는 현재 3% 미만
-- 지속적으로 관찰하여 pinpoint의 성능을 모니터링한다.
+-  pinpoint로 발생하는 성능저하는 현재 3% 미만
+-  지속적으로 관찰하여 pinpoint의 성능을 모니터링한다.
 
 **pinpoint feature 소개**
 
 server map
 
-- pinpoint로 모니터링하는 서버의 구조를 보여줌
+-  pinpoint로 모니터링하는 서버의 구조를 보여줌
 
 scatter chart
 
-- 초록색 : 성공한 transaction, 빨간색 : 실패한 transaction
-- 세로축은 응답 시간.
-- 드래그하면 선택된 점들의 정보가 보여짐
+-  초록색 : 성공한 transaction, 빨간색 : 실패한 transaction
+-  세로축은 응답 시간.
+-  드래그하면 선택된 점들의 정보가 보여짐
 
 call stack
 
-- transaction 하나를 선택하면 상태 콜스택이 보여짐
-- 해당 transaction이 어떻게 호출되었는지 확인할 수 있다.
+-  transaction 하나를 선택하면 상태 콜스택이 보여짐
+-  해당 transaction이 어떻게 호출되었는지 확인할 수 있다.
 
 inspector
 
-- 인스턴스의 기본 정보 및 메트릭 정보를 확인가능
+-  인스턴스의 기본 정보 및 메트릭 정보를 확인가능
 
 [참고문서](https://d2.naver.com/helloworld/1194202)
 

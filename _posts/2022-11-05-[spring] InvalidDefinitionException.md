@@ -1,7 +1,7 @@
 ---
 title: [spring] InvalidDefinitionException
 author: 신성일
-date: 2022-11-05 18:19:26 +0900
+date: 2022-11-05 18:36:26 +0900
 categories: [study, spring]
 tags: [spring, exception]
 ---
@@ -39,4 +39,3 @@ public class LoginRequestBody {
 위 과정 중 4-1번에서 기본 생성자를 사용하는 과정이 있으므로 기본생성자가 없을 경우 예외가 발생한 것이었다.
 
 물론 [이 포스트](https://juhi.tistory.com/68)에서 설명한 것과 같이 기본 생성자없이도 동작가능하도록 할 수 있으나, 웬만하면 기본 설정을 사용하는 것이 나아보인다.
-

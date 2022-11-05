@@ -1,7 +1,7 @@
 ---
 title: [spring] 스프링 MVC 구조
 author: 신성일
-date: 2022-11-05 18:19:26 +0900
+date: 2022-11-05 18:12:26 +0900
 categories: [study, spring]
 tags: [spring, mvc]
 ---
@@ -21,7 +21,7 @@ tags: [spring, mvc]
 7. Dispatcher Servlet은 ModelAndView의 view name을 가지고 `viewResolver` 를 호출한다.
 8. viewResolver는 View를 반환해준다.
 9. Dispatcher Servlet에서는 View의 render 메소드를 model을 넣어주며 호출해준다.
-10. 이후 HTML이 응답으로 클라이언트에게 간다.
+10.   이후 HTML이 응답으로 클라이언트에게 간다.
 
 <br/>
 
@@ -31,9 +31,9 @@ tags: [spring, mvc]
 
 **Dispatcher Servlet 구조**
 
-- `HttpServlet`을 상속 받아서 사용하고, 서블릿으로 동작한다.
-- 스프링 부트는 Dispatcher Servlet 을 서블릿으로 자동으로 동록하며 모든 경로(`urlPatterns="/"`)에 대해 매핑한다.
-- 클라이언트의 요청을 받고 서블릿이 호출되면, `HttpServlet`이 제공하는 `service()`가 호출된다. Dispatcher Servlet의 부모인 `FrameworkServlet`은 `service()`를 오버라이드 해두었다. `FrameworkServlet.service()`를 시작으로 여러 메서드가 호출되면서 `DispatcherServlet.doDispatch()`가 호출되고 위 과정을 시작한다.
+-  `HttpServlet`을 상속 받아서 사용하고, 서블릿으로 동작한다.
+-  스프링 부트는 Dispatcher Servlet 을 서블릿으로 자동으로 동록하며 모든 경로(`urlPatterns="/"`)에 대해 매핑한다.
+-  클라이언트의 요청을 받고 서블릿이 호출되면, `HttpServlet`이 제공하는 `service()`가 호출된다. Dispatcher Servlet의 부모인 `FrameworkServlet`은 `service()`를 오버라이드 해두었다. `FrameworkServlet.service()`를 시작으로 여러 메서드가 호출되면서 `DispatcherServlet.doDispatch()`가 호출되고 위 과정을 시작한다.
 
 <br/>
 
@@ -62,9 +62,5 @@ HandlerAdapter
 2. InternalResouceViewResolver : JSP를 처리할 수 있는 뷰를 반환함.
 
 <br/>
-
-
-
-
 
 출처 : 김영한의 스프링 강의

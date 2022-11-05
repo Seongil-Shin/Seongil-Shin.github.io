@@ -1,7 +1,7 @@
 ---
 title: [spring] ArgumentResolver 활용
 author: 신성일
-date: 2022-11-05 18:19:26 +0900
+date: 2022-11-05 18:31:26 +0900
 categories: [study, spring ]
 tags: [spring, ArgumentResolver]
 ---
@@ -28,8 +28,8 @@ public @interface Login {
 }
 ```
 
-- @Target(ElementType.PARAMETER) : 파라미터에만 적용
-- @Retention(RetentionPolicy.RUNTIME) : 리플렉션 등을 활용할 수 있도록 런타임까지 애노테이션 정보가 남아있음.
+-  @Target(ElementType.PARAMETER) : 파라미터에만 적용
+-  @Retention(RetentionPolicy.RUNTIME) : 리플렉션 등을 활용할 수 있도록 런타임까지 애노테이션 정보가 남아있음.
 
 **LoginMemberArgumentResolver**
 
@@ -38,15 +38,15 @@ public @interface Login {
 ```java
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 	@Override
-	public boolean supportsParameter(MethodParameter parameter) { 
+	public boolean supportsParameter(MethodParameter parameter) {
 		boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
     boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
     return hasLoginAnnotation && hasMemberType;
   }
-  
+
 	@Override
   public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                NativeWebRequest webRequest, 
+                                NativeWebRequest webRequest,
                                 WebDataBinderFactory binderFactory) throws Exception {
     	HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
       HttpSession session = request.getSession(false);
@@ -58,8 +58,8 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 }
 ```
 
-- supportsParameter : `@Login` 애노테이션이 있으면서 `Member` 타입이면 해당 `ArgumentResolver`가 사용되도록 적용
-- resolveArgument : 컨트롤러 호출 직전에 호출되어 필요한 파라미터 정보를 생성해준다.
+-  supportsParameter : `@Login` 애노테이션이 있으면서 `Member` 타입이면 해당 `ArgumentResolver`가 사용되도록 적용
+-  resolveArgument : 컨트롤러 호출 직전에 호출되어 필요한 파라미터 정보를 생성해준다.
 
 **WebMvcConfigurer에 설정 추가**
 
@@ -73,11 +73,6 @@ public class WebConfig implements WebMvcConfigurer {
 }
 ```
 
-
-
-
-
 ## 출처
 
-- [김영한의 스프링 MVC 2편](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2/dashboard)
-
+-  [김영한의 스프링 MVC 2편](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2/dashboard)

@@ -1,7 +1,7 @@
 ---
 title: [spring] mybatis dynamic field
 author: 신성일
-date: 2022-11-05 18:19:26 +0900
+date: 2022-11-05 18:41:26 +0900
 categories: [study, spring]
 tags: [spring, mybatis]
 ---

@@ -1,14 +1,12 @@
-```
-title: [spring] Pure DI - IoC가 없는 DI 
+---
+title: [spring] Pure DI - IoC가 없는 DI
 author: 신성일
-date: 2022-11-05 18:19:26 +0900
+date: 2022-11-05 18:34:26 +0900
 categories: [study, spring]
 tags: [spring, di, ioc]
-```
+---
 
 이 포스트는 [참고문서](https://jwchung.github.io/DI%EB%8A%94-IoC%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EC%95%8A%EC%95%84%EB%8F%84-%EB%90%9C%EB%8B%A4)를 필자가 이해하기 쉽게 정리한 내용입니다.
-
-
 
 ## DI는 IoC를 사용하지 않아도 된다
 
@@ -21,7 +19,7 @@ public class PizzaStore
 {
     private readonly Pizza[] pizzas =
         new Pizza[]
-        { 
+        {
             new Pizza(),
             new Pizza(),
             new Pizza()
@@ -57,7 +55,7 @@ public class PizzaStore
 >
 > 추상화된 것은 구체적인 것에 의존하면 안된다.
 
-위 `PizzaStore` 클래스는 현재 `Pizza ` 구현체에 의존하고 있다. 이 형태는 DIP를 위반하고 있는 것으로, 다음과 같이 변경되어야한다. 
+위 `PizzaStore` 클래스는 현재 `Pizza ` 구현체에 의존하고 있다. 이 형태는 DIP를 위반하고 있는 것으로, 다음과 같이 변경되어야한다.
 
 ![dip위반](../assets/img/[spring] DI는 IOC를 필요로하지 않는다(정리)/DIP-violation.png)
 
@@ -124,7 +122,7 @@ public static void Main()
 
 DI를 사용한다고 무조건 IoC 컨테이너가 필요한 것은 아니다. 보통은 의존성 등록비용(개발자가 직접 의존성을 주입하는 것) 때문에 IoC 컨테이너로 의존성 주입하지만, IoC 컨테이너를 사용하는 방법에는 `Weakly typed` 문제가 있다.
 
-Weakly typed 란, IoC 컨테이너에 의존성을 잘못 구성되였을 경우 컴파일 에러대신 런타임 에러가 발생하는 것이다. 
+Weakly typed 란, IoC 컨테이너에 의존성을 잘못 구성되였을 경우 컴파일 에러대신 런타임 에러가 발생하는 것이다.
 
 따라서 Weakly typed 비용과 의존성 등록 비용 중 어떤 것이 더 큰지 생각하여 IoC 컨테이너로 DI를 구현할지 Pure DI를 사용할지 결정해야한다. (참고문서의 필자는 weakly typed 비용이 더 크다고 함)
 

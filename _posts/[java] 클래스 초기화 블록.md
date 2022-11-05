@@ -1,0 +1,95 @@
+---
+title: [java] 클래스 초기화 블록
+author: 신성일
+date: 2022-11-05 18:19:26 +0900
+categories: [study, java]
+tags: [java, class]
+---
+
+# 클래스 초기화 블록
+
+어떤 클래스에 static 변수를 추가했더니 [github copilot](https://github.com/features/copilot)이 다음과 같은 문장을 추천해주었다.
+
+```java
+public class Crypto {
+
+	private static CryptoProperties cryptoProperties;
+	
+  // github copilot suggestion
+	static {
+		cryptoProperties = new CryptoProperties();
+	}
+	...
+```
+
+처음보는 문법이기에 조사해보았더니 `클래스 초기화 블록`이라는 단어를 접할 수 있었다.
+
+<br/>
+
+## 클래스 초기화 블록
+
+클래스의 멤버변수를 초기화 하는 방법으로는 다음과 같은 방법들이 있다.
+
+1. 생성자
+
+2. 필드 초기화
+
+   ```java
+   public class Location {
+     int x = 4;
+     int y = 6;
+   }
+   ```
+
+3. 초기화 블록
+
+이 중에서 필드 초기화는 간결하지만 문법상 한줄짜리 구문만 초기화 할 수 있다는 단점이 있다. 이 단점을 보완하기 위해 나온 것이 초기화 블록이다.
+
+초기화 블록은 다음과 같이 사용한다.
+
+```java
+public class Location {
+  int x;
+  int y;
+  // 초기화 블록
+  {
+    x = 5;
+    x += 10;
+    y = 12;
+    y -= 8;
+  }
+}
+```
+
+위와 같이 초기화 블록이 선언되어있으면, 필드 초기화와 같이 인스턴스를 생성할 떄 자동으로 호출된다. 또한 이 초기화 블록은 할당만을 공간이 아니라 다음과 같이 할당문이 아닌 실행문을 사용할 수도 있다.
+
+```java
+public class Location {
+  int x;
+  int y;
+  // 초기화 블록
+  {
+    System.out.println("초기화 블록 호출")
+  }
+}
+```
+
+
+
+## **static 초기화 블록**
+
+초기화 블록은 static 멤버변수를 초기화할 때도 사용할 수 있다.
+
+```java
+public class Location {
+  static int x;
+  static int y;
+  // 초기화 블록
+  static {
+    x = 5;
+    y = 10;
+  }
+}
+```
+
+ 위와 같이 일반 초기화 블록 앞에 `static` 키워드를 붙이면 된다.

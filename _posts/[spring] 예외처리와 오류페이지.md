@@ -1,0 +1,203 @@
+---
+title: [spring] 예외 처리와 오류페이지
+author: 신성일
+date: 2022-11-05 18:19:26 +0900
+categories: [study, spring]
+tags: [spring, exception]
+---
+
+# 예외 처리와 오류페이지
+
+## 서블릿 예외처리
+
+**서블릿의 예외처리 방식**
+
+Exception
+
+> WAS <- 서블릿 컨테이너 <- 필터 <- 서블릿 <- 인터셉터 <- 컨트롤러(예외발생)
+
+- 웹 애플리케이션에서 발생한 예외를 잡지 못하면, 예외는 서블릿 컨테이너에까지 전달된다.
+- 서블릿 컨테이너는 넘어온 예외를 기준으로 등록된 오류페이지를 조회한다. 등록된 것이 없다면 기본으로 등록되어있는 `500 Internal Server Error` 페이지를 클라이언트로 반환한다. 
+
+response.sendError()
+
+> WAS <- 서블릿 컨테이너(sendError 호출 기록 확인) <- 필터 <- 서블릿 <- 인터셉터 <- 컨트롤러(예외발생)
+
+- response.sendError()를 호출하면 response 내부에는 오류가 발생했다는 상태를 저장하고, 서블릿 컨테이너는 고객에게 응답하기 전에 response에 sendError()가 호출되었는지 확인한다. 호출되었다면 설정한 HTTP 오류코드에 맞추어 오류 페이지를 보여준다.
+
+<br/>
+
+**서블릿 오류화면 등록**
+
+스프링 부트에서 서블릿 컨테이너는 스브링 부트를 통해 실행되므로 스프링 부트가 제공하는 기능을 사용하여 서블릿 오류 페이지를 등록할 수 있다.
+
+```java
+@Component
+public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
+	@Override
+  public void customize(ConfigurableWebServerFactory factory) {
+		ErrorPage error404 = new ErrorPage(HttpStatus.NOT_FOUND, "/error-404");
+    ErrorPage errorExtra = new ErrorPage(Exception.class,  "/error-extra");
+    factory.addErrorPages(page404, pageExtra);
+  }
+}
+```
+
+- ErrorPage()는 HTTP 상태코드 또는 Exception를 통해 생성할 수 있다.
+- Exception을 등록할 때는, 자식 타입의 오류도 함께 처리한다. Exception은 모든 예외의 조상이므로 위 코드에서는 모든 예외가 잡힌다.
+
+등록된 에러 페이지는 함께 등록된 주소를 호출하는 방식으로 동작하기에, 해당 주소를 처리해줄 컨트롤러가 필요하다. 
+
+```java
+@RequestMapping("/error-404")
+public String error404(HttpServletRequest request, HttpServletResponse response)
+```
+
+<Br/>
+
+**서블릿 컨테이너에서 담아주는 정보**
+
+서블릿 컨테이너는 오류페이지를 호출하기 전에 request attribute에 오류에 관한 정보를 담아준다. 그 정보는 다음과 같다.
+
+- javax.servlet.error.exception : 예외 
+- javax.servlet.error.exception_type : 예외 타입 
+- javax.servlet.error.message : 오류 메시지 
+- javax.servlet.error.request_uri : 클라이언트 요청 URI 
+- javax.servlet.error.servlet_name : 오류가 발생한 서블릿 이름 
+- javax.servlet.error.status_code : HTTP 상태 코드
+
+<br/>
+
+**DispatcherType : 오류시 필터 넘어가기**
+
+서블릿 컨테이너로 넘어온 에러는 다음과 같은 과정을 거친다
+
+> 1. 서블릿 컨테이너 <- 필터 <- 서블릿 <- 인터셉터 <- 컨트롤러(예외발생)
+>
+> 2. 서블릿 컨테이너 -> 필터 -> 서블릿 ->  인터셉터 -> 컨트롤러(error-404) -> view
+
+하지만 필터를 오류화면을 가져오는 과정에서까지 반복할 필요는 없을 것이다. 서블릿은 이런 문제를 해결하기 위해 DispatcherType을 제공한다.
+
+DispatcherType은 request에 들어있는 정보로 `request.getDispatcherType()`으로 조회가능하다. DispatcherType에는 다음과 같은 것들이 있다.
+
+- FORWARD : 서블릿에서 다른 서블릿이나 JSP를 호출할 때
+
+  `RequestDispatcher.forward(request, response)`
+
+- INCLUDE : 서블릿에서 다른 서블릿이나 JSP의 결과를 포함할 때
+
+  `RequestDispatcher.include(request, response)`
+
+- REQUEST : 클라이언트 요청
+
+- ASYNC : 서블릿 비동기 호출 
+
+- ERROR : 오류 요청
+
+이 DispatcherType을 활용하여 필터를 등록할 때 DispatcherType 설정을 추가해주면 원하는 DispatcherType일 때만 필터를 호출하도록 설정가능하다
+
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+	@Bean
+  public FilterRegistrationBean logFilter() {
+    ...
+		filterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST,DispatcherType.ERROR);
+		...
+  }
+}
+```
+
+**오류시 인터셉터 넘어가기**
+
+인터셉터는 스프링에서 제공하는 기능이므로 DispatcherType과 무관하게 항상 호출된다. 하지만 다음과 같이 인터셉터를 등록할 때 오류페이지로 가는 호출을 `excludePathPatterns`에 등록하면 같은 효과를 얻을 수 있다.
+
+```java
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LogInterceptor())
+      .order(1)
+      .addPathPatterns("/**")
+      .excludePathPatterns("/error-page/**");
+}
+```
+
+<br/>
+
+## 스프링부트 예외처리
+
+서블릿에 오류페이지를 등록할 때는 다음과 같은 과정을 거쳤다.
+
+- WebServerCustomizer를 만듦
+- 예외 종류에 따라 ErrorPage를 추가함
+- 예외 처리용 컨트롤러를 만듦
+
+하지만 스프링 부트에서는 위와 같은 과정이 필요없다.
+
+**오류페이지 등록** 
+
+스프링부트에서는 아래를 기본으로 제공한다.
+
+- ErrorPage를 자동으로 등록한다. `/error`라는 경로로 기본 오류페이지를 설정하고, 상태코드나 예외를 설정하지 않으면 기본 오류페이지로 사용한다.
+  - 서블릿 밖으로 에외가 발생하거나, response.sendError()가 호출되면 모든 오류는 `/error`를 호출한다.
+  - ErrorMvcAutoConfiguration 라는 클래스가 오류 페이지를 자동으로 등록하는 역할을 한다.
+- BasicErrorController라는 스프링 컨트롤러를 자동으로 등록한다.
+  - ErrorPage에서 등록한 `/error`를 매핑해서 처리하는 컨트롤러다
+
+따라서 스프링부트에서는 `/error` 경로에 오류 페이지 파일을 만들어서 넣어두기만 하면 알아서 오류페이지가 클라이언트로 전달된다.이때 뷰 선택은 `BasicErrorController`에서 일어나고, 아래와 같은 우선순위로 일어난다.
+
+1. 뷰 템플릿
+   - resources/templates/error/500.html 
+   - resources/templates/error/5xx.html. : 500번대 오류 처리
+2. 정적리소스(static,public) 
+   - resources/static/error/400.html
+   - resources/static/error/404.html
+   - resources/static/error/4xx.html  : 400번대 오류처리
+3.  적용 대상이 없을 때 뷰 이름(error)
+   - resources/templates/error.html
+
+<br/>
+
+**BasicErrorController가 제공하는 정보들**
+
+BasicErrorController는 다음 정보를 model에 담아서 뷰에 전달한다. 
+
+- timestamp : 발생 시각
+- path : 클라이언트 요청 경로
+- status : 에러 상태
+- message : 에러 메세지
+- error : 에러 코드
+- exception : 발생한 예외
+- errors : 발생한 에러 
+- trace : 예외 trace
+
+하지만 위와 같은 정보를 클라이언트에 노출하는 건 좋지 않다.
+
+application.properties에서 다음과 같이 model에 정보를 담을지 말지 선택할 수 있다.
+
+- `server.error.include-exception`
+- `server.error.include-message`
+- `server.error.include-stacktrace`
+- `server.error.include-binding-errors`
+
+<br/>
+
+**스프링 부트 오류 관련 옵션**
+
+- `server.error.whitelabel.enabled` : 오류 처리화면을 못 찾을 시, 스프링 whitelabel 오류 페이지 적용
+- `server.error.path` : 오류 페이지 경로. 스프링이 자동 등록하는 서블릿 글로벌 오류 페이지 경로와 BasicErrorController 오류 컨트롤러 경로에 함께 사용된다.
+
+<br/>
+
+**BasicErrorController 확장 방법**
+
+스프링 부트에서 자동등록하는 에러 공통처리 컨트롤러의 기능을 변경하고 싶으면 다음과 같이 하면 된다.
+
+- ErrorController 인터페이스를 상속받아서 구현
+- BasicErrorController 상속받아 기능 추가
+
+
+
+## 출처
+
+- [김영한의 스프링 MVC 2편](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2/dashboard)

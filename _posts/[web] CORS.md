@@ -1,0 +1,124 @@
+---
+title: [web] CORS
+author: 신성일
+date: 2022-11-05 18:19:26 +0900
+categories: [study, web]
+tags: [web, cors]
+---
+
+# CORS
+
+> CORS : Cross-Origin Resource Sharing(교차 출처 리소스 공유)
+
+서로 다른 출처(Origin)에서 리소스를 공유할 때 적용되는 정책이다.
+
+<br/>
+
+**출처(Origin)이란?**
+
+URL은 다음과 같이 여러 개의 구성요소로 이루어져있다.
+
+![](https://evan-moon.github.io/static/e25190005d12938c253cc72ca06777b1/5bd27/uri-structure.png)
+
+여기서 출처란 `protocol` + `host` + `port` 을 뜻한다. 이 조합이 같아야 **같은 출처로 인정**된다.
+
+> 이때 `http`, `https`는 각각 `80` `443` 포트로 추정되어 생략되어도 된다
+>
+> 하지만 만약 `http://google.com:80` 같이 포트 번호가 명시되어있다면 포트번호까지 모두 일치해야 같은 출처라고 인정된다.
+
+<Br/>
+
+**SOP(Same-Origin Policy)**
+
+같은 출처에서만 리소스를 공유할 수 있다는 규칙을 가지며, CORS와 함께 다른 출처로 리소스를 공유할때 적용되는 또다른 정책이다.
+
+하지만 웹은 다른 출처에서 리소스를 가져오는 일이 매우 많기에 몇가지 예외조항을 두었고, 그 중 하나가 "CORS 정책을 지킨 리소스 요청"이다. 따라서 웹에서 다른 출처로 리소스를 요청할 때는 CORS 정책을 지키든가 몇가지 SOP의 예외 조항을 지켜야한다.
+
+예외사항 : 실행 가능한 스크립트, 렌더될 이미지, 스타일 시트을 요청하는 경우
+
+<Br/>
+
+**CORS 동작원리**
+
+1. 웹 클라이언트 어플리케이션에서 다른 출처로 리소스 요청을 할 때, 브라우저는 요청헤더에 다음과 같이 `Origin` 필드에 출처를 담아 보낸다.
+
+   ```Origin : https://google.com```
+
+2. 서버는 이 요청에 대한 응답을 할 때, 응답 헤더에 `Access-Control-Allow-Origin`이라는 값에 `이 리소스를 접근하는 것이 허용된 출처`를 내려준다
+
+3. 응답을 받은 브라우저는 자신이 보냈던 요청의 `Origin` 과 응답의 `Access-Control-Allow-Origin`를 비교해본 후 이 응답이 유효한지 확인한다.
+
+<br/>
+
+**CORS 정책 로직의 위치**
+
+CORS 정책이 적용되어 출처를 비교하는 로직은, 서버가 아니라 **브라우저에 구현**되어있다.
+
+만약 우리가 CORS 정책을 위반하는 리소스 요청을 하더라도 해당 서버가 같은 출처에서 보낸 요청만 받겠다는 로직을 가지고 있지 않으면 서버는 정상적으로 응답하고, 브라우저가 이 응답을 분석해서 CORS 정책 위반이라고 판단되면 그 응답을 버린다.
+
+![](https://evan-moon.github.io/static/d4d623ba331c1d7851e7000c11cd3809/21b4d/cors.png)
+
+즉 CORS 정책은 브라우저를 통하지 않은 서버간 통신일 때는 적용되지 않는다. 또한 CORS 정책을 위반하는 리소스 요청 때문에 에러가 발생했다고 해도 서버쪽 로그에는 정상적으로 응답을 했다는 로그만 남는다. 
+
+<br/>
+
+**Preflight Request**
+
+브라우저에서 요청을 보낼 때 한번에 보내지 않고, 예비요청(Preflight Request)과 본 요청으로 나누어서 보낸다. 이 Preflight는 HTTP 메소드 중 `OPTIONS` 메소드가 사용된다. 
+
+이렇게 나누어서 보내는 이유는, 본 요청을 보내기 전에 브라우저 스스로 이 요청을 보내는 것이 안전한지 확인하기 위함이다. 
+
+과정 
+
+1. 사용자가 본 요청이 브라우저에 전달하면, 브라우저는 먼저 예비요청을 서버로 보낸다. 
+2. 서버는 예비요청을 받으면 응답으로 현재 자신이 어떤 것들을 허용하고 금지하는지에 대한 정보를 응답 헤더에 담아서 브라우저에게 다시 보내준다.
+3. 브라우저는 자신이 보낸 예비 요청과 서버의 응답에 담긴 허용정책을 비교하고, 이 요청을 보내는 것이 안전하다고 판단되면 본요청을 보낸다. 하지만 안전하지 않다고 판단되면 이때 **CORS** 에러를 내게 된다.
+
+다만 **모든 상황에서 이렇게 두 번씩 요청을 보내진 않는다.** 이러한 요청을 **Simple Request** 라고 한다.
+
+<br/>
+
+**Simple Request** 
+
+Simple Request를 보낼 때는, 예비 요청을 보내지 않고 바로 서버에게 본 요청을 보낸 후, 서버의 응답 헤더에 `Access-Control-Allow-Origin`를 확인하여 CORS 정책을 검사하는 방식으로 이루어진다.
+
+Simple Request 조건
+
+1. 요청의 메소드는 `GET`, `HEAD`, `POST` 중 하나여야 한다.
+2. `Accept`, `Accept-Language`, `Content-Language`, `Content-Type`, `DPR`, `Downlink`, `Save-Data`, `Viewport-Width`, `Width`를 제외한 헤더를 사용하면 안된다.
+3. 만약 `Content-Type`를 사용하는 경우에는 `application/x-www-form-urlencoded`, `multipart/form-data`, `text/plain`만 허용된다.
+
+<Br/>
+
+**Credentialed Request**
+
+쿠키나 인증정보가 헤더에 담긴 요청을 뜻하며, 이 경우에는 CORS 정책 위반을 검사하는 룰에 다음 두가지가 추가된다.
+
+1. `Access-Control-Allow-Origin`에는 `*`를 사용할 수 없으며, 명시적인 URL이어야한다.
+2. 응답 헤더에는 반드시 `Access-Control-Allow-Credentials: true`가 존재해야한다.
+
+<br/>
+
+**CORS를 해결하기 위해 개발 시 지켜야하는 상황**
+
+기본적으로 정책을 다 지키면 되지만, 아래 사항을 개발할 때 항상 생각하고 진행하자
+
+1. 서버에서는 클라이언트에서 사용할 도메인을 `Access-Control-Allow-Origin`에 항상 명시적으로 세팅하자
+2. 프론트 개발 환경에서는 ` Webpack dev server`로 리버스 프록싱을 통해 서버에서 세팅한 Origin과 맞추어주자. (1에서 세팅한 프론트에서 배포환경일때 사용할 주소)
+
+<br/>
+
+**쿠키의 samesite vs CORS**
+
+samesite 옵션은 같은 도메인인지를 판단하는 것이고, CORS 정책은 도메인을 포함한 포트, 프로토콜을 모두 검사하는 정책이다. 둘은 무관계하다.
+
+samesite의 경우 서브도메인도 같은 도메인으로 판별해준다. 다만 모든 서브도메인을 같다고 판별하지는 않고, [Public Suffix Lists](https://stitchcoding.tistory.com/46)에 명시된 기준을 참고하여 어느 범위까지 동일할 때 same site로 판단할지를 결정한다. 
+
+> .co.kr  같이 세번째 자리부터 등록이 가능한 경우는 kr 앞에 co가 이미 추가되어있어서 same-site의 범위가 너무 넓어진다.
+
+<br/>
+
+[참고문서 : CORS](https://evan-moon.github.io/2020/05/21/about-cors/)
+
+[참고문서 : sameorigin vs samesite ](https://stitchcoding.tistory.com/46)
+

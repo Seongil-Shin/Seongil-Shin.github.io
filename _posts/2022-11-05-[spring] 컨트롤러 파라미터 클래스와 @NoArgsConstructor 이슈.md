@@ -1,5 +1,5 @@
 ---
-title: "@ModelAttribute"와 "@NoArgsConstructor" 동시 사용 이슈
+title: ModelAttribute와 NoArgsConstructor 동시 사용 이슈
 author: 신성일
 date: 2022-11-05 18:15:26 +0900
 categories: [study, spring]

@@ -1,10 +1,10 @@
-```
+---
 title: PathPattern과 servletPath
 author: 신성일
 date: 2022-11-10 18:25:26 +0900
 categories: [study, spring]
 tags: [spring, servlet, pathpattern, path]
-```
+---
 
 # **[spring] PathPattern과 servletPath**
 
@@ -30,7 +30,7 @@ public void addInterceptors(InterceptorRegistry registry) {
 
 ## 단서
 
-내 앱에서 `application.properties`에 `server.servlet.contextPath=/api` 로 모든 servlet의 prefix 주소를 `/api`로 설정한 것을 떠올렸다. 
+내 앱에서 `application.properties`에 `server.servlet.contextPath=/api` 로 모든 servlet의 prefix 주소를 `/api`로 설정한 것을 떠올렸다.
 
 ```properties
 server.servlet.contextPath=/api
@@ -46,8 +46,8 @@ server.servlet.contextPath=/api
 
 그렇다면 왜 스프링에서는 contextPath를 떼서 검사하는 것일까? 그것은 context path와 servlet path의 정의와 역할이 다르기 때문이다.
 
-- context path : 어플리케이션의 루트. 디폴트는 "/"
-- servlet path : prefix는 dispatcher servlet의 주소를 의미(디폴트는 "/"). prefix를 포함한 전체 주소는 스프링에서 처리되는 주소.
+-  context path : 어플리케이션의 루트. 디폴트는 "/"
+-  servlet path : prefix는 dispatcher servlet의 주소를 의미(디폴트는 "/"). prefix를 포함한 전체 주소는 스프링에서 처리되는 주소.
 
 스프링 인터셉터를 등록하기위해 구현한 인터페이스는 `WebMvcConfigurer`이다. WebMvcConfigurer은 다음과 같이 DispatherServlet 이후에 스프링 MVC 설정을 위해 쓰인다.
 

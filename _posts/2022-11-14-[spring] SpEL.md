@@ -211,8 +211,6 @@ int[][] numbers3 = (int[][]) parser.parseExpression("new int[4][5]").getValue(co
 ```java
 // 4개의 숫자를 담고 있는 자바 리스트로 평가된다
 List numbers = (List) parser.parseExpression("{1,2,3,4}").getValue(context);
-
-List listOfLists = (List) parser.parseExpression("{{1,2},{3,4}}").getValue(context);
 ```
 
 ### 삼항 연산자

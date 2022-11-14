@@ -6,8 +6,6 @@ categories: [study, spring]
 tags: [spring, spel]
 ---
 
-
-
 이 문서는 개인적인 목적이나 배포하기 위해서 복사할 수 있다. 출력물이든 디지털 문서든 각 복사본에 어떤 비용도 청구할 수 없고 모든 복사본에는 이 카피라이트 문구가 있어야 한다. ([출처](https://blog.outsider.ne.kr/837))
 
 <Br/>
@@ -22,12 +20,12 @@ tags: [spring, spel]
 #{SpEL 표현식}
 ```
 
-- `#{}` 안의 표현식을 evaluation 한다.
-  - 스프링에서 사용되는 `${}` 은 SpEL이 아니라 프로퍼티를 참조할 때 사용하는 표기이다. SpEL은 기본적으로 `#{}`으로 표기한다
+-  `#{}` 안의 표현식을 evaluation 한다.
+   -  스프링에서 사용되는 `${}` 은 SpEL이 아니라 프로퍼티를 참조할 때 사용하는 표기이다. SpEL은 기본적으로 `#{}`으로 표기한다
 
 <br/>
 
-## SpEL  파싱
+## SpEL 파싱
 
 ### Expression을 이용한 SpEL 파싱
 
@@ -41,8 +39,8 @@ int value2 = expression.getValue(Integer.class);
 System.out.println(value2);  // 2
 ```
 
-- ExpressionParser의 구현체인 SpelExpressionParser로 SpEL의 내용을 파싱하고, Expression의 getValue() 메서드를 사용해 파싱된 결과물을 Object 타입으로 얻을 수 있다.
-- getValue() 메서드에 클래스를 넣으면 타입 캐스팅도 가능하다.
+-  ExpressionParser의 구현체인 SpelExpressionParser로 SpEL의 내용을 파싱하고, Expression의 getValue() 메서드를 사용해 파싱된 결과물을 Object 타입으로 얻을 수 있다.
+-  getValue() 메서드에 클래스를 넣으면 타입 캐스팅도 가능하다.
 
 ### EvaluationContext를 이용한 SpEL 파싱
 
@@ -51,22 +49,22 @@ System.out.println(value2);  // 2
 ```java
 // name, nationality를 파라미터로 갖는 생성자
 Inventor tesla = new Inventor("Nikola Tesla","Serbian");
- 
+
 ExpressionParser parser = new SpelExpressionParser();
 Expression exp = parser.parseExpression("name"); // name 프로퍼티
- 
+
 // Context에 tesla객체를 넣어준다.
 EvaluationContext context = new StandardEvaluationContext(tesla);
 String name1 = (String) exp.getValue(context); //name = "Nikola Tesla"
 System.out.println(name1);  // Nikola Tesla
- 
+
 // getValue 메서드 호출 시 StandardEvaluationContext를 사용하지 않고 객체를 직접 지정
 String name2 = (String) exp.getValue(tesla);
 System.out.println(name2);  // Nikola Tesla
 ```
 
-- StandardEvaluationContext에 name 프로퍼티가 평가될 객체를 지정한다. 
-- 두번째 방법처럼 StandardEvaluationContext를 사용하지 않고 getValue()에 직접 객체를 지정할 수 있다. 하지만 StandardEvaluationContext를 사용하면 객체 생성 비용은 들지만, 필드에 대해 캐싱하기 때문에 반복적으로 사용하면 표현식 파싱이 더 빠르다는 장점이 있다.
+-  StandardEvaluationContext에 name 프로퍼티가 평가될 객체를 지정한다.
+-  두번째 방법처럼 StandardEvaluationContext를 사용하지 않고 getValue()에 직접 객체를 지정할 수 있다. 하지만 StandardEvaluationContext를 사용하면 객체 생성 비용은 들지만, 필드에 대해 캐싱하기 때문에 반복적으로 사용하면 표현식 파싱이 더 빠르다는 장점이 있다.
 
 <br/>
 
@@ -75,15 +73,15 @@ System.out.println(name2);  // Nikola Tesla
 ### 리터럴 표현식
 
 ```java
-String helloWorld = (String) parser.parseExpression("'Hello World'").getValue(); 
-double avogadrosNumber  = (Double) parser.parseExpression("6.0221415E+23").getValue();  
-int maxValue = (Integer) parser.parseExpression("0x7FFFFFFF").getValue(); 
+String helloWorld = (String) parser.parseExpression("'Hello World'").getValue();
+double avogadrosNumber  = (Double) parser.parseExpression("6.0221415E+23").getValue();
+int maxValue = (Integer) parser.parseExpression("0x7FFFFFFF").getValue();
 ```
 
 ### 프로퍼티, 배열, 리스트, 맵에 대한 접근
 
 ```java
-int year = (Integer) parser.parseExpression("Birthdate.Year + 1900").getValue(context); 
+int year = (Integer) parser.parseExpression("Birthdate.Year + 1900").getValue(context);
 
 String name = parser.parseExpression("Members[0].Name")
   .getValue(societyContext, String.class);
@@ -100,7 +98,7 @@ parser.parseExpression("Officers['advisors'][0].PlaceOfBirth.Country")
 city = parser.parseExpression("PlaceOfBirth?.City").getValue(context, String.class);
 ```
 
-- javascript의 `optional chaining` 처럼 null이 아닌지 확인하며 프로퍼티에 접근하는 문법도 사용가능하다.
+-  javascript의 `optional chaining` 처럼 null이 아닌지 확인하며 프로퍼티에 접근하는 문법도 사용가능하다.
 
 ### 메서드 호출
 
@@ -110,7 +108,7 @@ boolean isMember = parser.parseExpression("isMember('Mihajlo Pupin')")
   .getValue(societyContext, Boolean.class);
 ```
 
-- 메서드 호출을 지원하며, 가변인자도 지원한다.
+-  메서드 호출을 지원하며, 가변인자도 지원한다.
 
 ### 관계 연산자
 
@@ -146,12 +144,12 @@ int minusTwentyOne = parser.parseExpression("1+2-3*8").getValue(Integer.class); 
 ### 할당
 
 ```java
-Inventor inventor = new Inventor();        
+Inventor inventor = new Inventor();
 StandardEvaluationContext inventorContext = new StandardEvaluationContext(inventor);
 
 parser.parseExpression("Name").setValue(inventorContext, "Alexander Seovic2");
 
-// 대신에 getValue()로도 할당이 가능하다. 
+// 대신에 getValue()로도 할당이 가능하다.
 String aleks = parser.parseExpression("Name = 'Alexandar Seovic'")
   .getValue(inventorContext, String.class);
 ```
@@ -169,7 +167,7 @@ p.parseExpression(
   .getValue(societyContext);
 ```
 
-- 생성자를 새로 만들 수도 있다. primitive 타입과 String 외에는 모두 정규화된 클래스명을 사용해야한다.
+-  생성자를 새로 만들 수도 있다. primitive 타입과 String 외에는 모두 정규화된 클래스명을 사용해야한다.
 
 ### 타입
 
@@ -184,8 +182,8 @@ boolean
   .getValue(Boolean.class);
 ```
 
-- `T` 연산자를 클래스 인스턴스를 지정하는데 사용할 수 있다. 정적 메서드도 이 연산자를 사용해서 호출할 수 있다. 
-- StandardEvaluationContext는 타입을 찾으려고 TypeLocator를 사용하고 StandardTypeLocator(교체할 수 있다)는 java.lang 패키지로 만들어진다. 즉, java.lang 내에서 타입을 참조하는 T()는 정규화될 필요는 없지만 다른 모든 타입참조는 정규화되어야 한다.
+-  `T` 연산자를 클래스 인스턴스를 지정하는데 사용할 수 있다. 정적 메서드도 이 연산자를 사용해서 호출할 수 있다.
+-  StandardEvaluationContext는 타입을 찾으려고 TypeLocator를 사용하고 StandardTypeLocator(교체할 수 있다)는 java.lang 패키지로 만들어진다. 즉, java.lang 내에서 타입을 참조하는 T()는 정규화될 필요는 없지만 다른 모든 타입참조는 정규화되어야 한다.
 
 ### 빈(Bean) 참조
 
@@ -198,13 +196,13 @@ context.setBeanResolver(new MyBeanResolver());
 Object bean = parser.parseExpression("@foo").getValue(context);
 ```
 
-- context가 빈 리졸버로 설정되어있다면 @ 기호를 사용해서 표현식에서 빈을 검색하는 것이 가능하다.
+-  context가 빈 리졸버로 설정되어있다면 @ 기호를 사용해서 표현식에서 빈을 검색하는 것이 가능하다.
 
 ### 배열 생성
 
 ```java
-int[] numbers1 = (int[]) parser.parseExpression("new int[4]").getValue(context); 
-int[] numbers2 = (int[]) parser.parseExpression("new int[]{1,2,3}").getValue(context); 
+int[] numbers1 = (int[]) parser.parseExpression("new int[4]").getValue(context);
+int[] numbers2 = (int[]) parser.parseExpression("new int[]{1,2,3}").getValue(context);
 int[][] numbers3 = (int[][]) parser.parseExpression("new int[4][5]").getValue(context);
 ```
 
@@ -212,9 +210,9 @@ int[][] numbers3 = (int[][]) parser.parseExpression("new int[4][5]").getValue(co
 
 ```java
 // 4개의 숫자를 담고 있는 자바 리스트로 평가된다
-List numbers = (List) parser.parseExpression("{1,2,3,4}").getValue(context); 
+List numbers = (List) parser.parseExpression("{1,2,3,4}").getValue(context);
 
-List listOfLists = (List) parser.parseExpression("{{'a','b'},{'x','y'}}").getValue(context); 
+List listOfLists = (List) parser.parseExpression("{{1,2},{3,4}}").getValue(context);
 ```
 
 ### 삼항 연산자
@@ -227,7 +225,7 @@ String falseString = parser.parseExpression("false ? 'trueExp' : 'falseExp'")
 String name = parser.parseExpression("null?:'Unknown'").getValue(String.class);
 ```
 
-- 삼항연산자 사용이 가능하고, 단축형인 엘비스 문법도 사용할 수 있다.
+-  삼항연산자 사용이 가능하고, 단축형인 엘비스 문법도 사용할 수 있다.
 
 ### 변수
 
@@ -241,8 +239,8 @@ parser.parseExpression("Name = #newName").getValue(context);
 System.out.println(tesla.getName()) // "Mike Tesla"
 ```
 
-- context에 변수를 선언하여 표현식 내에서 변수를 참조할 수 있다.
-- 다만 `#this`와 `#root` 변수는 항상 정의되어있다. 각각 현재 평가객체, 루트 컨텍스트 객체를 참조한다.
+-  context에 변수를 선언하여 표현식 내에서 변수를 참조할 수 있다.
+-  다만 `#this`와 `#root` 변수는 항상 정의되어있다. 각각 현재 평가객체, 루트 컨텍스트 객체를 참조한다.
 
 ### 사용자 정의 함수
 
@@ -253,11 +251,11 @@ StandardEvaluationContext context = new StandardEvaluationContext();
 context.registerFunction("reverseString",
                          StringUtils.class.getDeclaredMethod("reverseString",
                                                              new Class[] { String.class }));
-String helloWorldReversed = 
+String helloWorldReversed =
           parser.parseExpression("#reverseString('hello')").getValue(context, String.class);
 ```
 
-- context에 함수를 등록해서 SpEL을 확장할 수 있다.
+-  context에 함수를 등록해서 SpEL을 확장할 수 있다.
 
 ### 컬렉션 투영(Collection projection)
 
@@ -265,8 +263,8 @@ String helloWorldReversed =
 List placesOfBirth = (List)parser.parseExpression("Members.![placeOfBirth.city]");
 ```
 
-- 하위 표현식을 평가해서 새로운 컬렉션을 반환한다. 컬렉션의 특정 필드만으로 리스트를 만들고 싶을 떄 사용한다.
-- 맵에서도 투영기능을 사용할 수 있고 맵의 경우 투영 표현식은 맵의 각 엔트리마다(자바 Map.Entry로 표현되는) 평가된다. 맵의 투영결과는 맵의 각 엔트리에 대한 투영 표현식의 평가결과로 이루어진 리스트이다
+-  하위 표현식을 평가해서 새로운 컬렉션을 반환한다. 컬렉션의 특정 필드만으로 리스트를 만들고 싶을 떄 사용한다.
+-  맵에서도 투영기능을 사용할 수 있고 맵의 경우 투영 표현식은 맵의 각 엔트리마다(자바 Map.Entry로 표현되는) 평가된다. 맵의 투영결과는 맵의 각 엔트리에 대한 투영 표현식의 평가결과로 이루어진 리스트이다
 
 ### 컬렉션 선택
 
@@ -278,17 +276,17 @@ List<Inventor> list = (List<Inventor>)parser.parseExpression(
 Map newMap = parser.parseExpression("map.?[value<27]").getValue();
 ```
 
-- 컬렉션을 필터링해서 원래 요소의 서브셋을 가진 새로운 컬렉션을 반환한다.
+-  컬렉션을 필터링해서 원래 요소의 서브셋을 가진 새로운 컬렉션을 반환한다.
 
 ### 표현식 템플릿
 
 ```java
-String randomPhrase = 
-   parser.parseExpression("random number is #{T(java.lang.Math).random()}", 
+String randomPhrase =
+   parser.parseExpression("random number is #{T(java.lang.Math).random()}",
                           new TemplateParserContext()).getValue(String.class);
 ```
 
-- `#{}`로 구분하여 하나 이상의 평가 블럭을 가진 리터럴 문자를 섞을 수 있다.
+-  `#{}`로 구분하여 하나 이상의 평가 블럭을 가진 리터럴 문자를 섞을 수 있다.
 
 <br/>
 
@@ -299,16 +297,16 @@ String randomPhrase =
 ```java
 @Value("#{1+1}")
 int value;
- 
+
 @Value("#{'hello ' + 'world'}")
 String greeting;
- 
+
 @Value("#{1 eq 5}")
 boolean trueOrFalse;
- 
+
 @Value("Literal String")
 String literalString;
- 
+
 @Override
 public void run(ApplicationArguments args) throws Exception {
     System.out.println(value);					// 2
@@ -318,7 +316,7 @@ public void run(ApplicationArguments args) throws Exception {
 }
 ```
 
-- 빈이 만들어질 때, @Value() 안의 값이 #{} 표기로 감싸져 있으면, SpEL로 파싱하고 평가해서 결과값을 변수에 할당함
+-  빈이 만들어질 때, @Value() 안의 값이 #{} 표기로 감싸져 있으면, SpEL로 파싱하고 평가해서 결과값을 변수에 할당함
 
 ### SpEL과 프로퍼티
 
@@ -329,7 +327,7 @@ my.value=100
 ```java
 @Value("#{'${my.value}' eq '100'}")
 boolean isEqual;
- 
+
 @Override
 public void run(ApplicationArguments args) throws Exception {
     System.out.println(isEqual);		// true
@@ -342,7 +340,7 @@ public void run(ApplicationArguments args) throws Exception {
 @Component
 public class Sample {
   private int value = 123;
- 
+
 	public int getValue() {
 		return value;
 	}
@@ -362,6 +360,6 @@ SpEL도 해당하는 타입으로 변환할 때 ConversionService를 사용한�
 
 ## 출처
 
-- https://blog.outsider.ne.kr/835
-- https://blog.outsider.ne.kr/837
-- https://atoz-develop.tistory.com/entry/Spring-SpEL-Spring-Expression-Language
+-  https://blog.outsider.ne.kr/835
+-  https://blog.outsider.ne.kr/837
+-  https://atoz-develop.tistory.com/entry/Spring-SpEL-Spring-Expression-Language

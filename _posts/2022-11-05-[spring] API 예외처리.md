@@ -124,8 +124,7 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
 
 ```java
 @Override
-public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver>
-resolvers) {
+public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
 	resolvers.add(new MyHandlerExceptionResolver());
 }
 ```
@@ -280,6 +279,69 @@ public class ExampleAdvice3 {}
 
 <br/>
 
+## @ExceptionHandler, @ControllerAdvice 원리
+
+@ControllerAdvice에서 Interceptor에서 날아온 에러도 잡는 것을 보고 원리가 신경 쓰여 `DispatcherServlet`의 `doDispatch()` 메서드 코드를 살펴봤다.
+
+```java
+protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  	...
+		try {
+      ...
+			try {
+        ...
+				// Determine handler for the current request.
+				mappedHandler = getHandler(processedRequest);
+
+				// Determine handler adapter for the current request.
+				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+        
+        ...
+          
+				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+					return;
+				}
+
+				// Actually invoke the handler.
+				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+        
+        ...
+          
+				mappedHandler.applyPostHandle(processedRequest, response, mv);
+			}
+			catch (Exception ex) {
+				dispatchException = ex;
+			}
+			catch (Throwable err) {
+				dispatchException = new NestedServletException("Handler dispatch failed", err);
+			}
+			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+    }
+  	...
+	}
+```
+
+- 핸들러(컨트롤러)와 인터셉터를 실행 중 예되가 발생하면 `dispatchException`에 예외를 저장하고, `processDispatchResult`로 넘겨준다.
+- 위 코드에는 나오지 않지만, `processDispatchResult`에서는 예외가 있고, `ModelAndViewDefiningException`이 아닌 경우 `processHandlerException`를 호출한다.
+  - `ModelAndViewDefiningException`은 예외 페이지를 보여주도록하는 예외
+- `processHandlerException`에서는 DispatcherServlet에 등록된  `HandlerExceptionResolver` 을 하나씩 수행한다.
+- `HandlerExceptionResolver`은 위에도 나와있지만 디폴트로 다음 세가지가 등록된다.
+  - ExceptionHandlerExceptionResolver
+  - ResponseStatusExceptionResolver
+  - DefaultHandlerExceptionResolver
+- 세 가지 Resolver 중 `ExceptionHandlerExceptionResolver`가 ExceptionHandler를 실행한다.
+-  `@ControllerAdvice`로 ExceptionHandler를 등록하면, 디폴트로 모든 컨트롤러에 등록된다. 따라서 interceptor에서 날린 예외도 받을 수 있는 것이다.
+
+### More..
+
+- `DispathcerServlet`의 코드를 보면 컨트롤러 안에서 선언한 `@ExceptionHandler` 메서드도 인터셉터에서 날린 예외를 받을 수 있는 걸로 보인다. 
+  - 그리고 실제로 실험을 해보니 인터셉터의 `preHandle`에서 날린 예외를 컨트롤러에서 선언한 `@ExceptionHandler`에서 처리하였다.
+- 인터셉터의 `afterCompletion` 은 `processDispatchResult`에서 실행되는데 따라서 `afterCompletion`에서 예외를 날려도 `@ControllerAdvise`와 `@ExceptionHandler`는 받지 못한다.
+  - 실험 결과, 실제로 ExceptionHandler에서는 처리하지 못하였지만 응답은 제대로 왔다. 대신 콘솔에 오류가 기록되었다. `afterCompletion`에서 발생한 예외는 스프링 내에서 처리하는 것이다.
+- `processHandlerException`에서 예외 처리 이후에도 `afterCompletion`은 실행된다.
+
+<br/>
+
 ## 정리
 
 HTML 에러 화면을 보여줘야하는 경우
@@ -290,3 +352,10 @@ API 에러 응답을 보내야하는 경우
 
 -  ExceptionHandlerExceptionResolver (@ExceptionHandler) 사용
 -  @ControllerAdvise는 예외처리 코드와 정상코드를 분리시키고자 할 때 사용
+
+<br/>
+
+## 출처
+
+- [스프링 공식문서](https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc)
+- [김영한의 스프링 MVC 2](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2#curriculum)

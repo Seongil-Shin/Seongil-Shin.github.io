@@ -75,9 +75,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 ## interceptor에서 controller로 값 전달하기
 
-## Interceptor에서 controller로 값 날리기
-
-**recommended : request 스코프의 빈 사용**
+### **recommended : request 스코프의 빈 사용**
 
 다음과 같이 전달할 값을 필드로 지닌 클래스를 만들고, request 스코프로 빈에 등록하는 것이 가장 좋다.
 
@@ -97,7 +95,7 @@ public class CurrentUser {
 }
 ```
 
-**alternative : HttpServletRequest에 추가**
+### **alternative : HttpServletRequest에 추가**
 
 필드가 딱 하나만 있거나, 컨트롤러에서도 HttpServletRequest를 사용한다면 다음과 같이 HttpServletRequest에 값을 추가하는 것도 방법이다.
 
@@ -115,6 +113,20 @@ public class MyInterceptor implements HandlerInterceptor {
 ```
 
 [참고](https://stackoverflow.com/questions/58942591/spring-boot-pass-argument-from-interceptor-to-method-in-controller)
+
+<br/>
+
+## ExceptionHandler와의 조합
+
+interceptor에서 날아간 예외는 어떻게 처리하는 것이 좋을까?
+
+이에 관해선 [API 예외처리](https://seongil-shin.github.io/posts/spring-API-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC/) 문서의 **@ExceptionHandler, @ControllerAdvice 원리** 섹션에서 자세히 정리해놓았지만, 간단히 요약하자면 아래와 같다. 
+
+- interceptor의 preHandler와 postHandle에서 던진 예외는 ExceptionHandler에서 잡을 수 있다.
+  - `@ExceptionHandler`로 선언한 핸들러와 `@ControllerAdvice`로 등록한 핸들러 모두 적용됨
+- afterCompletion에서 던진 예외서 ExceptionHandler에서 처리되지 않고 스프링에서 처리된다. 다만 이때 클라이언트 요청의 응답은 제대로 가고, 스프링 내부에서 예외가 처리된다.
+
+<br/>
 
 ## 참고
 

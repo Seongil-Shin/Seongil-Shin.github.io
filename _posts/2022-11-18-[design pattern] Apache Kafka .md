@@ -1,5 +1,5 @@
 ---
-title: [design pattern] Apache Kafka
+title: Apache Kafka
 author: 신성일
 date: 2022-11-18 23:00:26 +0900
 categories: [study, design pattern]

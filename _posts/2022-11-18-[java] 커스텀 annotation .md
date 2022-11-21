@@ -12,7 +12,7 @@ tags: [java, annotation]
 
 ```java
 // 애노테이션 예시
-@Service 
+@Service
 public class ArticleService
 ```
 
@@ -97,10 +97,10 @@ public @interface MyAnnotation {
 ```java
 Method method = MyClass.class.getMethod("doThis”); //자바 리플렉션 getMethod로 메서드 doThis를 얻어온다
 Annotation[] annotations = method.getDeclaredAnnotations(); //메서드에 선언된 어노테이션 객체를 얻어온다
-                               
+
 //메서드 doThat에 선언된 MyAnnotation의 어노테이션 객체를 얻어온다
-Annotation annotation = MyClass.class.getMethod("doThat") 
-                                         .getAnnotation(MyAnnotation.class); 
+Annotation annotation = MyClass.class.getMethod("doThat")
+                                         .getAnnotation(MyAnnotation.class);
 ```
 
 <br/>

@@ -6,7 +6,7 @@ categories: [study, design pattern]
 tags: [kafka]
 ---
 
-# [design pattern] Apache Kafka
+# Apache Kafka
 
 Apache Kafka는 빠르고 확장 가능한 작업을 위해 데이터 피드의 분산 스트리밍, 파이프 라이닝 및 재생을 위한 실시간 스트리밍 데이터를 처리하기 위한 목적으로 설계된 **오픈 소스 분산형 게시-구독 메시징 플랫폼**이다.
 
@@ -83,8 +83,38 @@ Kafka는 서버 클러스터 내에서 데이터 스트림을 레코드로 유�
 
 <br/>
 
+## Kafka vs Socket
+
+실시간으로 통신하고, Pub-Sub 구조로 통신을 하는 방법이 필요하다면 소켓으로도 충분히 해결 가능하다. 소켓이 훨씬 가볍기에 이와 같은 상황에선 소켓이 가장 잘 맞는다. 그럼 kafka는 언제 쓰일까? 먼저 소켓의 단점부터 알아보자.
+
+소켓의 단점
+
+1. producer와 consumer가 동시에 온라인 상태여야한다. 둘 중 하나가 오프라인이면 어떤 메세지도 보내지지 않고, 받아지지도 않는다.
+2. consumer는 producer만큼 스케일 업 되어야한다. producer가 10배의 메세지를 보내면, consumer도 10배 더 받을 수 있어야한다.
+3. consumer와 producer가 서로를 알아야한다.
+4. 또다른 consumer가 생기면  producer도 적절한 처리를 해줘야한다.
+5. 한번 보내진 메세지는 특수한 처리를 하지 않는한 저장되지 않는다.
+
+kafka 등 메세징 시스템에서는
+
+1. consumer와 producer가 동시에 online일 필요가 없다. 
+2. consumer와 producer가 서로를 몰라도 된다. 브로커만 알면 되고, 따라서 consumer와 producer 시스템 간 조정을 하지 않아도 된다.
+3. 메시징 시스템이 consumer와 producer 사이에서 버퍼로 작동한다. 메세지 볼륨이 커지면, 그 메세지들은 카프카에서 버퍼로 관리된되고, consumer는 하나씩 가져오면 된다. 따라서 매번 보내는 메세지의 볼륨 사이즈가 자주 변동되면, kafka는 좋은 선택지이다. 물론 계속 많은 메세지가 오면 consumer는 스케일 업 할 필요가 있지만, 가끔만 많이 오면 kafka가 적절하다
+4. 브로커를 사용하면, consumer와 producer는 새로운 누군가가 보내고 받는지를 신경쓰지 않아도 된다. 브로커만 신경 쓰면 된다.
+5. 메세지를 저장하고, offset으로 접근할 수 있다.
+
+이와 같이 kafka는 socket의 단점을 해결해줄 수 있는 방법이며, 따라서 socket의 단점이 문제가 될 때 사용하는 방법이다. 단순히 클라이언트와 실시간 통신을 하는 정도는 socket으로 해결할 수 있지만, 좀 더 복잡한 상황에서는 kafka가 필요하다. 그렇기에 kafka는 주로 백엔드 서비스들 사이의 통신을 하기 위해 사용한다.
+
+예를들어 128대의 서버간 망형태로 연결이 필요한 경우 128^2개의 소켓이 필요하다. 하지만 kafka를 사용하면 128개의 연결만으로도 해결이 가능하다.
+
+
+
+<br/>
+
 ## 출처
 
 - https://www.tibco.com/ko/reference-center/what-is-apache-kafka
 - https://engineering.linecorp.com/ko/blog/how-to-use-kafka-in-line-1/
 - https://magpienote.tistory.com/212
+- https://www.reddit.com/r/learnprogramming/comments/l0vqao/should_i_use_websockets_or_kafk
+- https://ence2.github.io/2020/11/kafka%EC%B9%B4%ED%94%84%EC%B9%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80/

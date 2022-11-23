@@ -88,7 +88,22 @@ recommendation:
 
 <br/>
 
+## k8s traffic 분산 방법
+
+그럼 k8s에서는 어떻게 클라이언트 트래픽을 여러 pod들로 분산할까?
+
+[kubernetes 공식문서](https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies)에 따르면, k8s는 iptable를 사용하여 pod들로 트래픽을 분산한다. 이때 발생하는 일은 다음과 같다.
+
+1. 사용자가 `kind:service` object를 생성한다
+2. k8s는 virtual clusterIP를 만들고, `kube-proxy deamonset`에게 iptable을 업데이트하라고 지시한다.
+3. virtual clusterIP로 온 요청은 pod ip로 로드밸런싱 된다.
+
+로드밸런싱 policy는 기본적으로 round robin 방식이지만, 100% 정확한 표현은 아니다. 자세한 얘기는 [다음 게시글](https://stackoverflow.com/questions/54865746/how-does-k8s-service-route-the-traffic-to-mulitiple-endpoints)에서 확인할 수 있다
+
+<br/>
+
 ## **출처**
 
 - https://medium.com/dtevangelist/k8s-kubernetes%EC%9D%98-hpa%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%98%A4%ED%86%A0%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81-auto-scaling-2fc6aca61c26
 - https://huisam.tistory.com/entry/k8s-hpa
+- https://stackoverflow.com/questions/54865746/how-does-k8s-service-route-the-traffic-to-mulitiple-endpoints

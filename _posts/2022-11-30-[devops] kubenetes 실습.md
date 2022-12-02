@@ -154,7 +154,9 @@ spec:
 
 ### 다중 컨테이너
 
-하나의 pod에는 여러개의 컨테이너를 가질 수도 있다. 하나의 Pod에 속한 컨테이너는 **서로 네트워크를 localhost로 공유**하고 **동일한 디렉터리를 공유**할 수 있다.
+하나의 pod에는 여러개의 컨테이너를 가질 수도 있다. 하나의 Pod에 속한 컨테이너는 **서로 네트워크를 localhost로 공유**하고 **동일한 디렉터리를 공유**할 수 있다. 
+
+서로 네트워크를 localhost로 공유할 수 있는 이유는 Pod 안의 모든 네트워크는 동일한 IPC namespace 아래에서 시행되기 때문이다. 
 
 ```yml
 apiVersion: v1
@@ -273,7 +275,7 @@ ReplicaSet은 다음과 같이 동작한다.
 
 1. `ReplicaSet Controller`는 ReplicaSet조건을 감시하면서 현재 상태와 원하는 상태가 다른 것을 체크
 2. `ReplicaSet Controller`가 원하는 상태가 되도록 `Pod`을 생성하거나 제거
-3. `Scheduler`는 API서버를 감시하면서 할당되지 않은unassigned `Pod`이 있는지 체크
+3. `Scheduler`는 API서버를 감시하면서 할당되지 않은 unassigned `Pod`이 있는지 체크
 4. `Scheduler`는 할당되지 않은 새로운 `Pod`을 감지하고 적절한 `노드`node에 배치
 5. 이후 노드는 기존대로 동작
 
@@ -346,8 +348,8 @@ API 서버와의 통신과정은 다음과 같다.
 2. `Deployment Controller`가 원하는 상태가 되도록 `ReplicaSet` 설정
 3. `ReplicaSet Controller`는 ReplicaSet 조건을 감시하면서 현재 상태와 원하는 상태가 다른 것을 체크
 4. `ReplicaSet Controller`가 원하는 상태가 되도록 `Pod`을 생성하거나 제거
-5. `Scheduler`는 API서버를 감시하면서 할당되지 않은unassigned `Pod`이 있는지 체크
-6. `Scheduler`는 할당되지 않은 새로운 `Pod`을 감지하고 적절한 `노드`node에 배치
+5. `Scheduler`는 API서버를 감시하면서 할당되지 않은 unassigned `Pod`이 있는지 체크
+6. `Scheduler`는 할당되지 않은 새로운 `Pod`을 감지하고 적절한 `노드`에 배치
 7. 이후 노드는 기존대로 동작
 
 ### 버전관리
@@ -483,7 +485,7 @@ kubectl apply -f counter-redis-svc.yml
 kubectl get all
 ```
 
-같은 클러스터에서 생성된 Pod이라면 redis라는 도메인으로 redis Pod에 접근할 수 있다. 
+**같은 클러스터에서 생성된 Pod이라면 redis라는 도메인으로 redis Pod에 접근**할 수 있다. 
 
 ClusterIP 서비스의 설정은 다음과 같다
 
@@ -577,13 +579,28 @@ NodePort는 클러스터의 모든 노드에 포트를 오픈한다. 여러개�
 
 ### Service(LoadBalancer) 만들기
 
-NodePort의 단점은 노드가 사라졌을 때 자동으로 다른 노드를 통해 접근이 불가능하다는 점이다. 예를 들어 3개의 노드가 있다면 3개 중에 하무 노드로 접근해도 NodePort로 연결할 수 있지만 어떤 노드가 살아있는지는 알수가 없다.
+NodePort의 단점은 노드가 사라졌을 때 자동으로 다른 노드를 통해 접근이 불가능하다는 점이다. 예를 들어 3개의 노드가 있다면 3개 중에 아무 노드로 접근해도 NodePort로 연결할 수 있지만 어떤 노드가 살아있는지는 알수가 없다.
 
 <img src="https://subicura.com/k8s/build/imgs/guide/service/lb.webp" alt="load balancer" style="zoom:50%;" />
 
-자동으로 살아있는 노드에 접근하기 위해 모든 노드를 바라보는 `Load Balancer`가 필요합니다. 브라우저는 NodePort에 직접 요청을 보내는 것이 아니라 LoadBalancer에 요청하고 LoadBalancer가 알아서 살아있는 노드에 접근하면 NodePort의 단점을 없앨 수 있다.
+자동으로 살아있는 노드에 접근하기 위해 모든 노드를 바라보는 `Load Balancer`가 필요하다. 브라우저는 NodePort에 직접 요청을 보내는 것이 아니라 LoadBalancer에 요청하고 LoadBalancer가 알아서 살아있는 노드에 접근하면 NodePort의 단점을 없앨 수 있다.
 
 - [실습링크](https://subicura.com/k8s/guide/service.html#service-loadbalancer-%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5)
+
+### ClusterIP vs NodePort vs LoadBalancer
+
+- ClusterIP : 클러스터 내부에서 접근 가능한 ip를 염.
+  - ip는 자동으로 생성되고, port는 selector로 걸린 pod의 targetPort를 port로 지정한 값으로 염.
+  - 클러스터 내부의 Pod에서만 접근 가능
+  - ClusterIP의 name을 도메인으로 사용할 수 있음.
+  - 로드밸런서의 역할도 제공한다.
+- NodePort : 클러스터 외부에서 접근 가능한 포트를 염
+  - selector로 걸린 pod의 targetPort를 port로 지정한 값으로 ClusterIP를 염. 외부로는 nodePort로 지정한 값으로 염.
+  - NodePort는 기본적으로 ClusterIP의 기능을 포함함.  따라서 클러스터 내부의 pod들은, NodePort로 연 port를, NodePort를 생성할 때 지정되는 ClusterIP를 통해 접근가능하다.
+  - 분산 노드 애플리케이션에서는 오토스케일링을 이유로 노드들의 네트워크 환경이 동적으로 변한다면, 서비스 디스커버리와 같은 방법으로 클라이언트에서 노드들의 네트워크 엔드포인트르 관리해야함. -> 로드 밸런서로 해결
+- LoadBalancer : NodePort 기능 + 살아있는 노드를 자동으로 찾아 요청을 전달함.
+  - selector로 걸린 pod의 targetPort를 port로 지정한 값으로 염. 외부로는 nodePort로 지정한 값으로 염.
+  - LoadBalancer는 기본적으로 NodePort의 기능을 포함함.  
 
 ### 주의
 
@@ -606,7 +623,7 @@ NodePort의 단점은 노드가 사라졌을 때 자동으로 다른 노드를 �
 ### Ingress 생성 흐름
 
 1. `Ingress Controller`는 `Ingress` 변화를 체크
-2. `Ingress Controller`는 변경된 내용을 `Nginx`에 설정하고 프로세스 재시작ㄴ
+2. `Ingress Controller`는 변경된 내용을 `Nginx`에 설정하고 프로세스 재시작
 
 YAML로 만든 Ingress 설정을 단순히 nginx 설정으로 바꾸는 과정을 Ingress Controller가 자동으로 해주는 것이다.
 
@@ -614,7 +631,7 @@ Ingress는 도메인, 경로만 연동하는 것이 아니라 요청 timeout, �
 
 <br/>
 
-## Volume(local)
+## Volume
 
 MySQL과 같은 데이터베이스는 데이터가 유실되지 않도록 반드시 별도의 저장소에 데이터를 저장하고, 컨테이너를 새로 만들 때 이전 데이터를 가져와야한다.
 
@@ -622,7 +639,7 @@ MySQL과 같은 데이터베이스는 데이터가 유실되지 않도록 반드
 
 ### Volume(**empty-dir**) 만들기
 
-empry-dir은 pod 안에 속한 컨테이너 간 디렉터리를 공유하는 방법으로 보통 사이드카 패턴에서 사용한다. 예를들어 특정 컨테이너에서 생성되는 로그 파일을 별도의 컨테이너가 수집할 수 있다.
+empry-dir은 같은 pod 안에 속한 컨테이너 간 디렉터리를 공유하는 방법으로 보통 사이드카 패턴에서 사용한다. 예를들어 특정 컨테이너에서 생성되는 로그 파일을 별도의 컨테이너가 수집할 수 있다.
 
 <img src="https://subicura.com/k8s/build/imgs/guide/volume/empty-dir.webp" style="zoom:67%;" />
 
@@ -756,8 +773,6 @@ Secret은 **암호화 되지 않는다.** 있는 정보를 그대로 저장하�
 ### Secret 만들기
 
 - [실습 링크](https://subicura.com/k8s/guide/secret.html#secret-%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5)
-
-
 
 
 

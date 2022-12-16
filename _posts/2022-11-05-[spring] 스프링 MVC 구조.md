@@ -6,9 +6,8 @@ categories: [study, spring]
 tags: [spring, mvc]
 ---
 
-## 스프링 MVC 구조
 
-![스프링 구조](../assets/img/[spring] 스프링 MVC 구조/imagesrc=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F27b5c274-b3f1-4ae8-90c4-accc4439f1bd%2FUntitled.png)
+![스프링 구조](https://cdn.inflearn.com/public/comments/f411d5af-8466-4119-9dcd-5676edc1fb49/%EC%9D%B4%EB%AF%B8%EC%A7%80%20001.png)
 
 **과정**
 
@@ -32,7 +31,7 @@ tags: [spring, mvc]
 **Dispatcher Servlet 구조**
 
 -  `HttpServlet`을 상속 받아서 사용하고, 서블릿으로 동작한다.
--  스프링 부트는 Dispatcher Servlet 을 서블릿으로 자동으로 동록하며 모든 경로(`urlPatterns="/"`)에 대해 매핑한다.
+-  스프링 부트는 Dispatcher Servlet 을 서블릿으로 자동으로 동록하며 **모든 경로(`urlPatterns="/"`)에 대해 매핑**한다.
 -  클라이언트의 요청을 받고 서블릿이 호출되면, `HttpServlet`이 제공하는 `service()`가 호출된다. Dispatcher Servlet의 부모인 `FrameworkServlet`은 `service()`를 오버라이드 해두었다. `FrameworkServlet.service()`를 시작으로 여러 메서드가 호출되면서 `DispatcherServlet.doDispatch()`가 호출되고 위 과정을 시작한다.
 
 <br/>

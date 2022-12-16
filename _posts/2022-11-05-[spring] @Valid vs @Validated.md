@@ -1,21 +1,19 @@
 ---
-title: Valid vs Validatedå
+title: Valid vs Validatedated
 author: 신성일
 date: 2022-11-05 18:25:26 +0900
 categories: [study, spring]
 tags: [spring, annotation, valid]
 ---
 
-## @Valid vs @Validated
-
-**@Valid**
+## **@Valid**
 
 -  JSR-303 표준 객체 제약조건 검증 어노테이션
--  ArgumentResolver에 의해 처리된다.
+-  **ArgumentResolver**에 의해 처리된다.
 -  검증에 오류가 있다면 `MethodArgumentNotValidException` 예외가 발생하며 디스패처 서블릿에 기본으로 등록된 예외 리졸버인 `DefaultHandlerExceptionResolver`에 의해 400 에러가 발생한다.
 -  스프링에서는 ArgumentResolver에 의해 처리되기에 `@Valid`는 기본적으로 **컨트롤러에서만 동작**하며 다른 계층에서는 검증되지 않는다. 다른 계층에서 파라미터를 검증하기 위해선 **@Validated**와 결합하여야한다.
 
-**@Validated**
+## **@Validated**
 
 -  스프링에서 제공하며, **AOP**기반으로 메소드의 요청을 가로채서 유효성 검증을 해준다.
 
@@ -29,7 +27,7 @@ tags: [spring, annotation, valid]
 
 -  @Valid와 다르게 Group Validation까지 가능하도록 구현되었다.
 
-   -  Group Validation이란 객채 유효성 검증에서, 모든 필드를 검사하지 않고 특정 그룹의 필드만 검증하도록 설정하는 것을 얘기한다.
+   -  Group Validation이란 객체 유효성 검증에서, 모든 필드를 검사하지 않고 특정 그룹의 필드만 검증하도록 설정하는 것을 얘기한다.
 
    -  이때 그룹을 지정할 때는 그룹 인터페이스를 정의하고 필드에 그룹을 추가해야한다.
 

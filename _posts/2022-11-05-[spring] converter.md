@@ -6,8 +6,6 @@ categories: [study, spring]
 tags: [spring, converter]
 ---
 
-## Converter
-
 controller 인자로 enum 받는 문제를 해결했던 것은 enum 타입에 맞춘 `Converter`를 bean에 등록하는 것이었다. 단순히 bean에 등록하는 것으로 controller에서 httpConverter 동작할 때 이것을 적용한 것이다. 이 뒤에 무엇이 있을까 하여 조사해보았다.
 
 스프링에서는 기본적인 타입 변환은 자동으로 지원한다. 따라서 파라미터로 넘어온 문자 데이터가 컨트롤러에서 직접 Integer 타입으로 변환된다.

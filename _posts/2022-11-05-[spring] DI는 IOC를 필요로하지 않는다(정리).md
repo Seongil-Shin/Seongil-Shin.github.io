@@ -61,7 +61,7 @@ public class PizzaStore
 
 ![dip 지킴](../assets/img/[spring] DI는 IOC를 필요로하지 않는다(정리)/DIP-resolved.png)
 
-DI는 DIP를 사용한다고 생각하지만 이 둘은 별개다. DI를 사용하면서 DIP가 필요없는 경우도 많다. 아래 `CachedUserStore` 클래스에서는 일정기간(`duration`) 동안 캐쉬하는 기능을 제공한다. 이때 `duration`은 DI를 통해 주입되지만 DIP가 필요한 것은 아디ㅏ.
+DI는 DIP를 사용한다고 생각하지만 이 둘은 별개다. DI를 사용하면서 DIP가 필요없는 경우도 많다. 아래 `CachedUserStore` 클래스에서는 일정기간(`duration`) 동안 캐쉬하는 기능을 제공한다. 이때 `duration`은 DI를 통해 주입되지만 DIP가 필요한 것은 아니다.
 
 ```java
 public interface IUserStore

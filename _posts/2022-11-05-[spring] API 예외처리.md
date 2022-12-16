@@ -6,7 +6,6 @@ categories: [study, spring]
 tags: [spring, api, exception]
 ---
 
-# API 예외처리
 
 ## 예외 발생 시에도 JSON 응답 보내기
 
@@ -31,8 +30,7 @@ BasicErrorController은 스프링부트에서 기본으로 오류를 처리해�
 
 ```java
 @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
-public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse
-response) {}
+public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {}
 
 @RequestMapping
 public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {}
@@ -67,7 +65,7 @@ BasicErrorController은 HTML 에러 페이지지를 제공할 때는 매우 편�
 
 스프링 MVC는 컨트롤러 밖으로 예외가 던져진 경우, 이 예외를 잡고 처리하는 HandlerExceptionResolver를 제공해준다.
 
-![image-20221103143127595](/Users/user/Library/CloudStorage/OneDrive-개인/study/assets/img/Monosnap 9. API 예외 처리.pdf 2022-11-03 16-08-16.png)
+![image-20221103143127595](https://3553248446-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-M5HOStxvx-Jr0fqZhyW%2F-MHgWZT9gTjduDZZSBCB%2F-MHg_Kf4ZPe0P4i73FqH%2Fimage.png?alt=media&token=e5b40b09-382a-42da-9e57-428789aa879eg)
 
 이때 HandlerExceptionResolver는 예외를 해결해도 postHandle()은 호출되지 않는다.
 
@@ -87,17 +85,17 @@ public interface HandlerExceptionResolver {
 ```java
 @Slf4j
 public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
-	@Override
+  @Override
   public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-		try {
-			if (ex instanceof IllegalArgumentException) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
-				return new ModelAndView();
-			}
-		} catch (IOException e) {
-			log.error("resolver ex", e);
+    try {
+      if (ex instanceof IllegalArgumentException) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+        return new ModelAndView();
+      }
+    } catch (IOException e) {
+      log.error("resolver ex", e);
     }
-		return null;
+    return null;
   }
 }
 ```
@@ -208,7 +206,7 @@ public class NotFoundException extends RuntimeException {
 }
 ```
 
-NotFoundException 예외가 컨트롤러 밖으로 넘어가면 ResponseStatusExceptionResolver가 해당 애노테이션을 확인해서 오류 코드를 404로 변경하고 메시지를 담는다.
+NotFoundException 커스텀 예외가 컨트롤러 밖으로 넘어가면 ResponseStatusExceptionResolver가 해당 애노테이션을 확인해서 오류 코드를 404로 변경하고 메시지를 담는다.
 
 reason에는 MessageSource를 찾는 기능도 제공한다.
 
@@ -223,7 +221,7 @@ error.notfound=찾을 수 없습니다.
 
 **ResponseStatusException**
 
-@ResponseStatus는 개발자가 직접 변경할 수 없는 예외에는 적용할 수 없다. 이떄는 ResponseStatusException를 사용하면 된다.`
+@ResponseStatus는 개발자가 직접 변경할 수 없는 예외에는 적용할 수 없다. 이때는 ResponseStatusException를 사용하면 된다.`
 
 ```java
 @GetMapping("/api/response-status-ex2")
@@ -254,7 +252,7 @@ public class ExControllerAdvice {
       public ErrorResult illegalExHandle(IllegalArgumentException e) {
           return new ErrorResult("BAD", e.getMessage());
       }
-  ...
+      ...
 }
 
 ```
@@ -285,43 +283,43 @@ public class ExampleAdvice3 {}
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-  	...
-		try {
-      ...
-			try {
+  ...
+  try {
+    ...
+      try {
         ...
-				// Determine handler for the current request.
-				mappedHandler = getHandler(processedRequest);
+        // Determine handler for the current request.
+        mappedHandler = getHandler(processedRequest);
 
-				// Determine handler adapter for the current request.
-				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+        // Determine handler adapter for the current request.
+        HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
         
         ...
           
-				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
-					return;
-				}
+        if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+          return;
+        }
 
-				// Actually invoke the handler.
-				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+        // Actually invoke the handler.
+        mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
         
         ...
           
-				mappedHandler.applyPostHandle(processedRequest, response, mv);
-			}
-			catch (Exception ex) {
-				dispatchException = ex;
-			}
-			catch (Throwable err) {
-				dispatchException = new NestedServletException("Handler dispatch failed", err);
-			}
-			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+        mappedHandler.applyPostHandle(processedRequest, response, mv);
+      }
+      catch (Exception ex) {
+        dispatchException = ex;
+      }
+      catch (Throwable err) {
+        dispatchException = new NestedServletException("Handler dispatch failed", err);
+      }
+      processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
     }
   	...
-	}
+}
 ```
 
-- 핸들러(컨트롤러)와 인터셉터를 실행 중 예되가 발생하면 `dispatchException`에 예외를 저장하고, `processDispatchResult`로 넘겨준다.
+- 핸들러(컨트롤러)와 인터셉터를 실행 중 예외가 발생하면 `dispatchException`에 예외를 저장하고, `processDispatchResult`로 넘겨준다.
 - 위 코드에는 나오지 않지만, `processDispatchResult`에서는 예외가 있고, `ModelAndViewDefiningException`이 아닌 경우 `processHandlerException`를 호출한다.
   - `ModelAndViewDefiningException`은 예외 페이지를 보여주도록하는 예외
 - `processHandlerException`에서는 DispatcherServlet에 등록된  `HandlerExceptionResolver` 을 하나씩 수행한다.
@@ -331,6 +329,7 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
   - DefaultHandlerExceptionResolver
 - 세 가지 Resolver 중 `ExceptionHandlerExceptionResolver`가 ExceptionHandler를 실행한다.
 -  `@ControllerAdvice`로 ExceptionHandler를 등록하면, 디폴트로 모든 컨트롤러에 등록된다. 따라서 interceptor에서 날린 예외도 받을 수 있는 것이다.
+- 서블릿 필터의 경우는 디스패처 서블릿 이전에 수행되기에, ExceptionHandler로 받지 않는다.
 
 ### More..
 

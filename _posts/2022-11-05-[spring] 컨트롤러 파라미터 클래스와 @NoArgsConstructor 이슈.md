@@ -1,12 +1,10 @@
 ---
-title: ModelAttribute와 NoArgsConstructor 동시 사용 이슈
+title: ModelAttribute와 NoArgsConstructor 추가 시 아무것도 안들어가는 이슈
 author: 신성일
 date: 2022-11-05 18:15:26 +0900
 categories: [study, spring]
 tags: [spring, binding]
 ---
-
-# @ModelAttribute와 @NoArgsConstructor 추가 시 아무것도 안들어가는 이슈
 
 제목 그대로 다음과 같이 `@NoArgsConstructor` 애노테이션을 `@ModelAttribute`로 적용되는 컨트롤러 파라미터 클래스에 추가하니 제대로 쿼리를 날려도 아무것도 안들어가는 이슈가 발생했다.
 

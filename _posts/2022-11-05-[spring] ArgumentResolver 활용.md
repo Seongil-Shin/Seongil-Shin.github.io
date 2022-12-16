@@ -37,23 +37,23 @@ public @interface Login {
 
 ```java
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
-	@Override
+  @Override
 	public boolean supportsParameter(MethodParameter parameter) {
-		boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
+    boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
     boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
     return hasLoginAnnotation && hasMemberType;
   }
 
-	@Override
+  @Override
   public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                 NativeWebRequest webRequest,
                                 WebDataBinderFactory binderFactory) throws Exception {
-    	HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
-      HttpSession session = request.getSession(false);
-      if (session == null) {
-      	return null;
-      }
-      return session.getAttribute(SessionConst.LOGIN_MEMBER);
+    HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
+    HttpSession session = request.getSession(false);
+    if (session == null) {
+      return null;
+    }
+    return session.getAttribute(SessionConst.LOGIN_MEMBER);
   }
 }
 ```
@@ -66,9 +66,9 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 ```java
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-	@Override
+  @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-  	resolvers.add(new LoginMemberArgumentResolver());
+  resolvers.add(new LoginMemberArgumentResolver());
   }
 }
 ```

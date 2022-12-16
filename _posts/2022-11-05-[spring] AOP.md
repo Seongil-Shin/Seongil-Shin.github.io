@@ -6,7 +6,6 @@ categories: [study, spring]
 tags: [spring, aop]
 ---
 
-## AOP
 
 > AOP = Aspect Oriented Programming = 관점 지향 프로그래밍
 
@@ -14,7 +13,7 @@ tags: [spring, aop]
 
 AOP에서 각 관점을 기준으로 모듈화한다는 것은 코드들을 부분적으로 나누어서 모듈화하겠다는 의미다. 개발을 하다보면 서로 다른 파일에서 같은 코드를 반복해서 쓰는 경우가 있는데 이것을 **흩어진 관심사(crosscutting concerns)**라고 한다. 이처럼 흩어진 관심사를 **Aspect로 모듈화**하고 핵심적인 비즈니스 로직에서 분리하여 **재사용**하겠다는 것이 AOP의 취지이다.
 
-![crosscutting concerns](../assets/img/[spring] AOP/scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.png)
+![crosscutting concerns](https://user-images.githubusercontent.com/56240505/123369146-27997800-d5b8-11eb-9be7-dfd7a34a4f86.png)
 
 <br/>
 
@@ -51,7 +50,7 @@ AOP에서 각 관점을 기준으로 모듈화한다는 것은 코드들을 부�
 -  스프링 빈에만 AOP 적용가능
 -  모든 AOP 기능을 제공하는 것이 아닌 스프링 IoC와 연동하여 애플리케이션에서 겪는 흔한 문제에 대한 해결책을 지원하는 것이 목적
 
-![spring aop](../assets/img/[spring] AOP/imagesrc=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fbaff68c9-468e-41f0-99a8-da038b8d3d40%2F_2020-08-06\_\_8.32.12.png)
+![spring aop](https://i0.wp.com/www.dineshonjava.com/wp-content/uploads/2017/03/Spring-AOP-Based-System.jpg)
 
 <br/>
 

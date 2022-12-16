@@ -16,7 +16,7 @@ HorizontalPodAutoscaler의 약자로, k8s에서 CPU 사용률을 체크하여 Po
 
 Auto scaling은 사용자가 정의한 주기(스케줄링)나 이벤트(모니터링 알람)에 따라 서버를 자동으로 생성하거나 삭제한다. 서비스 트래픽에 따라 서버를 늘리거나 줄여 발생하는 요금을 최소화한다.
 
-![0*FW7GEykC2wItvKxP](https://miro.medium.com/max/640/0*FW7GEykC2wItvKxP.png)
+![0*FW7GEykC2wItvKxP](https://miro.medium.com/max/1400/0*fMKxP-l3N6lO97rV)
 
 k8s에서는 다음과 같은 알고리즘을 통해 적절한 pod 개수를 유지한다.
 
@@ -32,13 +32,13 @@ k8s에서는 다음과 같은 알고리즘을 통해 적절한 pod 개수를 유
 
 초기 Replica(Pod) 개수를 1개로 설정
 
-![1*rRw2_cr-91eWD15rk-NViQ](https://miro.medium.com/max/640/1*rRw2_cr-91eWD15rk-NViQ.png)
+![1*rRw2_cr-91eWD15rk-NViQ](https://miro.medium.com/max/1222/1*rRw2_cr-91eWD15rk-NViQ.webp)
 
 **HPA 설정 예시**
 
 리소스 상태에 따라서 10개까지 scaling 가능하도록 설정
 
-![1*gpX_9eCEwnIXlGxWxOe9tw](https://miro.medium.com/max/750/1*gpX_9eCEwnIXlGxWxOe9tw.png)
+![1*gpX_9eCEwnIXlGxWxOe9tw](https://miro.medium.com/max/1340/1*gpX_9eCEwnIXlGxWxOe9tw.webp)
 
 <br/>
 
@@ -48,7 +48,7 @@ auto scaling을 위해서는 k8s에서 서버 메트릭 정보를 수집할 수 
 
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbZcysz%2FbtroRZrd7dd%2FHxk56OA8ZF7x4UqUPpP1q1%2Fimg.png)
 
-Metric server가 수집한 metric 정보를 k8s aggregatordㅔ게 노티하는 방식으로 metric 정보가 관리된다. 만약 metric 정보를 얻고 싶다면 별도의 tool을 이용해서 aggregator에 있는 metric 정보들을 가져가게 된다.
+Metric server가 수집한 metric 정보를 k8s aggregator에게 노티하는 방식으로 metric 정보가 관리된다. 만약 metric 정보를 얻고 싶다면 별도의 tool을 이용해서 aggregator에 있는 metric 정보들을 가져가게 된다.
 
 이러한 metric server는 기본적은 k8s component에 포함되어있지 않기에 별도의 적용이 필요하다.
 

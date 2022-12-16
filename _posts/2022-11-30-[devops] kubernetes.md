@@ -55,7 +55,7 @@ tags: [k8s, kubernetes]
 
 필요한 기능이 쿠버네티스에서 제공하지 않을 수 있다. 이럴때 그러한 기능을 쿠버네티스 기본 기능과 동일한 방식으로 적용하고 사용할 수 있다. 
 
-예를 들어 쿠버네티스는 기본적으로 SSL 인증서 관리기능을 제공하지 않지만 [cert-manager][https://github.com/cert-manager/cert-manager]를 설치하고 Certificate 리소스를 사용하면 쿠버네티스 명령어로 인증서를 관리할 수 있다. 
+예를 들어 쿠버네티스는 기본적으로 SSL 인증서 관리기능을 제공하지 않지만 [cert-manager](https://github.com/cert-manager/cert-manager)를 설치하고 Certificate 리소스를 사용하면 쿠버네티스 명령어로 인증서를 관리할 수 있다. 
 
 ### Auto scaling
 

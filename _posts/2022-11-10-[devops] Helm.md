@@ -36,9 +36,9 @@ chart/
 	requirements.yaml        # OPTIONAL: 차트의 의존성을 포함한 파일
 	values.yaml              # 배포때마다 바뀔 수 있는 값을 포함
 	charts/                  # 애플리케이션의 의존성들의 helm chart를 저장
-													 # ex) 애플리케이션 helm chart 설치시 필요하면 mysql helm chart를 저장
+					# ex) 애플리케이션 helm chart 설치시 필요하면 mysql helm chart를 저장
 	templates/               # 쿠버네티스 오브젝트 템플릿의 디렉터리. 실제 배포시 필요함.
-													 # 설정값과 결합하여 쿠버네티스 메니페스트를 생성하는데 사용한다.
+					# 설정값과 결합하여 쿠버네티스 메니페스트를 생성하는데 사용한다.
 	templates/NOTES.txt      # OPTIONAL: A plain text file containing short usage notes
 ```
 
@@ -102,17 +102,19 @@ templates에서 사용할 값들을 저장해놓은 곳. go template
 
 차트를 작성할 때 가장 중요한 부분중 하나는 `templates/` 디렉터리이다. 이 디렉터리의 템플릿들이 실제로 생성할 쿠버네티스 오브젝트를 정의하기 때문이다.
 
-Helm 템플릿은 [Go의 템플릿](https://pkg.go.dev/text/template) 방식을 따른다. `{{}}`로 감까진 영역을 템플릿 디렉티브라고 하는데, 이 템플릿 디렉티브를 활용하여 어떤 값을 특정 값으로 치환하거나 `if/else`와 같은 컨트롤 구조를 나타낼 수 있다. 또한 함수를 사용할 수도 있다.
+Helm 템플릿은 [Go의 템플릿](https://pkg.go.dev/text/template) 방식을 따른다. `\{\{\}\}`로 감까진 영역을 템플릿 디렉티브라고 하는데, 이 템플릿 디렉티브를 활용하여 어떤 값을 특정 값으로 치환하거나 `if/else`와 같은 컨트롤 구조를 나타낼 수 있다. 또한 함수를 사용할 수도 있다.
 
 ```yaml
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "test-chart.fullname" . }}
+  name: \{\{ include "test-chart.fullname" . \}\}
   labels:
-{{ include "test-chart.labels" . | indent 4 }}
+\{\{ include "test-chart.labels" . | indent 4 \}\}
 ...
-{{- if .Values.ingress.enabled -}}
+\{\{- if .Values.ingress.enabled -\}\}
+
 ```
 
 [chart 템플릿 작성 가이드](https://helm.sh/ko/docs/chart_template_guide/getting_started/)

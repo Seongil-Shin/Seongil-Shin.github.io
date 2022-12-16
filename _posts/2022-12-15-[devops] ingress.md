@@ -65,7 +65,7 @@ Ingress는 `Ingress controller`라고 불리는 서버 컨테이너에 적용되
 
 ### Ingress controller
 
-![ingress controller](https://blogfiles.pstatic.net/MjAxOTA0MDFfMzEg/MDAxNTU0MDk0MzE3ODQw.bAWecmPjZ7FdiGK1BuTnSe7D9EaYK2TIJgDwB8ENczkg.MZJ_mFOHBM6RkOIOZMlYhH9uQ_xBQOfSNQRcq7OW14cg.PNG.alice_k106/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2019-04-01_%EC%98%A4%ED%9B%84_1.51.46.png?type=w2)
+![ingress controller](https://www.fairwinds.com/hs-fs/hubfs/Blog%20Feature%20Images/Nginx%20Ingress%20on%20GCP%20-%20Fig%2001.png?width=1794&name=Nginx%20Ingress%20on%20GCP%20-%20Fig%2001.png)
 
 Ingress는 직접 생성해 사용할수도, 클라우드 플랫폼에 위임할 수도 있다. 직접 구동하려면 Nginx 웹 서버 기반의 Nginx Ingress Controller를 사용할 수 있고, 클라우드 플랫폼에 위임하려면 Google Kubernetes Engine을 사용할 수도 있다.
 

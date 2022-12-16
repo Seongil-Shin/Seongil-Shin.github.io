@@ -372,7 +372,7 @@ kubectl rollout undo deploy/echo-deploy --to-revision=2
 
 ### 배포전략 설정
 
-Deployment엔 다양한 배포 전략이 있다. 여기선 롤링 업데이트(RollingUpdate) 방식을 사용할 떄 동시에 업데이트하는 Pod의 개수를 변경해보자
+Deployment엔 다양한 배포 전략이 있다. 여기선 롤링 업데이트(RollingUpdate) 방식을 사용할 때 동시에 업데이트하는 Pod의 개수를 변경해보자
 
 ```yaml
 apiVersion: apps/v1
@@ -639,7 +639,7 @@ MySQL과 같은 데이터베이스는 데이터가 유실되지 않도록 반드
 
 ### Volume(**empty-dir**) 만들기
 
-empry-dir은 같은 pod 안에 속한 컨테이너 간 디렉터리를 공유하는 방법으로 보통 사이드카 패턴에서 사용한다. 예를들어 특정 컨테이너에서 생성되는 로그 파일을 별도의 컨테이너가 수집할 수 있다.
+empty-dir은 **같은 pod 안에 속한 컨테이너 간 디렉터리를 공유하는 방법**으로 보통 사이드카 패턴에서 사용한다. 예를들어 특정 컨테이너에서 생성되는 로그 파일을 별도의 컨테이너가 수집할 수 있다.
 
 <img src="https://subicura.com/k8s/build/imgs/guide/volume/empty-dir.webp" style="zoom:67%;" />
 
@@ -688,7 +688,7 @@ kubectl logs -f sidecar -c sidecar
 
 ### hostpath
 
-호스트 디렉터리를 컨테이너 디렉터리에 연결하는 방법이다.
+호스트(node) 디렉터리를 컨테이너 디렉터리에 연결하는 방법이다.
 
 <img src="https://subicura.com/k8s/build/imgs/guide/volume/hostpath.webp" alt="hostpath" style="zoom:50%;" />
 

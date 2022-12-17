@@ -6,8 +6,6 @@ categories: [study, spring]
 tags: [spring, mybatis]
 ---
 
-# mybatis.type-aliases-package 
-
 mybatis mapper에서 requestType이나 parameterType으로 클래스를 참조할 때 다음과 같이 패키지명을 다 써줘야하는 불편함이 있다.
 
 ```xml
@@ -32,7 +30,7 @@ mybatis.type-aliases-package=com.hello.spring
 
 <br/>
 
- ### 주의점
+### 주의점
 
 `mybatis.type-aliases-package`에서 설정한 패키지 하위 경로를 모두 살펴보는 방식으로 동작하므로, 같은 클래스가 두 개 이상 존재하면 에러가 난다.
 

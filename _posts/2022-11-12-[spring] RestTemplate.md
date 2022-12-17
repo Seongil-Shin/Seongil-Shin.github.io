@@ -1,11 +1,10 @@
 ---
-title: RestTemplate*
+title: RestTemplate
 author: 신성일
 date: 2022-11-12 20:19:26 +0900
 categories: [study, spring]
 tags: []
 ---
-
 
 
 스프링에서 지원하는 객체로, 간편하게 Rest 방식 API를 호출할 수 있는 스프링 내장 클래스다.
@@ -21,7 +20,7 @@ tags: []
 
 ## **동작원리**
 
-![RestTemplate](https://blogfiles.pstatic.net/MjAyMjAxMTVfMTc5/MDAxNjQyMjE3MzMzMTIw.K-uRor_KPMp0TZXCAcRvMo3lV3StP5YY17I5O1rfZL4g.ygXa8nHLGsZyo0kjzcfd5kdLPdt1uTmwZgWfMF_xlM4g.PNG.hj_kim97/1.png?type=w1)
+![RestTemplate](https://t1.daumcdn.net/cfile/tistory/99300D335A9400A52C)
 
 1. 애플리케이션 내부에서 REST API에 요청하기 위해 RestTemplate의 메서드를 호출한다.
 2. RestTemplate은 MessageConverter를 이용해 java object를 request body에 담을 message(JSON etc.)로 변환한다. 메시지 형태는 상황에 따라 다름

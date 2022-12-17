@@ -16,8 +16,8 @@ tags: []
 @ResponseStatus(HttpStatus.OK)
 @GetMapping("/article")
 public ArticleListDto getArticles(SelectArticlesQuery query) {
-		ArticleListDto articleListDto = articleService.getArticleList(query);
-		return articleListDto;
+  ArticleListDto articleListDto = articleService.getArticleList(query);
+  return articleListDto;
 }
 ```
 
@@ -34,8 +34,8 @@ public ArticleListDto getArticles(SelectArticlesQuery query) {
 ```java
 @GetMapping("/article")
 public ResponseEntity<ArticleListDto> getArticles(SelectArticlesQuery query) {
-		ArticleListDto articleListDto = articleService.getArticleList(query);
-		return ResponseEntity.ok(response);
+  ArticleListDto articleListDto = articleService.getArticleList(query);
+  return ResponseEntity.ok(response);
 }
 ```
 
@@ -43,7 +43,7 @@ public ResponseEntity<ArticleListDto> getArticles(SelectArticlesQuery query) {
 
 ## @ResponseStatus의 단점
 
-@ResponseStatus는 단 하나의 응답 상태 코드를 지정하는 것 외에 다른 작업이 불가능하다는 것이 가장 큰 단점이다.
+@ResponseStatus는 단 하나의 응답 상태 코드를 지정하는 것 외에 다른 작업이 불가능하다는 것이 가장 큰 단점이다. 따라서 보통 @ResponseStatus는 에러 핸들링 컨트롤러에서 주로 사용하고, 실제 서비스를 담당하는 컨트롤러에서는 사용하기에 불편하다.
 
 ResponseEntity의 경우 필요하다면, 컨트롤러 메서드 내부에서 오류 상태 코드를 지정하여 오류를 보낼 수 있다. 또한 Header에 대한 설정도 가능하다. 따라서 @ResponseStatus에 비해 유연성이 좋다.
 

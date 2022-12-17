@@ -1,11 +1,10 @@
-```
-title: spring - json 응답 시 특정 필드 빼고 보내기
+---
+title: json 응답 시 특정 필드 빼고 보내기
 author: 신성일
 date: 2022-11-12 18:19:26 +0900
 categories: [study, spring]
 tags: []
-```
-
+---
 
 
 스프링에서는 Http 메시지 컨버터를 통해 사용자가 보낸 데이터와 서버에서 내보내는 데이터를 자동으로 변환해준다. 만약 다음과 같은 객체를 응답으로 보낼 경우 `Content-Type`이  `application/json`이라면, 스프링은 다음 객체를 자동으로 Json 형식으로 바꾸어 내보낸다.

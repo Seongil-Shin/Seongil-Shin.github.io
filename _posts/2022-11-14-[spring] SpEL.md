@@ -339,9 +339,9 @@ public void run(ApplicationArguments args) throws Exception {
 public class Sample {
   private int value = 123;
 
-	public int getValue() {
-		return value;
-	}
+  public int getValue() {
+    return value;
+  }
 }
 ```
 

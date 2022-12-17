@@ -26,8 +26,8 @@ public class ArticleService
 @Target({ElementType.[적용대상]})
 @Retention(RetentionPolicy.[정보유지되는 대상])
 public @interface [어노테이션명] {
-	public 타입 elementName() [default 값]
-    ...
+  public 타입 elementName() [default 값]
+  ...
 }
 ```
 
@@ -62,7 +62,7 @@ public @interface [어노테이션명] {
   - ElementType.PARAMETER : 전달인자 선언
   - ElementType.TYPE_PARAMETER : 전달인자 타입 선언
   - ElementType.TYPE_USE : 타입 선언
-- @Documented : 해당 애노테이션을 javadoc에 포함시킴
+- @Documented : 해당 애노테이션이 붙은 대상을 javadoc에 포함시킴
 - @Inherited : 애노테이션의 상속을 가능하게 함
 - @Repeatable : Java8부터 지원하며, 연속적으로 애노테이션을 선언할 수 있게함
 
@@ -72,7 +72,7 @@ public @interface [어노테이션명] {
 
 ```java
 public @interface MyAnnotation {
-	public String name() default "";
+  public String name() default "";
   public int age() default 20;
   public String value() default "";
     ...
@@ -95,12 +95,11 @@ public @interface MyAnnotation {
 어플리케이션 실행시 커스텀 애노테이션을 사용한 곳과 지정한 값들을 얻어오려면 **자바 리플랙션**을 사용해야한다.
 
 ```java
-Method method = MyClass.class.getMethod("doThis”); //자바 리플렉션 getMethod로 메서드 doThis를 얻어온다
+Method method = MyClass.class.getMethod("doThis"); //자바 리플렉션 getMethod로 메서드 doThis를 얻어온다
 Annotation[] annotations = method.getDeclaredAnnotations(); //메서드에 선언된 어노테이션 객체를 얻어온다
 
 //메서드 doThat에 선언된 MyAnnotation의 어노테이션 객체를 얻어온다
-Annotation annotation = MyClass.class.getMethod("doThat")
-                                         .getAnnotation(MyAnnotation.class);
+Annotation annotation = MyClass.class.getMethod("doThat").getAnnotation(MyAnnotation.class);
 ```
 
 <br/>

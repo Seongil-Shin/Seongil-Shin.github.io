@@ -7,10 +7,7 @@ tags: [web, header, http]
 ---
 
 
-
-# **[web] Content-Disposition**
-
-HTTP Response Body에 오는 컨텐츠의 기질/성향을 알려주는 속성이다.
+HTTP Response Body에 오는 컨텐츠의 기질/성향을 알려주는 HTTP 헤더 속성이다.
 
 - inline : 디폴트 값. body에 있는 값이 웹 페이지에 표시되어야한다는 뜻.
 
@@ -24,7 +21,7 @@ HTTP Response Body에 오는 컨텐츠의 기질/성향을 알려주는 속성�
 
   `Content-Disposition : attachment; filename="filename.jpg"`
 
-- form-data : body가 `multipart/form-dara`일 경우 적용된다. 데이터가 여러 파트로 나눠져서 보내지도록 해줌. 다음과 같이 name으로 나눠진 필드를 나타낸다.
+- form-data : body가 `multipart/form-datwa`일 경우 적용된다. 데이터가 여러 파트로 나눠져서 보내지도록 해줌. 다음과 같이 name으로 나눠진 필드를 나타낸다.
 
   ```http
   POST /test.html HTTP/1.1

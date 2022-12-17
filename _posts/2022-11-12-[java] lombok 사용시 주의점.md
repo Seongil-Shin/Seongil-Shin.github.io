@@ -100,7 +100,7 @@ public class User {
 
 immutable 클래스를 만들어주는 조합 애노테이션으로, @EqualsAndHashCode, @AllArgsConstructor가 포함된다. 
 
-@EqualsAndHashCode는 문제가 되지 않지만, @AllArgsConstructor는 위에서 언급한 문제가 있다.
+@EqualsAndHashCode는 immutable 클래스이므로 문제가 되지 않지만, @AllArgsConstructor는 위에서 언급한 문제가 있다.
 
 <br/>
 

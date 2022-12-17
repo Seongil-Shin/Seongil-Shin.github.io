@@ -6,7 +6,6 @@ categories: [study, spring]
 tags: [spring, http, converter]
 ---
 
-# HTTP 메시지 컨버터
 
 스프링에서 컨트롤러를 개발하다보면, url 파라미터를 `long` 으로 받아도 문제없이 작동된다.
 
@@ -17,7 +16,7 @@ public String getArticleDetail(@PathVariable long articleId) {
 
 위와 같은 컨트롤러가 있을 때, 유저는 `/article/123`라는 요청을 보내면 자동으로 `getArticleDetail`의 매개변수인 `articleId`에 `123` 값이 문제없이 할당된다.
 
-URL 파라미터는 기본적으로 문자열로 인식한다. 하지만 long에 할당이 일어나는 것은 무언가가 중간에서 문자열 `123`을 long 타입 `123`으로 변환시켜주는 것이다. 그 무언가가 스프링 MVC에서는 `HTTP 메시지 컨버터`이다.
+URL 파라미터는 기본적으로 문자열로 인식다. 하지만 long에 할당이 일어나는 것은 무언가가 중간에서 문자열 `123`을 long 타입 `123`으로 변환시켜주는 것이다. 그 무언가가 스프링 MVC에서는 `HTTP 메시지 컨버터`이다.
 
 스프링 MVC는 다음의 경우에 HTTP 메시지 컨버터를 적용한다
 
@@ -52,12 +51,12 @@ HttpMessageConverter는 HTTP 메시지 컨버터의 인터페이스로 다음과
 1. HTTP 요청이 오고, 컨트롤러에서 @RequestBody, HttpEntity 파라미터를 사용한다
 2. 메시지 컨버터가 `canRead()`를 호출하여 메시지를 읽을 수 있는지 확인한다.
    -  대상 클래스 타입을 지원하는가, HTTP 요청의 Content-type 미디어 타입을 지원하는가
-3. 읽을 수 있으면 `read()를 호출해서 객체를 생성하고 반환한다.
+3. 읽을 수 있으면 `read()`를 호출해서 객체를 생성하고 반환한다.
 
 **HTTP 응답**
 
 1. 컨트롤러에서 @ResponseBody, HttpEntity로 값이 반환된다.
-2. 메시지컨버터가 메시지를 쓸 수 있는지 확인하기 위해 `canWrite()₩를 호출한다.
+2. 메시지컨버터가 메시지를 쓸 수 있는지 확인하기 위해 `canWrite()`를 호출한다.
    -  대상 클래스 타입을 지원하는가, HTTP 요청의 Accept 미디어 타입을 지원하는가
 3. 쓸 수 있으면 `write()`를 호출해서 HTTP 응답 메시지 바디에 데이터를 생성한다.
 

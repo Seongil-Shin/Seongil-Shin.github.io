@@ -6,8 +6,6 @@ categories: [stuy, design pattern]
 tags: [design pattern, unittest, test]
 ---
 
-# 유닛테스트에서 구현 검증이란?
-
 비즈니스 코드를 먼저 작성하고 유닛테스트를 작성할 때, 완성된 코드를 보고 테스트 코드를 작성하다보면 내부 구현에 맞추어 테스트를 작성하게 되고, 구현 자체를 검증하게 되는 일이 많이 발생하였다.
 
 **유닛 테스트에서는 구현이 아닌 행동을 검증**(test behaviour, not implementation)해야한다. 따라서 구현을 검증한 테스트 코드를 고치려 했으나 어디까지가 구현을 검증한 것인지가 모호했다.
@@ -182,7 +180,7 @@ it("[After] 기존 주문이 있으면 새 정보로 갱신된다", () => {
 
 위에서 살펴본 경우를 보고 한번 글 초반에 작성했던 의문에 대한 답을 생각해보자
 
-### **A 메서드 안에서 B 메서드를 제대로 호출했는지를 보는 것도 구현 검증일까? **
+### A 메서드 안에서 B 메서드를 제대로 호출했는지를 보는 것도 구현 검증일까?
 
 구현 검증이다. A 메서드는 B 메서드를 호출하든 안하든 A 메서드에 부여된 일을 수행하면 될 뿐이다.
 
@@ -214,7 +212,7 @@ it("[After] 기존 주문이 있으면 새 정보로 갱신된다", () => {
 
 mocks와 stub가 나쁜 것은 아니다. mocks와 stub은 서로 다른 시나리오와 환경에서 테스트를 할 수 있게 해준다. 이 정도는 `supporting implementation`이며 `testing implementation`이 아니다. 하지만 너무 많은 assertions이 mocks와 stub에 의존하여 나온다면 문제가 된다.
 
-**Testing begavior와 testing implementation이 같아지는 때**가 있다. 테스트하는 메서드가 coordinator 메서드일 경우 그렇다. 이러한 메서드는 결정을 내리고 다른 메서드나 클래스를 호출하는 역할을 한다. 이러한 메서드를 테스트할 때는 메서드가 적절히 불러졌는지 확인하는 것밖에 없다.
+**Testing behavior와 testing implementation이 같아지는 때**가 있다. 테스트하는 메서드가 coordinator 메서드일 경우 그렇다. 이러한 메서드는 결정을 내리고 다른 메서드나 클래스를 호출하는 역할을 한다. 이러한 메서드를 테스트할 때는 메서드가 적절히 불러졌는지 확인하는 것밖에 없다.
 
 Testing begavior와 testing implementation이 같아지는 예시)
 
@@ -295,7 +293,7 @@ private Book lord_of_the_rings = new Book("Lord of the rings");
 @Test
 public void reallyInterestedInWhatThisServiceIsDoing() {
 	BookRepository bookRepository = mock(BookRepository.class);
-  when(bookRepository.getAllBooks()).thenReturn(Collections.singletonList(lord_of_the_rings));
+   when(bookRepository.getAllBooks()).thenReturn(Collections.singletonList(lord_of_the_rings));
 	BookService bookService = new BookService(bookRepository);
 
 	assertThat(bookService.getAllBooks(), containsInAnyOrder(lord_of_the_rings));
@@ -311,7 +309,7 @@ private Book lord_of_the_rings = new Book("Lord of the rings");
 @Test
 public void shouldGetAllBooks() {
 	BookRepository bookRepository = mock(BookRepository.class);
-  when(bookRepository.getAllBooks()).thenReturn(Collections.singletonList(lord_of_the_rings));
+   when(bookRepository.getAllBooks()).thenReturn(Collections.singletonList(lord_of_the_rings));
 	BookService bookService = new BookService(bookRepository);
 
 	assertThat(bookService.getAllBooks(), containsInAnyOrder(lord_of_the_rings));

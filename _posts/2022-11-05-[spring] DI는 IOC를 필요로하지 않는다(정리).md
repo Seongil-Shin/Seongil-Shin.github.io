@@ -57,9 +57,9 @@ public class PizzaStore
 
 위 `PizzaStore` 클래스는 현재 `Pizza ` 구현체에 의존하고 있다. 이 형태는 DIP를 위반하고 있는 것으로, 다음과 같이 변경되어야한다.
 
-![dip위반](../assets/img/[spring] DI는 IOC를 필요로하지 않는다(정리)/DIP-violation.png)
+![dip위반](https://jwchung.github.io/images/DIP-violation.png)
 
-![dip 지킴](../assets/img/[spring] DI는 IOC를 필요로하지 않는다(정리)/DIP-resolved.png)
+![dip 지킴](https://jwchung.github.io/images/DIP-resolved.png)
 
 DI는 DIP를 사용한다고 생각하지만 이 둘은 별개다. DI를 사용하면서 DIP가 필요없는 경우도 많다. 아래 `CachedUserStore` 클래스에서는 일정기간(`duration`) 동안 캐쉬하는 기능을 제공한다. 이때 `duration`은 DI를 통해 주입되지만 DIP가 필요한 것은 아니다.
 
@@ -122,10 +122,15 @@ public static void Main()
 
 DI를 사용한다고 무조건 IoC 컨테이너가 필요한 것은 아니다. 보통은 의존성 등록비용(개발자가 직접 의존성을 주입하는 것) 때문에 IoC 컨테이너로 의존성 주입하지만, IoC 컨테이너를 사용하는 방법에는 `Weakly typed` 문제가 있다.
 
-Weakly typed 란, IoC 컨테이너에 의존성을 잘못 구성되였을 경우 컴파일 에러대신 런타임 에러가 발생하는 것이다.
+Weakly typed 란, IoC 컨테이너에 의존성을 잘못 구성되었을 경우 컴파일 에러대신 런타임 에러가 발생하는 것이다.
 
 따라서 Weakly typed 비용과 의존성 등록 비용 중 어떤 것이 더 큰지 생각하여 IoC 컨테이너로 DI를 구현할지 Pure DI를 사용할지 결정해야한다. (참고문서의 필자는 weakly typed 비용이 더 크다고 함)
 
 중요한 것은 뭘 사용해야할지보다 IoC 컨테이너 없이 Pure DI를 사용할 수 있고, Pure DI에도 장점이 있다는 것이다.
+
+### 요약
+DI는 어떠한 고차원 모듈이 저차원 모듈에 의존해서는 안된다는 DIP와 변경에는 닫혀있고 확장에는 열려있어야하는 OCP를 지키기 위해, 외부에서 의존하는 모듈을 주입해주는 것이다.
+보통 DI는 IoC 컨테이너로 주입해주지만, `weakly typed` 문제가 발생할 수 있다.
+따라서 직접 의존성 등록할 때 발생하는 비용과 `weakly typed` 비용을 잘 비교하여 사용하면 좋다.
 
 [참고문서](https://jwchung.github.io/DI%EB%8A%94-IoC%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EC%95%8A%EC%95%84%EB%8F%84-%EB%90%9C%EB%8B%A4)

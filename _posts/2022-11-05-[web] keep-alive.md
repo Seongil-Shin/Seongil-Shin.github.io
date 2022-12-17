@@ -6,8 +6,6 @@ categories: [study, web]
 tags: [web, keepalive]
 ---
 
-# Keep-Alive
-
 아래와 같이 http 헤더를 보다보면 keep-alive라고 명시된 부분이 보일 때가 있다.
 
 -  `connection : keep-alive`

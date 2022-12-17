@@ -6,9 +6,7 @@ categories: [study, spring]
 tags: [spring, exception]
 ---
 
-# InvalidDefinitionException
-
-@ResquestBody로 받는 매개변수의 클래스에 @NoArgsConstructor를 빼고 넣으니 위와 같은 에러가 발생했다.
+@ResquestBody로 받는 매개변수의 클래스에 @NoArgsConstructor를 빼니 `InvalidDefinitionException` 에러가 발생했다.
 
 ```java
 @PostMapping("/login")

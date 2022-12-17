@@ -6,7 +6,6 @@ categories: [study, spring]
 tags: [interceptor, spring]
 ---
 
-# 스프링 인터셉터
 
 스프링 인터셉터는 스프링 MVC가 제공하는 기술로, 서블릿 필터하고는 적용순서, 범위, 사용방법이 다르다.
 
@@ -37,7 +36,7 @@ tags: [interceptor, spring]
 스프링 인터셉터를 사용하려면 `HandlerInterceptor` 인터페이스를 구현하면 된다. 해당 인터페이스에는 다음과 같이 세가지 메서드가 있다
 
 -  preHandle : 컨트롤러 호출 전에 호출됨. true 반환 시 다음으로 진행, false 반환 시 컨트롤러 호출하지 않음.
--  postHandle : 컨트롤러 호출 후에 호출된다. preHandle에서 false 반환 시 호출되지 않음. 예외가 발생했을 때에서 호출되지 않음
+-  postHandle : 컨트롤러 호출 후에 호출된다. preHandle에서 false 반환 시 호출되지 않음. 예외가 발생했을 때에도 호출되지 않음
 -  afterCompletion : 뷰가 렌더링 된 다음에 호출됨. preHandle에서 false 가 반환되더라도 항상 호출됨.
    -  afterCompletion은 예외가 발생해도 호출된다. 따라서 공통 처리를 할 때는 afterCompletion을 사용한다.
    -  예외가 발생했을 때는 예외 정보(ex)를 포함해서 호출된다. (파라미터로 받음)
@@ -55,8 +54,8 @@ public class WebConfig implements WebMvcConfigurer {
       public void addInterceptors(InterceptorRegistry registry) {
           registry.addInterceptor(new LogInterceptor())
                   .order(1)
-			            .addPathPatterns("/**")
-									.excludePathPatterns("/css/**", "/*.ico", "/error");
+                  .addPathPatterns("/**")
+                  .excludePathPatterns("/css/**", "/*.ico", "/error");
       }
 }
 ```
@@ -122,9 +121,9 @@ interceptor에서 날아간 예외는 어떻게 처리하는 것이 좋을까?
 
 이에 관해선 [API 예외처리](https://seongil-shin.github.io/posts/spring-API-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC/) 문서의 **@ExceptionHandler, @ControllerAdvice 원리** 섹션에서 자세히 정리해놓았지만, 간단히 요약하자면 아래와 같다. 
 
-- interceptor의 preHandler와 postHandle에서 던진 예외는 ExceptionHandler에서 잡을 수 있다.
+- interceptor의 preHandle와 postHandle에서 던진 예외는 ExceptionHandler에서 잡을 수 있다.
   - `@ExceptionHandler`로 선언한 핸들러와 `@ControllerAdvice`로 등록한 핸들러 모두 적용됨
-- afterCompletion에서 던진 예외서 ExceptionHandler에서 처리되지 않고 스프링에서 처리된다. 다만 이때 클라이언트 요청의 응답은 제대로 가고, 스프링 내부에서 예외가 처리된다.
+- afterCompletion에서 던진 예외 ExceptionHandler에서 처리되지 않고 스프링에서 처리된다. 다만 이때 클라이언트 요청의 응답은 제대로 가고, 스프링 내부에서 예외가 처리된다.
 
 <br/>
 

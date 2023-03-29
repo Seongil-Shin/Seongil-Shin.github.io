@@ -1,7 +1,7 @@
 ---
 title: 성능 최적화를 위한 next.js case study
 author: 신성일
-date: 2023-03-27 :00:00 +0900
+date: 2023-03-27 23:00:00 +0900
 categories: [study, next.js]
 tags: [next.js, optimization]
 ---

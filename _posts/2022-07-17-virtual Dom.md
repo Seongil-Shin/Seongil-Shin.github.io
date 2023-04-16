@@ -152,8 +152,6 @@ Virtual DOM이라는 DOM을 추상화한 가상의 객체를 메모리에 만들
 
 최후의 경우 배열의 인덱스를 key로 사용할 수 있다. 하지만 이 경우 배열이 재배열되면 컴포넌트의 state가 꼬일 수 있다. 컴포넌트 인스턴스는 key를 기반으로 갱신되고 재사용되기 때문에, 인덱스를 key로 사용하면 항목의 순서가 바뀌었을 때 key 또한 바뀌기 때문이다. [예시](https://codepen.io/pen?&editors=0010&layout=left) [개선된 예시](https://codepen.io/pen?&editors=0010&layout=left)
 
-
-
 <br/>
 
 # 출처

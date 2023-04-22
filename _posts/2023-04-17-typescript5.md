@@ -12,7 +12,37 @@ typescript 5.0이 나왔다고 하여 간단히 어떤 기능들이 추가되었
 
 ## 데코레이터
 
+데코레이터는 재사용 가능한 방식으로 클래스와 그 멤버를 사용자 정의하는 ECMAScript의 기능이다. 데코레이터는 이전부터 지원되었으나 Typescript 5.0부터는 공식 기능으로 지원한다.
 
+```typescript
+function loggedMethod(originalMethod: any, context: ClassMethodDecoratorContext) {
+    const methodName = String(context.name);
+
+    function replacementMethod(this: any, ...args: any[]) {
+        console.log(`LOG: Entering method '${methodName}'.`)
+        const result = originalMethod.call(this, ...args);
+        console.log(`LOG: Exiting method '${methodName}'.`)
+        return result;
+    }
+
+    return replacementMethod;
+}
+
+class Person {
+    name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+
+    @loggedMethod
+    greet() {
+        console.log(`Hello, my name is ${this.name}.`);
+    }
+}
+
+const p = new Person("Ron");
+p.greet();
+```
 
 ## const 타입 파라미터
 
@@ -450,11 +480,145 @@ import {
 }
 ```
 
+<br/>
+
+## **Exhaustive `switch`/`case` Completions**
+
+switch 문을 작성할 때 검사 대상에 리터럴 타입이 있는지 감지한다. 감지되면 발견된지 않은 각 대소문자를 스카폴딩하는 완결성을 제공한다.
+
+```typescript
+type Fruit = 
+	| { kind : "apple" }
+	| { kind : "orange" }
+	| { kind : "banana" }
+
+function nom(fruit: Fruit) {
+	switch(fruit.kind) {
+    case 						// case 문을 작성하면 자동 완성으로 case "apple": case "orange": case "banana"가 생김
+  }
+}
+```
+
+<br/>
+
+## Speed, Memory, and Package Size Optimizations
+
+Typescript 5.0에서는 코드 구조, 데이터 구조, 알고리즘 구현을 변경하여 전체 경험을 좀 더 빠르게 만들었다.
+
+![image](/assets/image.png)
+
+![img](/assets/image-20230421235917311.png)
+
+<br/>
+
+## Breaking Changes and Deprecations
+
+### Runtime Requirements
+
+Typescript 5.0부터는 ECMAScript 2018을 대상으로 한다. 또한, Typescipt 패키지는 최소 요구 엔진을 12.20으로 설정했다.
+
+### `lib.d.ts` Changes
+
+DOM 유형이 생성되는 방식이 변경되어 기존 코드에 영향을 미칠 수 있다. 특히 특정 property가 숫자에서 숫자 리터럴 타입으로 변환되었다. 잘라내기, 복사, 붙여넣기 이벤트 처리를 위한 프로퍼티와 메서드가 인터페이스 전반으로 이동되었다.
+
+### API Breaking Changes
+
+모듈로 전환하고, 불필요한 인터페이스를 제거했으며 일부 정확성을 개선했다.
+
+### Forbidden Implicit Coercions in Relational Operators
+
+Typescript의 특정 연산은 암시적으로 문자열을 숫자로 강제 변환할 수 있는 코드를 작성할 경우 경고하고 있다.
+
+```typescript
+function func(ns: number | string) {
+  return ns * 4; // Error, possible implicit coercion
+}
+```
+
+5.0 부터는 관계 연산자 >, <, <=, >= 에도 이 기능이 적용된다. 원하는 경우 `+`를 사용하여 피연산자를 숫자로 명시적으로 강제할 수 있다.
+
+```typescript
+function func(ns: number | string) {
+  return ns > 4; // Now also an error
+}
+
+function func(ns: number | string) {
+  return +ns > 4; // OK
+}
+```
+
+### Enum Overhaul
+
+Enum을 사용할 때 Enum 유형에 도메인 외부 리터럴을 할당하면 오류가 발생하도록 추가됐다.
+
+```typescript
+enum SomeEvenDigit {
+    Zero = 0,
+    Two = 2,
+    Four = 4
+}
+
+// Now correctly an error
+let m: SomeEvenDigit = 1;
+```
+
+또 숫자와 간접 string enum 참조가 혼합되어 선언된 값이 있는 enum에서 오류를 제대로 생성하도록 변경됐다.
+
+```typescript
+enum Letters {
+    A = "a"
+}
+enum Numbers {
+    one = 1,
+    two = Letters.A
+}
+
+// Now correctly an error
+const t: number = Numbers.two;
+```
+
+### **More Accurate Type-Checking for Parameter Decorators in Constructors Under `--experimentalDecorators`**
+
+decorator에 대한 좀 더 정확한 type-checking이 되도록 하는 옵션이 추가되었다. 특히 생성자 파라미터에서 사용할 때 효과적이다.
+
+```typescript
+export declare const inject:
+  (entity: any) =>
+    (target: object, key: string | symbol, index?: number) => void;
+
+export class Foo {}
+
+export class C {
+    constructor(@inject(Foo) private x: any) {
+    }
+}
+```
+
+`key`가 `string | symbol`을 예상하기에 이 호출은 실패하지만 생성자 파라미터는 `undefined`키를 받는다. 올바른 수정은 `inject`의  `key`의 타입을 변경하는 것이다. 만약 변경할 수 없는 라이브러리를 사용중인 경우에는 `inject`를 좀 더 type-safe한 decorator로 감싸고  `key`에 type assertion을 사용하는 것이다.
+
+### **Deprecations and Default Changes**
+
+이제 다음 설정값들은 사용되지 않는다.
+
+- `--target: ES3`
+- `--out`
+- `--noImplicitUseStrict`
+- `--keyofStringsOnly`
+- `--suppressExcessPropertyErrors`
+- `--suppressImplicitAnyIndexErrors`
+- `--noStrictGenericChecks`
+- `--charset`
+- `--importsNotUsedAsValues`
+- `--preserveValueImports`
+- `prepend` in project references
+
+Typescript 5.5까지는 허용하지만 이후로는 경고가 발생한다. 단, `"ignoreDeperecations": "5.0"`을 사용하면 경고를 없앨 수 있다. 
+
+프로젝트 내에서 동일한 파일 이름을 참조하는 모든 참조가 케이스에 대해 동의하도록 보장하는 `--forceConsistentCasingInFileNames`는 이제 `true`로 기본 설정된다.
 
 
 
-
-
+<Br/>
 
 ## 출처
 

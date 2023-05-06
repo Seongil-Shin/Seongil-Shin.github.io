@@ -55,7 +55,7 @@ object1 = null;
 object2 = null;
 ```
 
-위 예제에서는 마지막에 `object1`과 `object2`를 null로 설정하여 순환 참조를 깨려고 했지만, `{next: refenceToObject2}`, `{ prev: refenceToObject1}`는 각각 메모리에 남아있다. 따라서  GC는 순환 참조를 꺨 수 없기에 메모리가 그대로 남아있게 된다.
+위 예제에서는 마지막에 `object1`과 `object2`를 null로 설정하여 순환 참조를 깨려고 했지만, `{next: refenceToObject2}`, `{ prev: refenceToObject1}`는 각각 메모리에 남아서 서로를 참조하고 있다. 즉 null로 할당하는 것은 `object1`, `object2`에 할당된 reference를 지운것 뿐이고, 순환참조된 obejct들 자체는 메모리에 계속 남아있다. 따라서  GC는 순환 참조를 꺨 수 없다.  (하지만 최신 자바스크립트 엔진에서는 GC가 발전하여 메모리 회수를 한다.)
 
 이러한 경우에는 `delete` 키워드를 사용한  `manual memory management`가 필요하다.  `delete`를 사용하여 순환참조를 만들어내는 property를 삭제하는 것이다.
 
@@ -174,6 +174,25 @@ weakSet.add(object2);
 ```
 
 위에서 순환참조 때 봤던 예시와 비슷하게 서로 참조하고 있더라도, 이번엔 WeakMap을 사용하여 순환참조가 일어나도 메모리 free up을 막지 않는다.
+
+ `WeakMap`은 약한 참조이므로, key object가 `WekMap`에 존재하더라도 GC에 의해 메모리를 회수할 수 있도록 해준다. 다른 말로, `WeakMap`은 key object가 다른 코드에서 접근이 불가능해지면, GC가  key object가 차지하고 있던 메모리를 회수하는 걸 막지않는다. 다음 예제에서 `objA`, `objB`는 함수 호출이 끝나면 scope에서 벗어나므로, GC가 메모리를 회수할 수 있다. 
+
+```js
+function createCircularReference() {
+  let objA = {};
+  let objB = {};
+
+  let weakMap = new WeakMap();
+  weakMap.set(objA, objB);
+  weakMap.set(objB, objA);
+}
+
+createCircularReference();
+```
+
+`WeakSet`도 비슷하게 `WeakSet`이 가지고 있는 object를 GC가 회수할 수 있다. `WeakSet`은 objects의 집합을 GC의 메모리 회수를 막는 거 없이 저장할 수 있는 방법이다. 하지만 `WeakSet`은 순환 참조에 직접 사용할 수 있는 것은 아니다. `key`-`value`를 저장하지 않기 때문이다. 오직 object를 저장만하고 그들 사이에 관계를 만들진 않는다.
+
+
 
 ## Using Garbage Collector API
 

@@ -2,8 +2,8 @@
 title: generator 문법
 author: 신성일
 date: 2022-01-02 18:19:26 +0900
-categories: [study, react]
-tags: [react]
+categories: [study, javascript]
+tags: [javascript]
 ---
 
 ## Generator 문법

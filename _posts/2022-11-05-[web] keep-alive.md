@@ -3,7 +3,7 @@ title: Keep-Alive
 author: 신성일
 date: 2022-11-05 18:51:26 +0900
 categories: [study, web]
-tags: [web, keepalive]
+tags: [web]
 ---
 
 아래와 같이 http 헤더를 보다보면 keep-alive라고 명시된 부분이 보일 때가 있다.

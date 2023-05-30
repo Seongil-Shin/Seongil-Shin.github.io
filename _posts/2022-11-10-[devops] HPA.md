@@ -3,7 +3,7 @@ title: HPA
 author: 신성일
 date: 2022-11-10 18:23:26 +0900
 categories: [study, devops]
-tags: [devops, hpa, k8x, kubernetes]
+tags: [kubernetes]
 ---
 
 # **[devops] HPA**

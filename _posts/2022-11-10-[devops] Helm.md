@@ -3,7 +3,7 @@ title: Helm
 author: 신성일
 date: 2022-11-10 18:21:26 +0900
 categories: [study, devops]
-tags: [devops, helm, k8s, kubernetes]
+tags: [kubernetes]
 ---
 
 # **Helm**

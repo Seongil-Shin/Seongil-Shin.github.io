@@ -3,7 +3,7 @@ title: Canary 테스트
 author: 신성일
 date: 2022-11-10 18:20:26 +0900
 categories: [study, devops]
-tags: [devops, canary]
+tags: []
 ---
 
 ## [devops] Canary 테스트

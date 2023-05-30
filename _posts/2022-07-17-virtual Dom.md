@@ -3,7 +3,7 @@ title : virtual DOM와 리렌더링
 author : 신성일
 date : 2022-07-17 14:00:00 +0900
 categories : [study, react]
-tags: [react, virtual dom]
+tags: [react]
 ---
 
 

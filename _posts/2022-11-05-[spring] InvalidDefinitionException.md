@@ -3,7 +3,7 @@ title: InvalidDefinitionException
 author: 신성일
 date: 2022-11-05 18:36:26 +0900
 categories: [study, spring]
-tags: [spring, exception]
+tags: []
 ---
 
 @ResquestBody로 받는 매개변수의 클래스에 @NoArgsConstructor를 빼니 `InvalidDefinitionException` 에러가 발생했다.

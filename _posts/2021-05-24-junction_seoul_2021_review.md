@@ -3,7 +3,7 @@ title: JunctionXSeoul 2021 후기
 author: 신성일
 date: 2021-05-24 17:38:44 +0900
 categories: [projects]
-tags: [hackathon, review, junction]
+tags: []
 ---
 
 ## 결과

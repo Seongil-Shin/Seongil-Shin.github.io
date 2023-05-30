@@ -3,7 +3,7 @@ title: ElasticSearch
 author: 신성일
 date: 2022-11-21 21:18:26 +0900
 categories: [study, database]
-tags: [database, elastic, search]
+tags: [db]
 ---
 
 > Elasticsearch는 시간이 갈수록 증가하는 문제를 처리하는 분산형 RESTful 검색 및 분석 엔진입니다. Elastic Stack의 핵심 제품인 Elasticsearch는 데이터를 중앙에 저장하여 손쉽게 확장되는 광속에 가까운 빠른 검색, 정교하게 조정된 정확도, 강력한 분석을 제공합니다.

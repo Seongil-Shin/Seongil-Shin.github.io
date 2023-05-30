@@ -3,7 +3,7 @@ title: controller에서 enum을 인자로 받기
 author: 신성일
 date: 2022-11-05 18:32:26 +0900
 categories: [study, spring]
-tags: [spring, enum, controller]
+tags: [spring]
 ---
 
 검색 API를 개발하는 과정에서 다음과 같이 검색 타입을 enum 으로 지정하였고, controller의 param으로 받으려고 했다.

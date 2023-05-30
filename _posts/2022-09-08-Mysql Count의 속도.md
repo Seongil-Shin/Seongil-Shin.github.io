@@ -3,7 +3,7 @@ title: Mysql Count 속도
 author: 신성일
 date: 2022-09-08 18:19:26 +0900
 categories: [study, database]
-tags: [database, db, mysql, count]
+tags: [db]
 ---
 
 

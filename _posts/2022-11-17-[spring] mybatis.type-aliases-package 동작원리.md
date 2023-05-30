@@ -3,7 +3,7 @@ title: mybatis.type-aliases-package
 author: 신성일
 date: 2022-11-17 16:19:26 +0900
 categories: [study, spring]
-tags: [spring, mybatis]
+tags: []
 ---
 
 mybatis mapper에서 requestType이나 parameterType으로 클래스를 참조할 때 다음과 같이 패키지명을 다 써줘야하는 불편함이 있다.

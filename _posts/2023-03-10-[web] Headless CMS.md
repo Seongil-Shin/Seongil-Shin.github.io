@@ -3,7 +3,7 @@ title: Headless CMS
 author: 신성일
 date: 2023-03-10 23:00:00 +0900
 categories: [study, web]
-tags: [web, headless, cms]
+tags: [web]
 ---
 
 

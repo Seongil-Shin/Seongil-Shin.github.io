@@ -3,7 +3,7 @@ title: Javscript 메모리 누수 방지 및 성능 개선
 author: 신성일
 date: 2023-04-18 22:00:00 +0900
 categories: [study, javascript]
-tags: []
+tags: [javascript]
 ---
 
 

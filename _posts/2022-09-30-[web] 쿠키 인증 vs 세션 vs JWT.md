@@ -3,7 +3,7 @@ title: 쿠키 인증 vs 세션 vs JWT
 author: 신성일
 date: 2022-09-30 18:19:26 +0900
 categories: [study, web]
-tags: []
+tags: [web]
 ---
 
 # 쿠키

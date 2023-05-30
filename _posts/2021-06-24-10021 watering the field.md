@@ -3,7 +3,7 @@ title: 10021 watering the field
 author: 신성일
 date: 2021-06-24 19:38:44 +0900
 categories: [알고리즘, beackjoon]
-tags: [알고리즘, algorithm]
+tags: []
 ---
 
 ## 알고리즘

@@ -3,7 +3,7 @@ title: 단일책임원칙(SRP)
 author: 신성일
 date: 2022-11-13 18:19:26 +0900
 categories: [study, design pattern]
-tags: [SRP, srp]
+tags: [oop]
 ---
 
 

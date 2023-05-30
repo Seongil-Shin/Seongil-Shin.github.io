@@ -3,7 +3,7 @@ title: 반정규화
 author: 신성일
 date: 2022-02-25 22:00:00 +0900
 categories: [study, database]
-tags: []
+tags: [db]
 ---
 
 ## **반정규화**

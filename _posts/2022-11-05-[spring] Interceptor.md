@@ -3,7 +3,7 @@ title: interceptor
 author: 신성일
 date: 2022-11-05 18:35:26 +0900
 categories: [study, spring]
-tags: [interceptor, spring]
+tags: [spring]
 ---
 
 

@@ -3,7 +3,7 @@ title: Typescript 5.0
 author: 신성일
 date: 2023-04-17 22:30:00 +0900
 categories: [study, typescript]
-tags: [ts, typescript]
+tags: [typescript]
 ---
 
 typescript 5.0이 나왔다고 하여 간단히 어떤 기능들이 추가되었는지 살펴보았다. 자세한 내용은 [Typescript 5.0 번역](https://velog.io/@hustle-dev/TypeScript-5.0-%EB%B2%88%EC%97%AD#%EB%8D%B0%EC%BD%94%EB%A0%88%EC%9D%B4%ED%84%B0)에서 확인 가능하다.

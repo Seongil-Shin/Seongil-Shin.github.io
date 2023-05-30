@@ -3,7 +3,7 @@ title: REACT/CORS 개발 환경에서, 외부 API 와 연결할때 쿠키가 생
 author: 신성일
 date: 2021-05-14 16:00:00 +0900
 categories: [study, react]
-tags: [react, cors, cookie]
+tags: []
 ---
 
 이미 서버에 올라간 백엔드 API 와 로그인 작업을 하던 도중에, 백엔드에서 보내는 쿠키를 브라우저가 저장하지 않는 문제를 발견했다.
@@ -25,7 +25,7 @@ tags: [react, cors, cookie]
 
 위처럼 하면, proxy에서 통신을 하는 것이라고 하여 CORS 를 위반하지 않고 제대로 쿠키를 저장할 수 있다.
 
-2. setuProxy.js
+2. setupProxy.js
 
    npm install http-proxy-middleware
 

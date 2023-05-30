@@ -3,7 +3,7 @@ title: singleton
 author: 신성일
 date: 2022-02-07 01:00:00 +0900
 categories: [cs, design pattern]
-tags: [cs, 디자인패턴]
+tags: [singleton]
 ---
 
 ## **Singleton 패턴**

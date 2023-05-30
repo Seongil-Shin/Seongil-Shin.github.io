@@ -3,7 +3,7 @@ title: nginx + spring boot+ react로 구성된 앱 dockerfile 작성
 author: 신성일
 date: 2022-11-29 18:19:26 +0900
 categories: [study, devops]
-tags: [docker, devops, spring, react, nginx]
+tags: []
 ---
 
 # nginx + spring boot+ react로 구성된 앱 dockerfile 작성

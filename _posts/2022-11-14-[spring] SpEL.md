@@ -3,7 +3,7 @@ title: SpEL - Spring Expression Language
 author: 신성일
 date: 2022-11-14 23:19:26 +0900
 categories: [study, spring]
-tags: [spring, spel]
+tags: []
 ---
 
 이 문서는 개인적인 목적이나 배포하기 위해서 복사할 수 있다. 출력물이든 디지털 문서든 각 복사본에 어떤 비용도 청구할 수 없고 모든 복사본에는 이 카피라이트 문구가 있어야 한다. ([출처](https://blog.outsider.ne.kr/837))

@@ -3,7 +3,7 @@ title: 서브네팅
 author: 신성일
 date: 2022-02-27 21:34:00 +0900
 categories: [study, network]
-tags: []
+tags: [network]
 ---
 
 ## **서브네팅**

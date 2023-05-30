@@ -3,7 +3,7 @@ title: useState 원리
 author: 신성일
 date: 2023-05-06  18:00:00 +0900
 categories: [study, react]
-tags: []
+tags: [react]
 ---
 
 ## State 변경 시 어떤 일이 벌어질까?

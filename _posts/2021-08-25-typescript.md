@@ -3,7 +3,7 @@ title: 타입스크립트
 author: 신성일
 date: 2021-08-25 16:00:00 +0900
 categories: [study, typescript]
-tags: [typescript]
+tags: []
 ---
 
 ## 타입스크립트 연습

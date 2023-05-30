@@ -3,7 +3,7 @@ title: DataStructure 개요
 author: 신성일
 date: 2022-01-23 14:00:00 +0900
 categories: [study, datastructure]
-tags: [DataStructure]
+tags: [자료구조]
 ---
 
 ## Array vs Linked List

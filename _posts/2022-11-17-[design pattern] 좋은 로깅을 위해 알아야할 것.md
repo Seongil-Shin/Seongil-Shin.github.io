@@ -3,7 +3,7 @@ title: 좋은 로깅을 위해 알아야할 13가지
 author: 신성일
 date: 2022-11-17 15:23:26 +0900
 categories: [study, design pattern]
-tags: [log, logging]
+tags: [design]
 ---
 
 이 글은 [Logging Best Pratices : The 13 You Should Know](https://www.dataset.com/blog/the-10-commandments-of-logging/)를 기반으로 요약, 학습한 글입니다.

@@ -3,7 +3,7 @@ title: Firebase/Function firestore, storage 쓰기, 읽기
 author: 신성일
 date: 2021-05-15 16:00:00 +0900
 categories: [study, firebase]
-tags: [firebase, functions, crawl, firestore]
+tags: [firebase]
 ---
 
 firebase cloud function에서 firestore와 storage의 이벤트트리거를 등록하는 예제는 firebase 문서에 자세히 설명되어있다.

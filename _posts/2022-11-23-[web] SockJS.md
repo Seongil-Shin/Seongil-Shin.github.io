@@ -3,7 +3,7 @@ title: SockJS
 author: 신성일
 date: 2022-11-23 21:19:26 +0900
 categories: [study, web]
-tags: [web, socket, sockjs]
+tags: [web]
 ---
 
 # SockJS

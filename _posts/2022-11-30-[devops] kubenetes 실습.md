@@ -3,7 +3,7 @@ title: kubernetes 실습
 author: 신성일
 date: 2022-11-30 18:29:26 +0900
 categories: [study, devops]
-tags: [k8s, kubernetes]
+tags: [kubernetes]
 ---
 
 이 포스트는 [subicura 님의 kubenetes 안내서](https://subicura.com/k8s/guide/pod.html)을 읽으며 요약/기록한 게시글입니다.

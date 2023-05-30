@@ -3,7 +3,7 @@ title: LocateC
 author: 신성일
 date: 2021-11-25 18:19:26 +0900
 categories: [projects]
-tags: [project, expo]
+tags: []
 ---
 
 ## 개발 계기

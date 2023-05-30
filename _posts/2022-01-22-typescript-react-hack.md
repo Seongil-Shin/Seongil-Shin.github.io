@@ -3,7 +3,7 @@ title : (Typescript) React typescript hack
 author : 신성일
 date : 2022-01-22 01:00:00 +0900
 categories : [study, react]
-tags: [typescript]
+tags: []
 ---
 
 

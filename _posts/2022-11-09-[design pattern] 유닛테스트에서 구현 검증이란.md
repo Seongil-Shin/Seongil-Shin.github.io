@@ -3,7 +3,7 @@ title: 유닛테스트 구현 검증이란?
 author: 신성일
 date: 2022-11-09 18:19:26 +0900
 categories: [stuy, design pattern]
-tags: [design pattern, unittest, test]
+tags: [design]
 ---
 
 비즈니스 코드를 먼저 작성하고 유닛테스트를 작성할 때, 완성된 코드를 보고 테스트 코드를 작성하다보면 내부 구현에 맞추어 테스트를 작성하게 되고, 구현 자체를 검증하게 되는 일이 많이 발생하였다.

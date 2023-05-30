@@ -3,7 +3,7 @@ title: 쿠버네티스 Ingress
 author: 신성일
 date: 2022-12-15 19:00:00 +0900
 categories: [study, devops]
-tags: [kubernetes, k8s, ingress]
+tags: [kubernetes]
 ---
 
 # 쿠버네티스 Ingress

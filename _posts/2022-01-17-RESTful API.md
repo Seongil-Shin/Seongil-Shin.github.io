@@ -3,7 +3,7 @@ title: RESTful API
 author: 신성일
 date: 2022-01-16 23:00:00 +0900
 categories: [study, web]
-tags: [study]
+tags: [rest]
 ---
 
 `REST`란, REprensentational State Transfer의 약자이다. 따라서, RESTful API는 REST의 기본 원칙을 잘 지킨 API를 의미한다.

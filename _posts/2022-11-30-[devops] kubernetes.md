@@ -3,7 +3,7 @@ title: kubernetes
 author: 신성일
 date: 2022-11-30 18:19:26 +0900
 categories: [study, devops]
-tags: [k8s, kubernetes]
+tags: [kubernetes]
 ---
 
 이 포스트는 [subicura 님의 kubenetes 게시글](https://subicura.com/2019/05/19/kubernetes-basic-1.html)을 읽으며 요약/기록한 게시글입니다.

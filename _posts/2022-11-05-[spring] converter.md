@@ -3,7 +3,7 @@ title: converter
 author: 신성일
 date: 2022-11-05 18:33:26 +0900
 categories: [study, spring]
-tags: [spring, converter]
+tags: [spring]
 ---
 
 controller 인자로 enum 받는 문제를 해결했던 것은 enum 타입에 맞춘 `Converter`를 bean에 등록하는 것이었다. 단순히 bean에 등록하는 것으로 controller에서 httpConverter 동작할 때 이것을 적용한 것이다. 이 뒤에 무엇이 있을까 하여 조사해보았다.

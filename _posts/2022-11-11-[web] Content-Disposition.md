@@ -3,7 +3,7 @@ title: Content-Disposition
 author: 신성일
 date: 2022-11-11 18:20:26 +0900
 categories: [study, web]
-tags: [web, header, http]
+tags: [web]
 ---
 
 

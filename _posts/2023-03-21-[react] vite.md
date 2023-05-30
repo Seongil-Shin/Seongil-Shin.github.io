@@ -3,7 +3,7 @@ title: Vite
 author: 신성일
 date: 2023-03-21 23:00:00 +0900
 categories: [study, react]
-tags: [react, vite, webpack, esbuild, rollup]
+tags: [vite]
 ---
 
 최근 create-react-app 대신에 vite를 공식으로 사용하자는 얘기가 나오고 있다. 

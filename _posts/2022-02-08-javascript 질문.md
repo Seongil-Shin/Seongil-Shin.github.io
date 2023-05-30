@@ -3,7 +3,7 @@ title: javascript 이벤트루프
 author: 신성일
 date: 2022-02-08 11:20:00 +0900
 categories: [study, javascript]
-tags: [study, javascript]
+tags: [javascript]
 ---
 
 ## **이벤트 루프**

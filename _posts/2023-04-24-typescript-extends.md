@@ -3,7 +3,7 @@ title: typescript 조건부타입(extends)
 author: 신성일
 date: 2023-04-24  22:30:00 +0900
 categories: [study, typescript]
-tags: []
+tags: [typescript]
 ---
 
 타입 스크립트 2.8부터 다음과 같은 `조건부 타입`을 사용할 수 있다.

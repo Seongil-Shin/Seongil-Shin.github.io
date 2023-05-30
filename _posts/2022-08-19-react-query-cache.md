@@ -3,7 +3,7 @@ title: React-query 에서 cache를 사용하는 방법
 author: 신성일
 date: 2022-08-19 21:00:00 +0900
 categories: [study, react]
-tags: [react, react-query, cache]
+tags: []
 ---
 
 ## useQuery 설정

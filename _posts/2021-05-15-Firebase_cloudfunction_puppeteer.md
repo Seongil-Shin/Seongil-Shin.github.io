@@ -3,7 +3,7 @@ title: Firebase/Function Puppeteer 사용하기
 author: 신성일
 date: 2021-05-15 16:00:00 +0900
 categories: [study, firebase]
-tags: [firebase, functions, crawl, puppeteer]
+tags: [firebase]
 ---
 
 일반 노드에서의 환경과 같이 사용하면 된다.

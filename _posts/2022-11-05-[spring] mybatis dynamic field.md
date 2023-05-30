@@ -3,7 +3,7 @@ title: mybatis dynamic field
 author: 신성일
 date: 2022-11-05 18:41:26 +0900
 categories: [study, spring]
-tags: [spring, mybatis]
+tags: []
 ---
 
 게시글 검색을 개발하는 도중 검색의 대상이 되는 field(title \| nickname \| content)를 동적으로 mybatis 쿼리문 상에 사용해야할 일이 있었다. 따라서 다음과 같이 `#{}` 를 사용하여 변수를 넣었으나 오류가 발생했다.

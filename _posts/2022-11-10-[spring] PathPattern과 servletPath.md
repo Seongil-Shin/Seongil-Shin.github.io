@@ -3,7 +3,7 @@ title: PathPattern과 servletPath
 author: 신성일
 date: 2022-11-10 18:25:26 +0900
 categories: [study, spring]
-tags: [spring, servlet, pathpattern, path]
+tags: [spring]
 ---
 
 # **[spring] PathPattern과 servletPath**

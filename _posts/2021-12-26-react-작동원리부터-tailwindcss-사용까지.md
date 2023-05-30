@@ -3,7 +3,7 @@ title: react 작동원리부터 tailwindcss 사용까지
 author: 신성일
 date: 2021-12-26 18:19:26 +0900
 categories: [study, react]
-tags: [react, tailwindcss]
+tags: []
 ---
 
 ## 개요

@@ -3,7 +3,7 @@ title: 커스텀 Annotation
 author: 신성일
 date: 2022-11-18 18:19:26 +0900
 categories: [study, java]
-tags: [java, annotation]
+tags: [java]
 ---
 
 ## Annotation

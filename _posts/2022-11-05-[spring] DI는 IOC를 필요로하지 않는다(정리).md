@@ -3,7 +3,7 @@ title: Pure DI - IoC가 없는 DI
 author: 신성일
 date: 2022-11-05 18:34:26 +0900
 categories: [study, spring]
-tags: [spring, di, ioc]
+tags: [spring]
 ---
 
 이 포스트는 [참고문서](https://jwchung.github.io/DI%EB%8A%94-IoC%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EC%95%8A%EC%95%84%EB%8F%84-%EB%90%9C%EB%8B%A4)를 필자가 이해하기 쉽게 정리한 내용입니다.

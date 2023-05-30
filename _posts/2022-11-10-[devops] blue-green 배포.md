@@ -3,7 +3,7 @@ title: blue-green 배포
 author: 신성일
 date: 2022-11-10 18:19:26 +0900
 categories: [study, devops]
-tags: [devops, blue, green]
+tags: []
 ---
 
 # **[devops] blue-green 배포**

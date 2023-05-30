@@ -3,7 +3,7 @@ title: Graph ql front
 author: 신성일
 date: 2021-06-19 12:35:44 +0900
 categories: [study, graphql]
-tags: [GraphQL]
+tags: []
 ---
 
 ## 설치

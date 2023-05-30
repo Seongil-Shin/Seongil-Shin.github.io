@@ -3,7 +3,7 @@ title: Open Graph(OG) 프로토콜
 author: 신성일
 date: 2022-09-11 16:00:00 +0900
 categories: [study, web]
-tags: [opengraph]
+tags: [web]
 ---
 
 ## Open Graph 프로토콜

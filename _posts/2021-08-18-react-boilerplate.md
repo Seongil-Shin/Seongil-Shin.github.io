@@ -3,7 +3,7 @@ title: React-boilterplate 설명
 author: 신성일
 date: 2021-08-18 16:00:00 +0900
 categories: [study, react]
-tags: [react, boilerplate]
+tags: []
 ---
 
 ## react-boilerplate 설명

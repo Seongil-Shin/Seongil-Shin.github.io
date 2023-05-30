@@ -3,7 +3,7 @@ title: module federation
 author: 신성일
 date: 2023-03-05 23:00:00 +0900
 categories: [study, web]
-tags: [webpack, module, federation]
+tags: [webpack]
 ---
 
 ## webpack module federation

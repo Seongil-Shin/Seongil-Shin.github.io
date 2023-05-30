@@ -3,7 +3,7 @@ title: checked vs unchecked exception
 author: 신성일
 date: 2022-11-10 18:24:26 +0900
 categories: [study, java]
-tags: [java, exception]
+tags: [java]
 ---
 
 # **[java] checked vs unchecked exception**

@@ -3,7 +3,7 @@ title: React native 기초
 author: 신성일
 date: 2021-07-03 19:30:44 +0900
 categories: [study, react-native]
-tags: [React native]
+tags: []
 ---
 
 ## 개발환경 만들기

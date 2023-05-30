@@ -2,7 +2,7 @@
 title: 유닛테스트 구현 검증이란?
 author: 신성일
 date: 2022-11-09 18:19:26 +0900
-categories: [stuy, design pattern]
+categories: [study, design pattern]
 tags: [design]
 ---
 

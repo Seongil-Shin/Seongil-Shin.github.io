@@ -36,7 +36,7 @@ tags: [optimization]
 2. css에 `will-change` 속성을 사용하여 브라우저에게 일어날 변화에 대해 알려줌으로써 최적화할 수 있다.
 3. `contain` 속성을 사용하여 해당 엘리먼트의 변화가 다른 dom에 영향을 끼치지 않는다는 걸 명시할 수 있다.
 
-[상세](https://seongil-shin.github.io/posts/css-%EC%B5%9C%EC%A0%81%ED%99%94/#css-%EC%B5%9C%EC%A0%81%ED%99%94
+[상세](https://seongil-shin.github.io/posts/css-%EC%B5%9C%EC%A0%81%ED%99%94/#css-%EC%B5%9C%EC%A0%81%ED%99%94)
 
 
 

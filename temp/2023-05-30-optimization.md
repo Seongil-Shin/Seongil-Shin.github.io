@@ -16,6 +16,19 @@ tags: [optimization]
 
 
 
+## lazy loading
+
+페이지내 모든 이미지/영상이 페이지가 로드되는 순간에 필요하지 않을 수 있다. 따라서 유저가 보는 뷰포트 근처에 있는 이미지/영상만 로드하여 로딩을 빠르게하는 기법을 `lazy loading`이라고 한다.
+
+구현법은 다음과 같다.
+
+1.  `img` 태그에서 `loading="lazy"`를 주어 적용.
+   - 단 구형 브라우저에서는 동작하지 않으므로 polyfill 사용
+   - `picture` 태그에서는 `img`에서만 설정하면 된다.
+2. 자동재생이 안되도 되는 `video`는 `preload`를 `none`이나 `metadata`로 설정할 수 있음. 
+3. lazy-loading 라이브러리나 js로 뷰포트 근처의 이미지, 비디오 태그에 `src` 부여 (처음엔 빈상태로 둠)
+   - 자동재생이 되어야하는 video 에서 사용
+
 <br/>
 
 # Javascript

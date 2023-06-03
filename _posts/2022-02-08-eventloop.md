@@ -130,9 +130,12 @@ queue에 이벤트가 존재하면 while-loop 안으로 들어가서 해당하�
 ![browser structure](/assets/img/2022-02-08-javascript 질문/browser-structure.png)
 
 - 비동기로 처리되는 작업은 task, microtask, animationFrame으로 구분된다.
-- microtask는 task보다 먼저 작업이 처리된다.
-  - microtask : MutationObserver, Promise 가 해당
-- microtask가 처리된 이후, requestAnimationFrame이 호출되고 이후 브라우저 렌더링이 발생한다.
+  - microtask : Promise 등
+  - task (macro task) : setTimeout
+  - animationFrame : UI 렌더링. requestAnimationFrame이 호출되어 브라우저 렌더링 발생
+
+- microtask는 task보다 먼저 작업이 처리되고, microtask가 다 비워져야 task가 수행된다. 이는 microtask가 상대적으로 작은 작업이기에 빠르게 끝내기 위해서이다.
+- microtask에서 추가한 microtask도 큐가 다 빌때까지 실행된다. task에서 추가한 task는 다음 이벤트루프까지 실행되지 않는다.
 
 ## **출처**
 

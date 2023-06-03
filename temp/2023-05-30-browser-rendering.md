@@ -22,10 +22,16 @@ tags: [browser]
 
 ## html parsing 차단
 
-브라우저가 html을 파싱하다가 `head` 태그 내 위치한 `script` 태그를 만났을 때 파싱이 차단되는 경우가 있다. 이는 `script`로 불러와지는 코드가 html 을 변경시킬 수 있기에 막는 것이다. 따라서 `script` 를 **`body` 태그 아래에 삽입**하여 html 파싱이 종료된 이후 로드하는 방법도 있지만, `script`의 **`async`, `defer` 속성**을 사용할 수 있다.
+브라우저가 html을 파싱하다가 `head` 태그 내 위치한 `script` 태그를 만났을 때 파싱이 차단되는 경우가 있다. 이는 `script`로 불러와지는 코드가 html 을 변경시킬 수 있기에 막는 것이다. 이러한 html 파싱 차단을 막기 위해선 다음과 같은 방법이 있다.
 
-- `async` : 로드할 때는 차단하지 않음. 실행할땐 차단함
-- `defer` : 로드, 실행할 때 모두 차단하지 않음.
+-  `script` 를 **`body` 태그 아래에 삽입**하여 html 파싱이 종료된 이후 로드
+
+- **`async`, `defer` 속성** 사용
+
+  - `async` : 로드할 때는 차단하지 않음. 실행할땐 차단함
+
+  - `defer` : 로드, 실행할 때 모두 차단하지 않음.
+
 
 **CSS도 간접적으로 차단할 수 있다.**  script가 페이지 스타일에 영향을 줄 수 있기에 css 파싱이 완료되고 js를 실행하도록하여, 간접적으로 html 파싱이 차단되는 시간이 길어질 수 있다. ([링크](https://seongil-shin.github.io/posts/css-%EC%B5%9C%EC%A0%81%ED%99%94/#css-%EC%B5%9C%EC%A0%81%ED%99%94%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%9C-%EC%9D%B4%EC%9C%A0))
 

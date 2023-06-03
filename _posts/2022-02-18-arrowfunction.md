@@ -72,7 +72,7 @@ const Foo = () => {};
 const foo = new Foo(); // TypeError: Foo is not a constructor
 ```
 
-화살표함수를 생성자로 사용할 수는 없다.
+화살표함수에는 prototype이 없기에 생성자로 사용할 수는 없다.
 
 **addEventListener()의 콜백함수**
 

@@ -145,9 +145,15 @@ myFunction();
 }
 ```
 
+## 그외 이유들
+
+- DOM 노드 참조
+  - DOM 노드를 메모리에 저장하면, 저장한 노드의 자식 노드까지 모두 참조가 유지되어 실제 DOM에는 없는데도 메모리 상에선 유지될 수 있다.
+- 클로저 : 사용하지 않는 클로저는 함수에 의해 계속 참조되어있는 상태이므로, 메모리에 계속 남아있어 메모리 누수의 원인이 될 수 있다.
+
 <br/>
 
-## Best Practices for Manual Memory Management
+# Best Practices for Manual Memory Management
 
 ## Using weak references
 

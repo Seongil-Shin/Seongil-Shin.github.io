@@ -3,7 +3,7 @@ title: 스프링 MVC 구조
 author: 신성일
 date: 2022-11-05 18:12:26 +0900
 categories: [study, spring]
-tags: [mvc]
+tags: [architecture]
 ---
 
 

@@ -1,5 +1,5 @@
 ---
-title: 영상이 재생되지 않는 문제
+title: 영상이 자동재생되지 않는 문제
 author: 신성일
 date: 2023-06-03 18:00:00 +0900
 categories: [study, react]
@@ -43,7 +43,7 @@ tags: [issues]
 
 swiper에서 loop 옵션을 사용하고 있었다. 끝까지 가면 다시 처음 슬라이드가 나오도록 하기 위해서였다. 하지만, loop 옵션을 사용하면 다음과 같이 실제로 보여질 `swiper-slide` 앞 뒤로 `swiper-slide-duplicate`를 생성한다. 그리고 각  `swiper-slide-duplicate`는 `slide-swiper`와 구성이 같다.
 
-![image-20230603185315584](./assets/image-20230603185315584.png)
+![image-20230603185315584](/assets/image-20230603185315584.png)
 
 즉, 필요한 슬라이드 개수의 3배 정도 슬라이드가 만들어지고, 각 슬라이드 안에는 영상이 포함되어있다는 것이다. 이처럼 많은 영상을 한번에 재생하는 것은 사이트 성능에 악영향을 줄거라 생각했다. 따라서 다음과 같이 swiper에 옵션을 주어 `swiper-slide-duplicate` 안에 있는 비디오의 재생은 멈추었다.
 
@@ -74,7 +74,7 @@ new Swiper('.myswiper1', {
 
 하지만 이렇게 하니 `마지막 -> 첫번쨰`, `첫번쨰 -> 마지막`으로 갈때 이동한 후 슬라이드의 영상이 재생되지 않는 것을 발견했다. 그 이유는 앞 두 경우에는 `swiper-slide-duplicate`가 화면에 보이는 경우였기 떄문이다. 다음 사진을 보면 `swiper-slide-active`가 `swiper-slide-duplicate`에 붙은 걸 확인할 수 있다.
 
-![image-20230603190020412](./assets/image-20230603190020412.png) 
+![image-20230603190020412](/assets/image-20230603190020412.png) 
 
 따라서 다음과 같이 이벤트를 수정하여 `swiper-slide-active`가 붙은건 명시적으로 실행해주어 문제를 해결했다.
 

@@ -33,7 +33,9 @@ jobs:
           
       - name: Sync external posts
         run: |
-          git clone https://github.com/Seongil-Shin/Seongil-Shin.github.io.post.git _posts
+          git clone https://github.com/Seongil-Shin/Seongil-Shin.github.io.post.git obsidian
+          mv obsidian _posts/
+          
 
       - name: Build Site
         env:

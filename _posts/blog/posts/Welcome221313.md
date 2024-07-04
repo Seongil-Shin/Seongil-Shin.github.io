@@ -15,4 +15,5 @@ This is your new *vault*.    asdasdad   dasd 12321123213asdas
 Make a note of something, [[create a link]], or try [the Importer](https://help.obsidian.md/Plugins/Importer)!
 
 When you're ready, delete this note and make the vault your own. 
-![](assets/images/Pasted%20image%2020240702220301.png)![](assets/images/dpblog.png)
+
+![](assets/images/Pasted%20image%2020240704102705.png)![](assets/images/Pasted%20image%2020240704102707.png)

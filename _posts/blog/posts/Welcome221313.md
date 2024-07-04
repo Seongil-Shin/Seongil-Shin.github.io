@@ -10,7 +10,7 @@ tags:
 ---
 
 
-This is your new *vault*.    asdasdad   dasd 12321123213
+This is your new *vault*.    asdasdad   dasd 12321123213asdas
 
 Make a note of something, [[create a link]], or try [the Importer](https://help.obsidian.md/Plugins/Importer)!
 

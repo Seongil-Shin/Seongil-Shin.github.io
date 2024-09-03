@@ -1,5 +1,5 @@
 ---
-title: 2024-08-31-How I Use "AI"
+title: How I Use "AI"
 author: 신성일
 date: 2024-08-31 19:45:24 +0900
 categories: study, article

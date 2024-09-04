@@ -45,10 +45,11 @@ esbuild
 
 vite
 - esbuild의 단점을 보완한 라이브러리
-- `vue.js` 창시자가 만든 `frontend build tool`로, 두가지 포인트가 있다
+- `vue.js` 창시자가 만든 `frontend build tool`로, 크게 두가지 기능을 한다
 	- `native ES modules` 기반의 강력한 개발서버
-	- esbuild로 파일들을 통합하고 rollup을 통해 번들링
+	- esbuild로 파일들을 통합하고 rollup을 통한 번들링
 - esbuild 로 성능을 높이고, rollup으로 번들링의 유연성을 챙겼다
+- vite 프로젝트를 시작하면 설정이 자동으로 된다.
 - 자세한 내용은 일전에 [작성한 글](https://seongil-shin.github.io/posts/react-vite/)이 있다
 - 키포인트
 	- 개발 서버 구동시간이 0에 가까울 정도로 매우 빠름
@@ -58,6 +59,9 @@ vite
 - 주의할 점
 	- 기본적으로 ES6 타겟으로 번들한다. 따라서 ES5 이하를 타겟으로 잡으려면 polyfill 추가가 필요하다. (또는 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인 사용)
 	- 기본적으로 `index.html`이 빌드 시작점이고, 순수 JS 번들 생성을 위해서는 라이브러리 모드가 필요하다
+- vs cra
+	- frontend 개발 도구라는 점에서 CRA와 비교가 많이 된다
+	- [자세한 내용](https://junghan92.medium.com/%EB%B2%88%EC%97%AD-create-react-app-%EA%B6%8C%EC%9E%A5%EC%9D%84-vite%EB%A1%9C-%EB%8C%80%EC%B2%B4-pr-%EB%8C%80%ED%95%9C-dan-abramov%EC%9D%98-%EB%8B%B5%EB%B3%80-3050b5678ac8)은 링크된 게시글을 참조하면 좋을거 같고, 리액트 개발 설정을 편하게 해주던 CRA가 여러 단점이 생겼고, vite는 그 단점들을 보완하였다. 성능적으로도 크게 좋아졌다
 
 
 ## Package manager
@@ -93,9 +97,33 @@ npm을 좀 더 편리하게 사용할 수 있도록 도와주는 도구로, npm 
 - 특정 노드 버전의 스크립트를 실행할 경우
 
 
+## Compiler
+
+JS는 인터프리터 언어이므로, 일반적으로 쓰이는 컴파일러라는 의미가 아닌 주로 트랜스파일링을 하는 도구를 뜻한다 (Babel, SWC 등)
+
+웹 브라우저 호환을 위해, TS -> JS 변환, 코드 압축 등을 담당한다. 여기서는 간단히 Babel, SWC에 대해서만 조사하였다
+
+Babel
+- 주로 최신 자바스크립트 문법을 이전 버전의 브라우저에서도 동작하도록, 이전 문법으로 재작성해주는 역할을 하는 프로그램이다.
+- 플러그인이나 프리셋을 통해 기능을 확장할 수 있고, 이를 통해 React나 TS 를 변역할 수도 있다.
+- 한계점
+	- 배포 뒤 개발자들이 babel이 변경한 코드를 이해하기 어려워할 수 있다
+	- 코드의 크기가 늘어난다
+	- polyfill을 사용해서 babel이 지원해주지 않는 범위까지 변환해주어야한다
+	- 속도가 느리다
+
+SWC
+- babel의 단점을 개선하기 위해 next.js 에서 도입한 컴파일러이다
+- 장점
+	- Rust로 작성하여 속도가 매우 빨라졌다
+	- 확장성 : 라이브러리를 설치할 필요없이 next.js에 미리 설치된 SWC를 사용할 수 있다
+	- WebAssembly : Rust의 WASM 지원으로 어떤 플랫폼에서도 Next.js 개발을 할 수 있다
+- [자세한 내용](https://nextjs.org/docs/architecture/nextjs-compiler#why-swc)은 링크된 게시글 참고
 
 
 ## 참고
 - https://bepyan.github.io/blog/2023/bundlers
 - https://velog.io/@sebinn/%ED%8C%A8%ED%82%A4%EC%A7%80-%EB%A7%A4%EB%8B%88%EC%A0%80-%EB%B9%84%EA%B5%90-npm-yarn-pnpm
 - https://engineering.ab180.co/stories/yarn-to-pnpm
+- https://namu.wiki/w/SWC
+- https://velog.io/@kwonhygge/Next-JS%EA%B0%80-Babel%EC%9D%84-SWC%EB%A1%9C-%EB%8C%80%EC%B2%B4%ED%95%9C-%EC%9D%B4%EC%9C%A0

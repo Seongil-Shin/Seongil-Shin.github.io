@@ -1,7 +1,7 @@
 ---
 title: template
 author: 신성일
-date: "{{date}}"
+date: "{{date}}-({time}} +0900"
 categories: study
 tags:
   - "#study"

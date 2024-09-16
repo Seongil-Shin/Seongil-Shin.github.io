@@ -1,0 +1,763 @@
+<!DOCTYPE html><html lang="ko" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.3" /><meta property="og:title" content="kubernetes 실습" /><meta name="author" content="신성일" /><meta property="og:locale" content="ko" /><meta name="description" content="이 포스트는 subicura 님의 kubenetes 안내서을 읽으며 요약/기록한 게시글입니다." /><meta property="og:description" content="이 포스트는 subicura 님의 kubenetes 안내서을 읽으며 요약/기록한 게시글입니다." /><link rel="canonical" href="https://seongil-shin.github.io/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/" /><meta property="og:url" content="https://seongil-shin.github.io/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/" /><meta property="og:site_name" content="디피의 개발일지" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-11-30T18:29:26+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="kubernetes 실습" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"신성일"},"dateModified":"2023-05-30T21:53:32+09:00","datePublished":"2022-11-30T18:29:26+09:00","description":"이 포스트는 subicura 님의 kubenetes 안내서을 읽으며 요약/기록한 게시글입니다.","headline":"kubernetes 실습","mainEntityOfPage":{"@type":"WebPage","@id":"https://seongil-shin.github.io/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/"},"url":"https://seongil-shin.github.io/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/"}</script><title>kubernetes 실습 | 디피의 개발일지</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-HC9W0NGRV0"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HC9W0NGRV0'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/profile.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">디피의 개발일지</a></div><div class="site-subtitle font-italic">개인 학습 및 프로젝트 기록</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/Seongil-Shin" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['callmeshin75','gmail.com'].join('@')" aria-label="email" class="order-4" > <i class="fas fa-envelope"></i> </a> <a href="https://www.linkedin.com/in/%EC%84%B1%EC%9D%BC-%EC%8B%A0-a9411b237/" aria-label="linkedin" class="order-5" target="_blank" rel="noopener"> <i class="fab fa-linkedin"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>kubernetes 실습</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>kubernetes 실습</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> 신성일 </span> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Wed, Nov 30, 2022, 6:29 PM +0900" prep="on" > Nov 30, 2022 <i class="unloaded">2022-11-30T18:29:26+09:00</i> </span></div><div> <span> <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Tue, May 30, 2023, 9:53 PM +0900" prefix="Updated " > May 30, 2023 <i class="unloaded">2023-05-30T21:53:32+09:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="5592 words">31 min</span></div></div><div class="post-content"><p>이 포스트는 <a href="https://subicura.com/k8s/guide/pod.html">subicura 님의 kubenetes 안내서</a>을 읽으며 요약/기록한 게시글입니다.</p><h1 id="kubenetes-실습">Kubenetes 실습</h1><h2 id="pod-생성하기">Pod 생성하기</h2><h3 id="yaml로-설정파일-작성하여-생성하기">YAML로 설정파일 작성하여 생성하기</h3><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">echo</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/echo:v1</span>
+</pre></table></code></div></div><div class="table-wrapper"><table><thead><tr><th>정의<th>설명<th>예<tbody><tr><td>apiVersion<td>API 서버 버전<td>v1, app/v1, autoscaling/v1<tr><td>kind<td>종류<td>Pod, ReplicaSet, Deployment, Service<tr><td>metadata<td>메타데이터<td>name과 label, annotation으로 구성<tr><td>spec<td>상세명세<td>리소스 종류마다 다름.</table></div><p>apiVersion, kind, metadata, spec은 리소스를 정의할 때 반드시 필요한 요소이다.</p><p><code class="language-plaintext highlighter-rouge">apiVersion</code>은 API 서버의 버전을 나타내는 필드로, <code class="language-plaintext highlighter-rouge">apiVersion</code>에 따라 지원하는 리소스가 달라 주의해야한다. 어떤 버전을 사용해야하는지 궁금하면 <a href="https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html">이 게시글</a>을 참고하자.</p><p>위 YAML 파일을 작성하고 다음과 같이 테스트해볼 수 있다.</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="c"># Pod 생성</span>
+kubectl apply <span class="nt">-f</span> echo-pod.yml
+
+<span class="c"># Pod 목록 조회</span>
+kubectl get pod
+
+<span class="c"># Pod 로그 확인</span>
+kubectl logs <span class="nb">echo
+</span>kubectl logs <span class="nt">-f</span> <span class="nb">echo</span>
+
+<span class="c"># Pod 컨테이너 접속</span>
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> <span class="nb">echo</span> <span class="nt">--</span> sh
+<span class="c"># ls</span>
+<span class="c"># ps</span>
+<span class="c"># exit</span>
+
+<span class="c"># Pod 제거</span>
+kubectl delete <span class="nt">-f</span> echo-pod.yml
+</pre></table></code></div></div><h3 id="컨테이너-상태-모니터링">컨테이너 상태 모니터링</h3><p>컨테이너 실행과 실제 서비스 준비는 약간 차이가 있다. 서버를 실행하고 초기화를 거친다음 실제로 접속이 가능할 때 <strong>서비스가 준비되었다</strong>고 한다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://subicura.com/k8s/build/imgs/guide/pod/pod-monitoring.webp" alt="" /></p><p>쿠버네티스는 libenessProbe와 readnessProbe로 컨테이너생성과 서비스 준비를 체크하여 초기화하는 동안 서비스 되는 것을 막을 수 있다. 보통은 둘을 동시에 적용한다.</p><p><strong>livenessProbe</strong></p><p>livenessProbe는 컨테이너가 정상적으로 동작하는지 체크하고 정상적으로 동작하지 않는다면 컨테이너를 재시작하여 문제를 해결한다. 정상상태인지 체크하는 방식에는 여러 가지가 있는데, <code class="language-plaintext highlighter-rouge">http get</code>으로 확인하는 방법은 다음과 같다.</p><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">echo-lp</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/echo:v1</span>
+      <span class="na">livenessProbe</span><span class="pi">:</span>
+        <span class="na">httpGet</span><span class="pi">:</span>
+          <span class="na">path</span><span class="pi">:</span> <span class="s">/not/exist</span>
+          <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+        <span class="na">initialDelaySeconds</span><span class="pi">:</span> <span class="m">5</span>
+        <span class="na">timeoutSeconds</span><span class="pi">:</span> <span class="m">2</span> <span class="c1"># Default 1</span>
+        <span class="na">periodSeconds</span><span class="pi">:</span> <span class="m">5</span> <span class="c1"># Defaults 10</span>
+        <span class="na">failureThreshold</span><span class="pi">:</span> <span class="m">1</span> <span class="c1"># Defaults 3</span>
+</pre></table></code></div></div><p>위 예시는 존재하지 않는 path와 port를 입력하여 일부러 실패에 이르게 하였다. <code class="language-plaintext highlighter-rouge">kubectl apply</code>로 pod을 생성하고 시간이 지난 후 <code class="language-plaintext highlighter-rouge">kubectl get pod</code>을 통해 pod의 상태를 확인하면 <code class="language-plaintext highlighter-rouge">CrashLoopBackOff</code> 상태에 빠진 것을 알 수 있다.</p><p><code class="language-plaintext highlighter-rouge">http get</code>이외에도 <code class="language-plaintext highlighter-rouge">exec</code>, <code class="language-plaintext highlighter-rouge">tcpSocket</code>방법으로도 확인이 가능하다</p><p><strong>readinessProbe</strong></p><p>readinessProbe는 컨테이너가 준비되었는지 체크하고 정상적으로 준비되지 않았다면 pod으로 들어오는 요청을 제외한다. livenessProbe와의 차이점은 문제가 있어도 pod을 재시작하지 않고 pod으로 오는 요청만 제외한다는 점이다.</p><div class="language-yml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">echo-rp</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/echo:v1</span>
+      <span class="na">readinessProbe</span><span class="pi">:</span>
+        <span class="na">httpGet</span><span class="pi">:</span>
+          <span class="na">path</span><span class="pi">:</span> <span class="s">/not/exist</span>
+          <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+        <span class="na">initialDelaySeconds</span><span class="pi">:</span> <span class="m">5</span>
+        <span class="na">timeoutSeconds</span><span class="pi">:</span> <span class="m">2</span> <span class="c1"># Default 1</span>
+        <span class="na">periodSeconds</span><span class="pi">:</span> <span class="m">5</span> <span class="c1"># Defaults 10</span>
+        <span class="na">failureThreshold</span><span class="pi">:</span> <span class="m">1</span> <span class="c1"># Defaults 3</span>
+</pre></table></code></div></div><p>livenessProbe와 똑같이 존재하지않는 곳으로 요청을 보냈지만, <code class="language-plaintext highlighter-rouge">CrashLoopBackOff</code>에는 빠지지 않고 pod의 READY 상태만 <code class="language-plaintext highlighter-rouge">0/1</code>로 유지된다.</p><p><strong>livenessProbe + readinessProbe</strong></p><p>보통은 둘을 함께 적용한다.</p><div class="language-yml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">echo-health</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/echo:v1</span>
+      <span class="na">livenessProbe</span><span class="pi">:</span>
+        <span class="na">httpGet</span><span class="pi">:</span>
+          <span class="na">path</span><span class="pi">:</span> <span class="s">/</span>
+          <span class="na">port</span><span class="pi">:</span> <span class="m">3000</span>
+      <span class="na">readinessProbe</span><span class="pi">:</span>
+        <span class="na">httpGet</span><span class="pi">:</span>
+          <span class="na">path</span><span class="pi">:</span> <span class="s">/</span>
+          <span class="na">port</span><span class="pi">:</span> <span class="m">3000</span>
+</pre></table></code></div></div><p>정상적으로 생성된다.</p><h3 id="다중-컨테이너">다중 컨테이너</h3><p>하나의 pod에는 여러개의 컨테이너를 가질 수도 있다. 하나의 Pod에 속한 컨테이너는 <strong>서로 네트워크를 localhost로 공유</strong>하고 <strong>동일한 디렉터리를 공유</strong>할 수 있다.</p><p>서로 네트워크를 localhost로 공유할 수 있는 이유는 Pod 안의 모든 네트워크는 동일한 IPC namespace 아래에서 시행되기 때문이다.</p><div class="language-yml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">counter</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">counter</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/counter:latest</span>
+      <span class="na">env</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">REDIS_HOST</span>
+          <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">localhost"</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">db</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+</pre></table></code></div></div><p>요청횟수를 redis에 저장하는 웹 어플리케이션이다. 다음과 같이 테스트할 수 있다.</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre><td class="rouge-code"><pre><span class="c"># Pod 생성</span>
+kubectl apply <span class="nt">-f</span> counter-pod-redis.yml
+
+<span class="c"># Pod 목록 조회</span>
+kubectl get pod
+
+<span class="c"># Pod 로그 확인</span>
+kubectl logs counter <span class="c"># 오류 발생 (컨테이너 지정 필요)</span>
+kubectl logs counter app
+kubectl logs counter db
+
+<span class="c"># Pod의 app컨테이너 접속</span>
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> counter <span class="nt">-c</span> app <span class="nt">--</span> sh
+<span class="c"># curl localhost:3000</span>
+<span class="c"># curl localhost:3000</span>
+<span class="c"># telnet localhost 6379</span>
+  dbsize
+  KEYS <span class="k">*</span>
+  GET count
+  quit
+
+<span class="c"># Pod 제거</span>
+kubectl delete <span class="nt">-f</span> counter-pod-redis.yml
+</pre></table></code></div></div><p>현재틑 터미널로 테스트하였지만, <code class="language-plaintext highlighter-rouge">Service</code>를 적용하면 브라우저 테스트를 할 수 있다.</p><p><br /></p><h2 id="replicaset">ReplicaSet</h2><p>pod을 단독으로 만들면 pod에 어떤 문제가 생겼을 때 자동으로 복구되지않는다. 이러한 pod을 정해진 만큼 복제하고 관리하는 것이 ReplicaSet이다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://subicura.com/k8s/build/imgs/guide/replicaset/rs.webp" alt="replicaset" style="zoom:67%;" /></p><h3 id="replicaset-만들기">ReplicaSet 만들기</h3><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ReplicaSet</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">echo-rs</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+      <span class="na">tier</span><span class="pi">:</span> <span class="s">app</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+        <span class="na">tier</span><span class="pi">:</span> <span class="s">app</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">echo</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/echo:v1</span>
+</pre></table></code></div></div><div class="table-wrapper"><table><thead><tr><th>정의<th>설명<tbody><tr><td>spec.selector<td>label 체크 조건<tr><td>spec.replicas<td>원하는 pod의 개수<tr><td>spec.template<td>생성할 pod의 명세</table></div><p>RepliacaSet은 <strong>label을 체크</strong>해서 원하는 수의 Pod이 없으면 새로운 Pod을 생성한다.</p><p>다음과 같이 테스트 가능하다</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="c"># ReplicaSet 생성</span>
+kubectl apply <span class="nt">-f</span> echo-rs.yml
+
+<span class="c"># 리소스 확인</span>
+kubectl get po,rs
+
+<span class="c"># 생성한 pod의 label을 확인</span>
+kubectl get pod <span class="nt">--show-labels</span>
+
+<span class="c"># app- 를 지정하면 app label을 제거</span>
+kubectl label pod/echo-rs-tcdwj app-
+
+<span class="c"># 다시 Pod 확인 -&gt; label을 삭제한 pod은 그대로 있고, label과 일치하는 pod이 새로 생김</span>
+kubectl get pod <span class="nt">--show-labels</span>
+
+<span class="c"># app=으로 라벨 추가</span>
+kubectl label pod/echo-rs-tcdwj <span class="nv">app</span><span class="o">=</span><span class="nb">echo</span>
+
+<span class="c"># 다시 Pod 확인 -&gt; 새로 생성된 pod이 제거됨.</span>
+kubectl get pod <span class="nt">--show-labels</span>
+</pre></table></code></div></div><p>ReplicaSet은 다음과 같이 동작한다.</p><ol><li><code class="language-plaintext highlighter-rouge">ReplicaSet Controller</code>는 ReplicaSet조건을 감시하면서 현재 상태와 원하는 상태가 다른 것을 체크<li><code class="language-plaintext highlighter-rouge">ReplicaSet Controller</code>가 원하는 상태가 되도록 <code class="language-plaintext highlighter-rouge">Pod</code>을 생성하거나 제거<li><code class="language-plaintext highlighter-rouge">Scheduler</code>는 API서버를 감시하면서 할당되지 않은 unassigned <code class="language-plaintext highlighter-rouge">Pod</code>이 있는지 체크<li><code class="language-plaintext highlighter-rouge">Scheduler</code>는 할당되지 않은 새로운 <code class="language-plaintext highlighter-rouge">Pod</code>을 감지하고 적절한 <code class="language-plaintext highlighter-rouge">노드</code>node에 배치<li>이후 노드는 기존대로 동작</ol><h3 id="주의">주의</h3><p>ReplicaSet은 원하는 개수의 Pod을 유지하는 역할을 담당한다. label을 이용하여 Pod을 체크하므로 label이 겹치지 않게 신경써서 정의해야한다.</p><p>실전에서 ReplicaSet을 단독으로 쓰는 경우는 거의 없다. Deployment가 ReplicaSet을 이용하고,주로 Deployment를 이용한다.</p><p><br /></p><h2 id="deployment">Deployment</h2><p>하나의 배포판을 의미하는 것으로, 쿠버네티스에서 가장 널리 사용되는 오브젝트이다. ReplicaSet을 이용하여 Pod을 업데이트하고 이력을 관리하여 롤백하거나 특정버전으로 돌아갈 수 있다.</p><h3 id="deployment-만들기">Deployment 만들기</h3><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">echo-deploy</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">4</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+      <span class="na">tier</span><span class="pi">:</span> <span class="s">app</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+        <span class="na">tier</span><span class="pi">:</span> <span class="s">app</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">echo</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/echo:v1</span>
+</pre></table></code></div></div><p>kind와 metadate.name을 제외하곤 ReplicaSet과 동일한 설정이다.</p><p>다음과 같이 테스트 가능하다</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c"># Deployment 생성</span>
+kubectl apply <span class="nt">-f</span> echo-deployment.yml
+
+<span class="c"># 리소스 확인</span>
+kubectl get po,rs,deploy
+</pre></table></code></div></div><p>한번 위 yml 파일의 <code class="language-plaintext highlighter-rouge">spec.template.spec.containers[0].image</code>를 다음과 같이 변경하고 다시 Deployment를 생성해보자</p><div class="language-yml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="nn">...</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/echo:v2</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">kubectl get po,rs,deploy</code> 명령어로 확인해보면, 새로운 ReplicaSet이 생기고 Pod이 업데이트되는 것을 확인할 수 있다.</p><p>Deployment는 새로운 이미지로 업데이트하기 위해 ReplicaSet을 이용한다. 버전을 업데이트하면 새로운 ReplicaSet을 생성하고 해당 ReplicaSet이 새로운 버전의 Pod을 생성한다. 이때 다음과 같은 과정을 거친다.</p><ol><li>새로운 ReplicaSet을 0 -&gt; 1개로 조정하고 정상적으로 Pod이 동작하면 기존 ReplicaSet을 4 -&gt; 3개로 조정한다.<li>1을 기존 ReplicaSet이 0개가 될 때까지 반복한다.<li>기존 ReplicaSet을 제거한다.</ol><p>API 서버와의 통신과정은 다음과 같다.</p><ol><li><code class="language-plaintext highlighter-rouge">Deployment Controller</code>는 Deployment 조건을 감시하면서 현재 상태와 원하는 상태가 다른 것을 체크<li><code class="language-plaintext highlighter-rouge">Deployment Controller</code>가 원하는 상태가 되도록 <code class="language-plaintext highlighter-rouge">ReplicaSet</code> 설정<li><code class="language-plaintext highlighter-rouge">ReplicaSet Controller</code>는 ReplicaSet 조건을 감시하면서 현재 상태와 원하는 상태가 다른 것을 체크<li><code class="language-plaintext highlighter-rouge">ReplicaSet Controller</code>가 원하는 상태가 되도록 <code class="language-plaintext highlighter-rouge">Pod</code>을 생성하거나 제거<li><code class="language-plaintext highlighter-rouge">Scheduler</code>는 API서버를 감시하면서 할당되지 않은 unassigned <code class="language-plaintext highlighter-rouge">Pod</code>이 있는지 체크<li><code class="language-plaintext highlighter-rouge">Scheduler</code>는 할당되지 않은 새로운 <code class="language-plaintext highlighter-rouge">Pod</code>을 감지하고 적절한 <code class="language-plaintext highlighter-rouge">노드</code>에 배치<li>이후 노드는 기존대로 동작</ol><h3 id="버전관리">버전관리</h3><p>deployment는 변경된 상태를 기록한다</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="c"># 히스토리 확인</span>
+kubectl rollout <span class="nb">history </span>deploy/echo-deploy
+
+<span class="c"># revision 1 히스토리 상세 확인</span>
+kubectl rollout <span class="nb">history </span>deploy/echo-deploy <span class="nt">--revision</span><span class="o">=</span>1
+
+<span class="c"># 바로 전으로 롤백</span>
+kubectl rollout undo deploy/echo-deploy
+
+<span class="c"># 특정 버전으로 롤백</span>
+kubectl rollout undo deploy/echo-deploy <span class="nt">--to-revision</span><span class="o">=</span>2
+</pre></table></code></div></div><h3 id="배포전략-설정">배포전략 설정</h3><p>Deployment엔 다양한 배포 전략이 있다. 여기선 롤링 업데이트(RollingUpdate) 방식을 사용할 때 동시에 업데이트하는 Pod의 개수를 변경해보자</p><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">echo-deploy-st</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">4</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+      <span class="na">tier</span><span class="pi">:</span> <span class="s">app</span>
+  <span class="na">minReadySeconds</span><span class="pi">:</span> <span class="m">5</span>
+  <span class="na">strategy</span><span class="pi">:</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">RollingUpdate</span>
+    <span class="na">rollingUpdate</span><span class="pi">:</span>
+      <span class="na">maxSurge</span><span class="pi">:</span> <span class="m">3</span>
+      <span class="na">maxUnavailable</span><span class="pi">:</span> <span class="m">3</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">echo</span>
+        <span class="na">tier</span><span class="pi">:</span> <span class="s">app</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">echo</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/echo:v1</span>
+          <span class="na">livenessProbe</span><span class="pi">:</span>
+            <span class="na">httpGet</span><span class="pi">:</span>
+              <span class="na">path</span><span class="pi">:</span> <span class="s">/</span>
+              <span class="na">port</span><span class="pi">:</span> <span class="m">3000</span>
+</pre></table></code></div></div><p>다음과 같이 테스트해보면,</p><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> echo-strategy.yml
+kubectl get po,rs,deploy
+
+<span class="c"># 이미지 변경 (명령어로)</span>
+kubectl <span class="nb">set </span>image deploy/echo-deploy-st <span class="nb">echo</span><span class="o">=</span>ghcr.io/subicura/echo:v2
+
+<span class="c"># 이벤트 확인</span>
+kubectl describe deploy/echo-deploy-st
+</pre></table></code></div></div><p>Pod을 하나씩 생성하지 않고, 한번에 3개가 생성된 것을 확인할 수 있다.</p><p>Deployment는 가장 흔하게 사용하는 배포방식이다. 이외에 StatefulSet, DaemonSet, CronJob, Job등이 있지만 사용법은 크게 다르지 않다.</p><p><br /></p><h2 id="service">Service</h2><p>Pod을 자체 IP를 가지고 다른 Pod과 통신할 수 있다. 하지만 쉽게 사라지고 생성되며 그 과정에서 Pod의 IP가 변경되기에 직접 통신하는 방법은 권장하지 않는다.</p><p>쿠버네티스는 Pod과 직접 통신하는 대신 별도의 고정된 IP를 가진 서비스를 만들고, 그 서비스를 통해 Pod에 접근한다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://subicura.com/k8s/build/imgs/guide/service/pod-service.webp" alt="service" style="zoom: 50%;" /></p><h3 id="serviceclusterip-만들기">Service(ClusterIP) 만들기</h3><p>ClusterIP는 클러스터 내부에 새로운 IP를 할당하고 여러 개의 Pod을 바라보는 로드밸런서 기능을 제공한다.</p><p>서비스 이름을 내부 도메인 서버에 등록하여 Pod 간에 서비스 이름으로 통신할 수 있습니다.</p><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">counter</span>
+      <span class="na">tier</span><span class="pi">:</span> <span class="s">db</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">counter</span>
+        <span class="na">tier</span><span class="pi">:</span> <span class="s">db</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">6379</span>
+              <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+<span class="c1"># 하나의 yaml 파일에 여러개의 리소스를 정의할 땐 "---"를 구분자로 사용한다.</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">6379</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">counter</span>
+    <span class="na">tier</span><span class="pi">:</span> <span class="s">db</span>
+</pre></table></code></div></div><p>다음과 같이 테스트하면, <code class="language-plaintext highlighter-rouge">redis</code>라는 이름의 서비스가 생성되었음을 알 수 있다.</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> counter-redis-svc.yml
+
+<span class="c"># Pod, ReplicaSet, Deployment, Service 상태 확인</span>
+kubectl get all
+</pre></table></code></div></div><p><strong>같은 클러스터에서 생성된 Pod이라면 redis라는 도메인으로 redis Pod에 접근</strong>할 수 있다.</p><p>ClusterIP 서비스의 설정은 다음과 같다</p><div class="table-wrapper"><table><thead><tr><th>정의<th>설명<tbody><tr><td>spec.ports.port<td>서비스가 생성할 Port<tr><td>spec.ports.targetPort<td>서비스가 접근할 Pod의 Port(디폴트 : port와 동일)<tr><td>spec.selector<td>서비스가 접근할 Pod의 label 조건</table></div><p>이제 redis에 접근할 counter앱을 Deployment로 만들어보자</p><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">counter</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">counter</span>
+      <span class="na">tier</span><span class="pi">:</span> <span class="s">app</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">counter</span>
+        <span class="na">tier</span><span class="pi">:</span> <span class="s">app</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">counter</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">ghcr.io/subicura/counter:latest</span>
+          <span class="na">env</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">REDIS_HOST</span>
+              <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">redis"</span>    <span class="c1"># redis 도메인으로 접근  </span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">REDIS_PORT</span>
+              <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">6379"</span>
+</pre></table></code></div></div><p>다음과 같이 테스트할 수 있다.</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> counter-app.yml
+
+<span class="c"># counter app에 접근</span>
+kubectl get po
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> counter-&lt;xxxxx&gt; <span class="nt">--</span> sh
+<span class="c"># curl localhost:3000</span>
+<span class="c"># curl localhost:3000</span>
+<span class="c"># telnet redis 6379</span>
+  dbsize
+  KEYS <span class="k">*</span>
+  GET count
+  quit
+</pre></table></code></div></div><h3 id="service-생성-흐름">Service 생성 흐름</h3><p>서비스는 각 pod을 바라보는 로드밸런서 역할을 하면서 내부 도메인서버에 새로운 도메인을 생성한다.</p><p>서비스는 다음과 같이 동작한다</p><ol><li><code class="language-plaintext highlighter-rouge">Endpoint Controller</code>는 <code class="language-plaintext highlighter-rouge">Service</code>와 <code class="language-plaintext highlighter-rouge">Pod</code>을 감시하면서 조건에 맞는 Pod의 IP를 수집<li><code class="language-plaintext highlighter-rouge">Endpoint Controller</code>가 수집한 IP를 가지고 <code class="language-plaintext highlighter-rouge">Endpoint</code> 생성<li><code class="language-plaintext highlighter-rouge">Kube-Proxy</code>는 <code class="language-plaintext highlighter-rouge">Endpoint</code> 변화를 감시하고 노드의 iptables을 설정<li><code class="language-plaintext highlighter-rouge">CoreDNS</code>는 <code class="language-plaintext highlighter-rouge">Service</code>를 감시하고 서비스 이름과 IP를 <code class="language-plaintext highlighter-rouge">CoreDNS</code>에 추가</ol><p>iptables은 커널 레벨의 네트워크 도구이고, <code class="language-plaintext highlighter-rouge">CoreDNS</code>는 빠르고 편리하게 사용할 수 있는 클러스터 내부용 도메인 네임 서버이다. <code class="language-plaintext highlighter-rouge">iptables</code> 설정으로 여러 IP에 트래픽을 전달하고, <code class="language-plaintext highlighter-rouge">CoreDNS</code>를 이용하여 IP 대신 도메인 이름을 사용한다.</p><blockquote><p>iptables 는 규칙이 많아지면 성능이 느려지는 이슈가 있어, ipvs를 사용하는 옵션도 있다</p><p>CoreDNS는 클러스터에서 호환성을 위해 kube-dns라는 이름으로 생성된다.</p></blockquote><p><strong>Endpoint</strong>는 서비스의 접속 정보를 가지고 있다. Endpoint의 상태는 다음과 같이 확인이 가능하다</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>kubectl get endpoints
+kubectl get ep <span class="c">#줄여서</span>
+
+<span class="c"># redis Endpoint 확인</span>
+kubectl describe ep/redis
+</pre></table></code></div></div><h3 id="servicenodeport-만들기">Service(NodePort) 만들기</h3><ul><li><a href="https://subicura.com/k8s/guide/service.html#service-nodeport-%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5">링크</a></ul><p>NodePort는 클러스터의 모든 노드에 포트를 오픈한다. 여러개의 노드가 있다면 아무 노드로 접근해도 지정한 pod으로 접근할 수 있다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://subicura.com/k8s/build/imgs/guide/service/nodeport-multi.webp" alt="" /></p><p>참고로 NodePort는 ClusterIP의 기능을 기본으로 포함한다.</p><h3 id="serviceloadbalancer-만들기">Service(LoadBalancer) 만들기</h3><p>NodePort의 단점은 노드가 사라졌을 때 자동으로 다른 노드를 통해 접근이 불가능하다는 점이다. 예를 들어 3개의 노드가 있다면 3개 중에 아무 노드로 접근해도 NodePort로 연결할 수 있지만 어떤 노드가 살아있는지는 알수가 없다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://subicura.com/k8s/build/imgs/guide/service/lb.webp" alt="load balancer" style="zoom:50%;" /></p><p>자동으로 살아있는 노드에 접근하기 위해 모든 노드를 바라보는 <code class="language-plaintext highlighter-rouge">Load Balancer</code>가 필요하다. 브라우저는 NodePort에 직접 요청을 보내는 것이 아니라 LoadBalancer에 요청하고 LoadBalancer가 알아서 살아있는 노드에 접근하면 NodePort의 단점을 없앨 수 있다.</p><ul><li><a href="https://subicura.com/k8s/guide/service.html#service-loadbalancer-%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5">실습링크</a></ul><h3 id="clusterip-vs-nodeport-vs-loadbalancer">ClusterIP vs NodePort vs LoadBalancer</h3><ul><li>ClusterIP : 클러스터 내부에서 접근 가능한 ip를 염.<ul><li>ip는 자동으로 생성되고, port는 selector로 걸린 pod의 targetPort를 port로 지정한 값으로 염.<li>클러스터 내부의 Pod에서만 접근 가능<li>ClusterIP의 name을 도메인으로 사용할 수 있음.<li>로드밸런서의 역할도 제공한다.</ul><li>NodePort : 클러스터 외부에서 접근 가능한 포트를 염<ul><li>selector로 걸린 pod의 targetPort를 port로 지정한 값으로 ClusterIP를 염. 외부로는 nodePort로 지정한 값으로 염.<li>NodePort는 기본적으로 ClusterIP의 기능을 포함함. 따라서 클러스터 내부의 pod들은, NodePort로 연 port를, NodePort를 생성할 때 지정되는 ClusterIP를 통해 접근가능하다.<li>분산 노드 애플리케이션에서는 오토스케일링을 이유로 노드들의 네트워크 환경이 동적으로 변한다면, 서비스 디스커버리와 같은 방법으로 클라이언트에서 노드들의 네트워크 엔드포인트르 관리해야함. -&gt; 로드 밸런서로 해결</ul><li>LoadBalancer : NodePort 기능 + 살아있는 노드를 자동으로 찾아 요청을 전달함.<ul><li>selector로 걸린 pod의 targetPort를 port로 지정한 값으로 염. 외부로는 nodePort로 지정한 값으로 염.<li>LoadBalancer는 기본적으로 NodePort의 기능을 포함함.</ul></ul><h3 id="주의-1">주의</h3><p>실전에서 NodePort와 LoadBalancer는 제한적으로 사용한다. 보통 웹 어플리케이션을 배포하면 80 또는 443 포트만 사용하고 하나의 포트에서 여러 개의 서비스를 도메인이나 경로에 따라 다르게 설정하기 때문이다. 이 부분은 Ingress에서 처리할 수 있다.</p><p><br /></p><h2 id="ingress">Ingress</h2><p>하나의 클러스터에서 여러가지 서비스를 운영한다고 해보자. 이때 NodePort를 사용하여 서비스 개수만큼 포트를 열고 사용자에게 어떤 포트인지 알려주는 방법은 유저 경험에 좋지 않다.</p><p>좋은 방법은 같은 포트 아래에서 각 서비스를 path로 구분하는 방법이고, Ingress 사용해 구현한다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://subicura.com/k8s/build/imgs/guide/ingress/ingress.webp" alt="ingress" style="zoom:67%;" /></p><h3 id="ingress-만들기">Ingress 만들기</h3><ul><li><a href="https://subicura.com/k8s/guide/ingress.html#ingress-%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5">자세한 실습 링크</a></ul><h3 id="ingress-생성-흐름">Ingress 생성 흐름</h3><ol><li><code class="language-plaintext highlighter-rouge">Ingress Controller</code>는 <code class="language-plaintext highlighter-rouge">Ingress</code> 변화를 체크<li><code class="language-plaintext highlighter-rouge">Ingress Controller</code>는 변경된 내용을 <code class="language-plaintext highlighter-rouge">Nginx</code>에 설정하고 프로세스 재시작</ol><p>YAML로 만든 Ingress 설정을 단순히 nginx 설정으로 바꾸는 과정을 Ingress Controller가 자동으로 해주는 것이다.</p><p>Ingress는 도메인, 경로만 연동하는 것이 아니라 요청 timeout, 요청 max size 등 다양한 프록시 서버 설정을 할 수 있다.</p><p><br /></p><h2 id="volume">Volume</h2><p>MySQL과 같은 데이터베이스는 데이터가 유실되지 않도록 반드시 별도의 저장소에 데이터를 저장하고, 컨테이너를 새로 만들 때 이전 데이터를 가져와야한다.</p><p>쿠버네티스는 Volume을 사용하여 컨테이너의 디렉토리를 외부 저장소와 연결하고 다양한 플러그인을 지원하여 흔히 사용하는 대부분의 스토리지를 별도 설정없이 사용할 수 있다.</p><h3 id="volumeempty-dir-만들기">Volume(<strong>empty-dir</strong>) 만들기</h3><p>empty-dir은 <strong>같은 pod 안에 속한 컨테이너 간 디렉터리를 공유하는 방법</strong>으로 보통 사이드카 패턴에서 사용한다. 예를들어 특정 컨테이너에서 생성되는 로그 파일을 별도의 컨테이너가 수집할 수 있다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://subicura.com/k8s/build/imgs/guide/volume/empty-dir.webp" style="zoom:67%;" /></p><p>아래 예시는 app 컨테이너는 <code class="language-plaintext highlighter-rouge">/var/log/example.log</code>에 로그 파일을 만들고, <code class="language-plaintext highlighter-rouge">sidecar</code> 컨테이너는 해당 로그파일을 처리하도록 하는 예시다</p><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">sidecar</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+      <span class="na">args</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">/bin/sh</span>
+        <span class="pi">-</span> <span class="s">-c</span>
+        <span class="pi">-</span> <span class="pi">&gt;</span>
+          <span class="s">while true;</span>
+          <span class="s">do</span>
+            <span class="s">echo "$(date)\n" &gt;&gt; /var/log/example.log;</span>
+            <span class="s">sleep 1;</span>
+          <span class="s">done</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlog</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/log</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">sidecar</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+      <span class="na">args</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">/bin/sh</span><span class="pi">,</span> <span class="nv">-c</span><span class="pi">,</span> <span class="s2">"</span><span class="s">tail</span><span class="nv"> </span><span class="s">-f</span><span class="nv"> </span><span class="s">/var/log/example.log"</span><span class="pi">]</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlog</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/log</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlog</span>
+      <span class="na">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+</pre></table></code></div></div><p>다음 명령어로 테스트해볼수 있다.</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> empty-dir.yml
+
+<span class="c"># sidecar 로그 확인</span>
+kubectl logs <span class="nt">-f</span> sidecar <span class="nt">-c</span> sidecar
+</pre></table></code></div></div><h3 id="hostpath">hostpath</h3><p>호스트(node) 디렉터리를 컨테이너 디렉터리에 연결하는 방법이다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://subicura.com/k8s/build/imgs/guide/volume/hostpath.webp" alt="hostpath" style="zoom:50%;" /></p><p>아래 예시는 호스트의 <code class="language-plaintext highlighter-rouge">/var/log</code>를 컨테이너의 <code class="language-plaintext highlighter-rouge">/host/var/log</code> 디렉터리로 마운트한다.</p><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">host-log</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">log</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+      <span class="na">args</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/bin/sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">sleep</span><span class="nv"> </span><span class="s">infinity"</span><span class="pi">]</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlog</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/host/var/log</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlog</span>
+      <span class="na">hostPath</span><span class="pi">:</span>
+        <span class="na">path</span><span class="pi">:</span> <span class="s">/var/log</span>
+</pre></table></code></div></div><p>아래 명령어로 마운트된 디렉터리를 확인할 수 있다.</p><div class="language-shell highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> hostpath.yml
+
+<span class="c"># 컨테이너 접속 후 /host/var/log 디렉토리를 확인</span>
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> host-log <span class="nt">--</span> sh
+<span class="nb">ls</span> <span class="nt">-al</span> /host/var/log
+</pre></table></code></div></div><p><br /></p><h2 id="configmap">ConfigMap</h2><p>컨테이너에서 설정 파일을 관리하는 방법은 이미지를 빌드할 때 복사하거나, 컨테이너를 실행할 때 외부 파일을 연결하는 방법이 있다.</p><p>쿠버네티스는 ConfigMap으로 설정을 관리한다.</p><p>ConfigMap을 만드는 방법을 다음 세가지가 있다. <a href="https://subicura.com/k8s/guide/configmap.html#configmap-%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5">실습</a></p><ul><li>ConfigMap 파일 직접 생성<li>env 파일로 생성<li>YAML 파일로 생성</ul><p>ConfigMap은 컨테이너에서 volume으로 마운트하여 파일을 가져오는 방식으로 사용한다. 하지만 volume이 아닌 환경변수로 설정할 수도 있다. 이때는 다음과 같이 환경 변수를 작성하는 곳에 configMap을 키로 연결하면 된다.</p><div class="language-yaml highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">alpine-env</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">alpine</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">alpine</span>
+      <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sleep"</span><span class="pi">]</span>
+      <span class="na">args</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">100000"</span><span class="pi">]</span>
+      <span class="na">env</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">hello</span>
+          <span class="na">valueFrom</span><span class="pi">:</span>
+            <span class="na">configMapKeyRef</span><span class="pi">:</span>
+              <span class="na">name</span><span class="pi">:</span> <span class="s">my-config</span>
+              <span class="na">key</span><span class="pi">:</span> <span class="s">hello</span>
+</pre></table></code></div></div><p><br /></p><h2 id="secret">Secret</h2><p>쿠버네티스에서 비밀번호, SSH 인증, TLS Secret와 같은 보안 정보를 관리하는 방법으로, ConfigMap과 유사하지만, 보안 정보를 관리하기 위해 <code class="language-plaintext highlighter-rouge">Secret</code>을 별도로 제공한다.</p><p>ConfigMap와의 차이점은 데이터가 <code class="language-plaintext highlighter-rouge">base64</code>로 저장되는 거 말고는 거의 없다.</p><h3 id="주의-2">주의</h3><p>Secret은 <strong>암호화 되지 않는다.</strong> 있는 정보를 그대로 저장하며, etcd에 접근이 가능하면 누구나 저장된 Secret을 확인할 수 있다. <a href="https://www.vaultproject.io/">vault</a>와 같은 외부 솔루션을 사용하여 보안을 강화할 수 있다.</p><h3 id="secret-만들기">Secret 만들기</h3><ul><li><a href="https://subicura.com/k8s/guide/secret.html#secret-%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5">실습 링크</a></ul><p><br /></p><p><br /></p><h2 id="출처">출처</h2><p>https://subicura.com/k8s/</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/study/'>study</a>, <a href='/categories/devops/'>devops</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/kubernetes/" class="post-tag no-text-decoration" >kubernetes</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=kubernetes 실습 - 디피의 개발일지&url=https://seongil-shin.github.io/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=kubernetes 실습 - 디피의 개발일지&u=https://seongil-shin.github.io/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=kubernetes 실습 - 디피의 개발일지&url=https://seongil-shin.github.io/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8-%EC%A0%84%EC%B2%B4-%ED%9B%84%EA%B8%B0/">실용주의프로그래머 - 전체 후기</a><li><a href="/posts/JS-bundler,-package-manager,-compiler/">JS bundler, package manager, compiler</a><li><a href="/posts/Esbuild-to-reduce-build-times-by-90/">Esbuild to reduce build times by 90%</a><li><a href="/posts/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8-1%EC%9E%A5-%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98-%EC%B2%A0%ED%95%99/">실용주의프로그래머 1장 실용주의 철학</a><li><a href="/posts/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8-5%EC%9E%A5-%EA%B5%AC%EB%B6%80%EB%9F%AC%EC%A7%80%EA%B1%B0%EB%82%98-%EB%B6%80%EB%9F%AC%EC%A7%80%EA%B1%B0%EB%82%98/">실용주의프로그래머 5장 구부러지거나 부러지거나</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/devops-Helm/"><div class="card-body"> <span class="timeago small" > Nov 10, 2022 <i class="unloaded">2022-11-10T18:21:26+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Helm</h3><div class="text-muted small"><p> Helm Kubernetes 패키지 관리를 도와주는 도구. node.js의 npm과 같은 역할을 수행한다. Helm을 사용하면 쿠버네티스 클러스터에서 동작하도록 작성된 패키지들을 관리할 수 있다. 즉, Helm을 사용하면 클러스터에 배포한 애플리케이션을 쉽게 설치, 업데이트, 삭제할 수 있다. 일반적으로 쿠버네티스는 여러 오브젝트로 구성되어있는데...</p></div></div></a></div><div class="card"> <a href="/posts/devops-HPA/"><div class="card-body"> <span class="timeago small" > Nov 10, 2022 <i class="unloaded">2022-11-10T18:23:26+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>HPA</h3><div class="text-muted small"><p> [devops] HPA HorizontalPodAutoscaler의 약자로, k8s에서 CPU 사용률을 체크하여 Pod의 개수를 스케일링하는 기술이다. 지정한 메트릭을 controller가 체크하여 부하에 따라 필요한 pod의 replica 수가 되도록 자동으로 pod 수를 늘리거나 줄일 수 있는 기술이다. Auto scaling Auto s...</p></div></div></a></div><div class="card"> <a href="/posts/devops-kubernetes/"><div class="card-body"> <span class="timeago small" > Nov 30, 2022 <i class="unloaded">2022-11-30T18:19:26+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>kubernetes</h3><div class="text-muted small"><p> 이 포스트는 subicura 님의 kubenetes 게시글을 읽으며 요약/기록한 게시글입니다. Kubenetes 쿠버네티스(kubenetes, k8s)는 도커 컨테이너를 쉽고 빠르게 배포/확장하고 관리를 자동화해주는 오픈소스 플랫폼이다. 단순한 컨테이너 플랫폼이 아닌 마이크로 서비스, 클라우드 플랫폼을 지향하고 컨테이너로 이루어진 것들을 손쉽게 담...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/devops-kubernetes/" class="btn btn-outline-primary" prompt="Older"><p>kubernetes</p></a> <a href="/posts/web-nginx%EC%97%90%EC%84%9C-%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%82%AC%EC%9A%A9/" class="btn btn-outline-primary" prompt="Newer"><p>nginx에서 환경변수 사용하는 방법</p></a></div><div id="disqus" class="pt-2 pb-2"><p class="text-center text-muted small pb-5"> Comments powered by <a href="https://disqus.com/">Disqus</a>.</p></div><script src="/assets/js/lib/jquery.disqusloader.min.js"></script> <script> const options = { scriptUrl: '//.disqus.com/embed.js', disqusConfig: function() { this.page.title = 'kubernetes 실습'; this.page.url = 'https://seongil-shin.github.io/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/'; this.page.identifier = '/posts/devops-kubenetes-%EC%8B%A4%EC%8A%B5/'; } }; $.disqusLoader('#disqus', options); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#main > div.row:first-child > div:first-child img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/Seongil-Shin">ShinSeongil</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://seongil-shin.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script>

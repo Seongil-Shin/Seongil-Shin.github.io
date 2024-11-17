@@ -1,5 +1,5 @@
 ---
-title: template
+title: why-nextjs-sucks
 author: 신성일
 date: 2024-09-08
 categories: study, article

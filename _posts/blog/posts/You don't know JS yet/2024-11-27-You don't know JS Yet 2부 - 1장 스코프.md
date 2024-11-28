@@ -1,5 +1,5 @@
 ---
-title: You don't know JS Yet 2부 - 스코프
+title: You don't know JS Yet 2부 - 1장 스코프
 author: 신성일
 date: 2024-11-26 19:00:00 +0900
 categories: study, YDKJSY

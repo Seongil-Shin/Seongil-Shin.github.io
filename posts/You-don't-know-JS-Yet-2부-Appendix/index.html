@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="ko" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.4" /><meta property="og:title" content="You don’t know JS Yet 2부 - Appendix" /><meta name="author" content="신성일" /><meta property="og:locale" content="ko" /><meta name="description" content="A.1 암시적 스코프" /><meta property="og:description" content="A.1 암시적 스코프" /><link rel="canonical" href="https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/" /><meta property="og:url" content="https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/" /><meta property="og:site_name" content="디피의 개발일지" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2024-12-15T19:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="You don’t know JS Yet 2부 - Appendix" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"신성일"},"dateModified":"2024-12-15T19:00:00+09:00","datePublished":"2024-12-15T19:00:00+09:00","description":"A.1 암시적 스코프","headline":"You don’t know JS Yet 2부 - Appendix","mainEntityOfPage":{"@type":"WebPage","@id":"https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/"},"url":"https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/"}</script><title>You don't know JS Yet 2부 - Appendix | 디피의 개발일지</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-HC9W0NGRV0"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HC9W0NGRV0'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/profile.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">디피의 개발일지</a></div><div class="site-subtitle font-italic">개인 학습 및 프로젝트 기록</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/Seongil-Shin" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['callmeshin75','gmail.com'].join('@')" aria-label="email" class="order-4" > <i class="fas fa-envelope"></i> </a> <a href="https://www.linkedin.com/in/%EC%84%B1%EC%9D%BC-%EC%8B%A0-a9411b237/" aria-label="linkedin" class="order-5" target="_blank" rel="noopener"> <i class="fab fa-linkedin"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>You don't know JS Yet 2부 - Appendix</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>You don't know JS Yet 2부 - Appendix</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> 신성일 </span> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Sun, Dec 15, 2024, 7:00 PM +0900" prep="on" > Dec 15 <i class="unloaded">2024-12-15T19:00:00+09:00</i> </span></div><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="4122 words">22 min</span></div></div><div class="post-content"><h2 id="a1-암시적-스코프">A.1 암시적 스코프</h2><p>스코프는 가끔 명확하지 않은 위치에 생성된다. 일반적으론 이러한 암시적 스코프가 작동에 영향을 주진않는데, 알고 있으면 유용하다.</p><ul><li>매개변수 스코프<li>함수명 스코프</ul><h3 id="매개변수-스코프">매개변수 스코프</h3><p>함수 매개변수는 함수 스코프에서 지역으로 선언한 변수와 동일하다고 하였지만, 항상 그렇지는 않다.</p><p>아래와 같이 단순한 매개변수 형태는 함수 스코프와 매개변수 스코프가 같다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">getStudentName</span><span class="p">(</span><span class="nx">studentId</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>하지만 기본값이 있는 매개변수, …을 사용하는 나머지 매개변수, 비구조화 매개변수의 경우에는 매개변수 자체적으로 스코프를 형성하고, 함수 스코프는 그 아래 형성된다. (<strong>단순하지 않은 매개변수는 자체 스코프를 형성한다</strong>)</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">getStudentName</span><span class="p">(</span><span class="cm">/* 파란색 버블 (스코프) */</span><span class="nx">studentId</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+ <span class="c1">// 초록색 버블 (스코프)</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>그 이유는 단순하지 않은 매개변수 형태에서는 다양한 예외 케이스를 효과적으로 다루기 위해 자체 스코프를 형성한다.</p><ul><li>왼쪽에서 오른쪽으로 연산이 수행되면서 <code class="language-plaintext highlighter-rouge">maxId</code>는 초기화되어있지 않으므로 TDZ 에러를 발생시킴. ```js // TDZ 에러 발생 function getStudentName(studentId = maxId, maxId) { }</ul><p>// 문제 없음 function getStudentName(maxId, studentId = maxId) { }</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre>
+- 기본 매개변수에 함수 표현식이 있는 경우 매개변수 자체에 대한 클로저가 생길 수 있어 복잡성이 더 증가한다.
+
+```js
+// id를 재할당하여 5가 출력됨
+function getStudentName(id, defaultId = () =&gt; id) {
+	id = 5;
+	console.log(defaultId())
+}
+getStudentName(3) // 5
+
+
+// var id가 매개변수 스코프 내의 id를 가려서 defaultId의 클로저는 매개변수 스코프를 가리키고 있기에 3이 출력됨 
+function getStudentName2(id, defaultId = () =&gt; id) {
+	var id = 5;
+	console.log(defaultId())
+}
+getStudentName2(3) // 3
+</pre></table></code></div></div><ul><li>아래와 같이 과거 코드와의 호환 문제로 상황이 더 복잡해진 경우가 있다.<div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">getStudentName</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">defaultId</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">id</span><span class="p">;</span>   <span class="c1">// 호환 문제로 매개변수와 깉은 이름의 지역변수는 undefined로 초기화하지 않고, 매개변수 id를 매개변수 값으로 초기화함.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nf">defaultId</span><span class="p">())</span>  
+
+  <span class="nx">id</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>  <span class="c1">// 지역변수를 5로 재할당하여 매개변수와 다른 스코프에 있음을 확인할 수 있음.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nf">defaultId</span><span class="p">())</span>
+<span class="p">}</span>
+<span class="nf">getStudentName</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1">// 3, 3</span>
+<span class="c1">// 5, 3</span>
+</pre></table></code></div></div></ul><p>따라서 이러한 차이에 영향을 받지 않으려면 다음 사항을 유념해야한다</p><ul><li>지역 변수로 매개변수를 섀도잉하지마라<li>기본 매개변수에서는 다른 매개변수를 참조하지마라</ul><h3 id="함수명-스코프">함수명 스코프</h3><p>함수이름 스코프에서는 함수 자체의 스코프에 함수 표현식의 이름이 추가된다고 설명하였다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">askQuestion</span> <span class="o">=</span> <span class="kd">function</span> <span class="nf">ofTheTeacher</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>이때 ofTheTeacher가 askQuestion이 선언된 외부 스코프에 추가되지 않지만, 단순히 함수 내부 스코프에 추가되는 것도 아니다. 이 경우도 암시 스코프의 예외 케이스를 만든다</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">askQuestion</span> <span class="o">=</span> <span class="kd">function</span> <span class="nf">ofTheTeacher</span><span class="p">()</span> <span class="p">{</span>
+   <span class="kd">let</span> <span class="nx">ofTheTeacher</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">some name</span><span class="dl">"</span> <span class="c1">// 중복 선언 오류를 발생하지 않는다</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>let은 재선언이 불가능하지만 함수명인 <code class="language-plaintext highlighter-rouge">ofTheTeacher</code>와 다른 스코프에 있기에 섀도잉으로 처리된다. 실무적으로 이러한 경우가 중요할때가 거의 없지만, 이슈를 피하기 위해 함수 이름과 동일한 이름의 변수를 함수 본문 내부에서 let으로 선언하는 것은 피하라.</p><h2 id="a2-익명-함수-vs-기명-함수">A.2 익명 함수 vs 기명 함수</h2><p>요약</p><ul><li>이름 추론은 불완전하다<li>렉시컬 이름을 사용하면 자기 참조가 가능하다<li>이름은 설명을 제공하기에 유용하다<li>화살표함수에는 렉시컬 이름이 없다<li>IIFE에도 이름이 필요하다</ul><h3 id="a21-명시적-혹은-추론된-이름">A.2.1 명시적 혹은 추론된 이름</h3><p>기명함수를 사용하여 함수의 이름을 명시적으로 남기면 스택트레이스에서도 함수 이름을 확인할 수 있다. 이와 별개로 익명함수를 사용하더라도 이름이 추론되는 경우가 있다</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">notNamed</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{}</span>
+<span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">cb</span><span class="p">:</span> <span class="nf">funcion</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="nx">notNamed</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// notNamed</span>
+<span class="nx">confib</span><span class="p">.</span><span class="nx">cb</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// cb</span>
+</pre></table></code></div></div><p>이와같이 JS는 이름을 추론하기에 추론된 이름을 사용해도 되지만 모든 문제를 해결할 수는 없다</p><h3 id="a22-이름이-없다면">A.2.2 이름이 없다면?</h3><p>이름 추론이 정상적으로 동작하지 않는 경우들이 있기에, 이름 추론에 의존하는 것은 불완전하다</p><ul><li>콜백 인자로 전달 시 이름 추론 안됨 ```js function ajax(url, cb) { console.log(cb.name) }</ul><p>ajax(“some.url”, function(){})</p><p>// “”</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>
+- 함수 표현식을 단순 할당이 아닌 다른 형태로 하는 경우에는 대부분 추론에 실패함. 
+```js
+var config = {}
+config.cb = function(){}
+config.cb.name; // ""
+
+var [noName] = [function(){}]
+noName.name; // ""
+</pre></table></code></div></div><h3 id="a23-나는-누구일까요">A.2.3 나는 누구일까요?</h3><p>렉시컬 이름 식별자가 없으면 함수는 내부적으로 자기 자신을 참조할 방법이 없다. 자기 참조는 재귀나 이벤트 처리하는 작업에서 매우 중요하다</p><h3 id="a24-이름은-설명입니다">A.2.4 이름은 설명입니다</h3><p>함수에 이름을 넣지 않으면 코드를 이해하기가 어렵다</p><h3 id="a25-화살표-함수">A.2.5 화살표 함수</h3><p>화살표함수는 이름 추론을 통해 이름이 붙더라도 항상 익명이다. 따라서 사용을 지양하는 것이 좋다.</p><p>화살표함수에는 목적이 있지만, 이는 타이핑 횟수를 줄이는 것이 아닌 화살표 함수 렉시컬 this 동작을 이해해야 제대로 쓸 수 있다.</p><p>간단히 말하면 화살표 함수의 this는 렉시컬 스코프에 의해 결정된다. 화살표 함수 자체는 this를 가지지 않으며 화살펴 함수 안에 this를 사용하면 다른 변수 참조처럼 작동한다. 즉 화살표 함수는 this를 다른 렉시컬 변수처럼 취급한다. 이러한 동작을 사용해야하는 경우는 다음과 같다</p><ul><li><code class="language-plaintext highlighter-rouge">var self = this</code> 와 같은 기법을 사용하는 경우<li>내부 함수 표현식에 <code class="language-plaintext highlighter-rouge">.bind(this)</code>를 호출하는 것 대신에 사용하기 위해</ul><h3 id="a26-iife">A.2.6 IIFE</h3><p>IIFE 에도 이름을 붙이는 것이 좋다.</p><p>이와 별개로 IIFE는 보통 함수 표현식을 <code class="language-plaintext highlighter-rouge">()</code>로 감싸서 정의하는데, 이는 JS 파서가 function 키워드를 만났을때 함수 선언문으로 해석하지 않게하기 위함이다. 이를 위해서는 다음과 같은 방법도 활용가능하며 취향껏 선택할 수 있다</p><ul><li><code class="language-plaintext highlighter-rouge">()</code>로 감싸기<li><code class="language-plaintext highlighter-rouge">!</code>, <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">~</code>, <code class="language-plaintext highlighter-rouge">void</code> 등의 단항 연산자를 function 앞에 놓아 표현식으로 만들기</ul><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="p">(</span><span class="kd">function</span> <span class="nf">thisIsIIFE</span><span class="p">()</span> <span class="p">{})()</span>
+<span class="o">!</span><span class="kd">function</span> <span class="nf">thisIsIIFE</span><span class="p">()</span> <span class="p">{}()</span>
+<span class="o">+</span><span class="kd">function</span> <span class="nf">thisIsIIFE</span><span class="p">()</span> <span class="p">{}()</span>
+<span class="o">~</span><span class="kd">function</span> <span class="nf">thisIsIIFE</span><span class="p">()</span> <span class="p">{}()</span>
+<span class="k">void</span> <span class="kd">function</span> <span class="nf">thisIsIIFE</span><span class="p">()</span> <span class="p">{}()</span>
+</pre></table></code></div></div><h2 id="a3-호이스팅--함수와-변수">A.3 호이스팅 : 함수와 변수</h2><p>함수, 변수 호이스팅이 왜 유용하고 배워야하는지</p><h3 id="a31-함수-호이스팅">A.3.1 함수 호이스팅</h3><p>함수 선언문은 컴파일 단계에서 호이스팅 되기에 함수 식별자는 스코프 시작 부분에 함수 참조로 자동 초기화된다.</p><p>이를 사용하면 함수 실행은 코드 위쪽에서하고 선언은 아래쪽에 배치할 수 있는데, 이러한 배치는 복잡한 함수 내부를 아래로 숨길 수 있기에 함수 세부 사항을 굳이 파악하지 않고도 코드의 작동을 파악하기 편하다</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="nf">getStudents</span><span class="p">()</span>
+
+
+<span class="kd">function</span> <span class="nf">getStudents</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">whatever</span> <span class="o">=</span> <span class="nf">doSomething</span><span class="p">();</span>
+
+	<span class="k">return</span> <span class="nx">whatever</span><span class="p">;</span>
+
+	<span class="kd">function</span> <span class="nf">doSomething</span><span class="p">()</span> <span class="p">{</span>
+		<span class="c1">// ...</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="a32-변수-호이스팅">A.3.2 변수 호이스팅</h3><p>함수 호이스팅과 다르게 변수 호이스팅은 가독성에 도움을 주지 않는다. 따라서 유용한 경우는 적은데 저자의 생각으로는 CommonJS에서 비공개 변수를 하단에 배치하는 경우에는 도움이 된다고 한다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">publicAPI</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">assign</span><span class="p">(</span><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">,</span> <span class="p">{</span>
+	<span class="nx">getStudents</span>
+<span class="p">})</span>
+
+<span class="c1">// 비공개 구현</span>
+<span class="kd">var</span> <span class="nx">cache</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kd">var</span> <span class="nx">otherData</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="kd">function</span> <span class="nf">getStudents</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h2 id="a4-var에-대한-변론">A.4 var에 대한 변론</h2><p>변수 호이스팅과 관련하여 JS 개발 중 발생하는 여러 이슈의 원인은 주로 var와 관련된다. 여기서 살펴볼 것은 다음과 같다</p><ul><li>var에 문제가 있는 것이 아니다<li>let은 우리들의 친구이다<li>const의 유용성은 제한적이다<li>var와 let을 사용하는 최선의 방법은 둘의 장점을 모두 취하는 것이다</ul><h3 id="a41-var를-버리지-마세요">A.4.1 var를 버리지 마세요.</h3><p>var 에는 문제가 없고 var 만의 장점이 있다. 따라서 무조건 쓰지말자고 하는 것은 장점을 버리는 일이다.</p><h3 id="a42-혼란스러운-const">A.4.2 혼란스러운 const</h3><p>const 를 사용하면 얻을 수 있는 약간의 이점은 있지만, const를 사용하면서 겪는 혼란보다는 크지 않다.</p><p>const는 변경할 수 없는 값을 만드는 것이 아니라, 재할당을 할 수 없도록 하는 것이다. 따라서 객체, 배열과 같이 변경할 수 있는 값에 const를 사용하면 나중에 수정이 발생할 수 있다</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="kd">const</span> <span class="nx">studentIds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">51</span><span class="p">]</span>
+<span class="nx">studentsIds</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="mi">55</span><span class="p">)</span> <span class="c1">// 동작함</span>
+</pre></table></code></div></div><p>물론 <code class="language-plaintext highlighter-rouge">41</code>, <code class="language-plaintext highlighter-rouge">"name"</code>과 같은 원시값을 사용할 때는 변경할 수 없지만, 이런 이점을 취할 일은 거의 없다. const는 블록 스코프이고 블록은 짧아야한기에 실제로 const가 영향을 끼치는 범위는 작다.</p><h3 id="a43-var와-let">A.4.3 var와 let</h3><p>var를 사용할 때</p><ul><li>함수의 최상위 스코프에서 사용 (처음, 중간, 끝 관계없이). 전역에서는 되도록 사용하지 않음<li>반복문 내에서 선언한 변수를 조건문에서도 보고 싶을때<li>의도하지 않은 블록 내에 선언이 있을때. (ex : try…catch)</ul><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">commitAction</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">do</span> <span class="p">{</span>
+		<span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="nf">commit</span><span class="p">();</span>
+		<span class="kd">var</span> <span class="nx">done</span> <span class="o">=</span> <span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="nx">done</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">getStudents</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">try</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">records</span> <span class="o">=</span> <span class="nf">fromCache</span><span class="p">(</span><span class="dl">"</span><span class="s2">학생</span><span class="dl">"</span><span class="p">)</span>
+	<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">records</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">records</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>let을 사용할 때</p><ul><li>블록 안에서만 사용하는 경우</ul><p>이처럼 var의 함수스코프라는 특성과 여러번 안전하게 재선언이 가능하다는 특징은 잘 활용하면 유용하다.</p><h2 id="a5-tdz">A.5 TDZ</h2><p>TDZ가 필요한 이유에 대한 절</p><h3 id="a51-모든-일이-시작된-곳-const">A.5.1 모든 일이 시작된 곳, const</h3><p>TC39에서는 ES6 개발 초기에 const와 let을 호이스팅 해야할 지 여부를 결정해야했다. 결과적으로 아래와 코드에서 블록 내부에서 일관된 변수만 사용하도록 하기위해 호이스팅 하도록 결정하였다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="kd">let</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">hi</span><span class="dl">"</span>
+<span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">greeting</span><span class="p">)</span>
+	<span class="kd">let</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">hello</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>만약 호이스팅 되지 않으면 블록 전반부에는 상위 스코프의 변수가, 후반은 새로 선언된 변수가 적용되는 혼란스러운 동작이 발생했을 것이다.</p><p>let과 const가 var 처럼 undefined로 자동 초기화 되지 않는 이유 또한 이러한 호이스팅과 관련있다. 다음과 같은 경우, undefined로 초기화된다면 const는 상위에서는 undefined인데 아래에서는 값이 할당되고 그 이후에는 값이 재할당안되는 비직관적인 동작이 발생했을 것이다. (const는 상수라 변하면 안되는데 변경됨)</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">studentName</span><span class="p">)</span>
+	<span class="kd">const</span> <span class="nx">studentName</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">kevin</span><span class="dl">"</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>이런 이유 때문에 let, const는 호이스팅 되지만 값이 없는 시간대가 있고 이 시간대에 변수에 접근할 경우 TDZ 오류를 발생시키자고 하였다</p><h3 id="a52-곁다리-let">A.5.2 곁다리 let</h3><p>TC39 는 let 에 const와 마찬가지로 TDZ를 도입하자고 결정하였다. 이는 개발자들로 하여금 변수를 신중하게 사용하고, 변수를 그 변수를 사용하는 코드의 상단에 선언하도록 하여 가독성을 높여 도움이 된다.</p><p>다만 저자의 생각은 다른 것 같다. let은 var와 마찬가지로 동작하는 것이 직관적이라고 생각하는 것 같다</p><h2 id="a6-동기-콜백도-여전히-클로저일까">A.6 동기 콜백도 여전히 클로저일까?</h2><h3 id="a61-콜백이란-a62-동기-콜백">A.6.1 콜백이란, A.6.2 동기 콜백</h3><p>콜백에는 비동기콜백, 동기 콜백이 있다.</p><ul><li>비동기 콜백 : 미래의 어느 시점에 되돌아와 다시 호출하는 함수.<li>동기 콜백 : <code class="language-plaintext highlighter-rouge">Array.map</code>의 인자와 같이 당장 호출되는 함수로, 되돌아올 곳이 없음. 콜백보다는 DI, IoC라는 용어가 적합함.</ul><h3 id="a63-동기-클로저">A.6.3 동기 클로저</h3><p>동기 콜백의 경우 콜백이 실행되는 위치가 자신이 선언된 스코프이다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">printLabels</span><span class="p">(</span><span class="nx">labels</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">labelsList</span><span class="dl">"</span><span class="p">);</span>
+	<span class="nx">labels</span><span class="p">.</span><span class="nf">forEach</span><span class="p">(</span>
+		<span class="kd">function</span> <span class="nf">renderLabel</span><span class="p">(</span><span class="nx">label</span><span class="p">)</span> <span class="p">{</span>
+			<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">li</span><span class="dl">"</span><span class="p">);</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">lebel</span><span class="p">;</span>
+			<span class="nx">list</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">)</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>따라서 동기 콜백에서 외부 스코프의 변수를 참조하더라도 이는 자신의 스코프에서 참조한 것이지 클로저를 통해 접근한 것이 아니다. 따라서 동기 콜백의 경우는 클로저가 형성된다고 보기 어렵다</p><h3 id="a64-클로저-지연">A.6.4 클로저 지연</h3><p>커링을 수동으로 적용하면 클로저를 사용할 수 있다</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">printLabels</span><span class="p">(</span><span class="nx">labels</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">labelsList</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">renderLabel</span> <span class="o">=</span> <span class="nf">renderTo</span><span class="p">(</span><span class="nx">list</span><span class="p">);</span>
+
+	<span class="nx">labels</span><span class="p">.</span><span class="nf">forEach</span><span class="p">(</span><span class="nx">renderLabel</span><span class="p">)</span>
+
+	<span class="kd">function</span> <span class="nf">renderTo</span><span class="p">(</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kd">function</span> <span class="nf">createLabel</span><span class="p">(</span><span class="nx">label</span><span class="p">)</span> <span class="p">{</span>
+			<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">li</span><span class="dl">"</span><span class="p">);</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">lebel</span><span class="p">;</span>
+			<span class="nx">list</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h2 id="a7-클래식-모듈-변형">A.7 클래식 모듈 변형</h2><p>클래식 모듈 패턴 예시</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">StudentList</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="nf">defineModule</span><span class="p">(</span><span class="nx">Student</span><span class="p">){</span>
+	<span class="kd">var</span> <span class="nx">elems</span> <span class="o">=</span> <span class="p">[];</span>
+
+	<span class="kd">var</span> <span class="nx">publicAPI</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="nf">renderList</span><span class="p">()</span> <span class="p">{</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">publicAPI</span><span class="p">;</span>
+<span class="p">})(</span><span class="nx">Student</span><span class="p">)</span>
+</pre></table></code></div></div><p>이와 같은 패턴은 나중에 변형해서 사용할 수 있다. 어떤 모듈 로더를 사용하더라도 클래식 모듈의 변형일 뿐이다.</p><h3 id="a71-내-api는-어디에-있나요">A.7.1 내 API는 어디에 있나요?</h3><p>위 예시에서 <code class="language-plaintext highlighter-rouge">publicAPI</code>는 따로 객체로 생성하지 않고 return 문에 직접 선언할 수도 있고 이러한 방식이 더 많이 쓰인다. 하지만 저자는 따로 객체로 생성하는걸 선호하는데 이유를 다음과 같이 들었다.</p><ul><li>publicAPI 라는 이름 자체가 객체의 목적을 명확하게 해주므로 가독성을 높인다<li>publicAPI를 따로 두면 모듈이 살아있는 동안 API에 접근하거나 수정할때 유용하다</ul><h3 id="a72-amd-비동기-모듈-정의">A.7.2 AMD (비동기 모듈 정의)</h3><p>RequireJS 를 쓰면 쉽게 구현 가능한 모듈 패턴으로, 몇 년전 인기를 끈 스타일의 모듈이다</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="nf">define</span><span class="p">([</span><span class="dl">"</span><span class="s2">./Students.js</span><span class="dl">"</span><span class="p">],</span> <span class="kd">function</span> <span class="nf">StudentList</span><span class="p">(</span><span class="nx">Student</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">elems</span> <span class="o">=</span> <span class="p">[];</span>
+
+	<span class="k">return</span> <span class="p">{</span>
+		<span class="nf">renderList</span><span class="p">()</span> <span class="p">{</span>
+			<span class="c1">// ...</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">})</span>
+</pre></table></code></div></div><h3 id="a73-umd">A.7.3 UMD</h3><p>UMD 는 구체적인 패턴이라기보다 비슷한 형식들의 모음에 가깝다. UMD는 브라우저, AMD 스타일 로더, Node.js 에서 모듈을 읽어올때, 별도의 변환도구 없이 더 나은 상호 운용성을 위해 설계되었다</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="p">(</span><span class="kd">function</span> <span class="nf">UMD</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">definition</span><span class="p">){</span>
+	<span class="c1">// AMD 스타일일 경우</span>
+	<span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">define</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">function</span><span class="dl">"</span> <span class="o">&amp;&amp;</span> <span class="nx">define</span><span class="p">.</span><span class="nx">amd</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nf">define</span><span class="p">(</span><span class="nx">definition</span><span class="p">);</span>
+	<span class="p">}</span> 
+	<span class="c1">// Node.js 일 경우</span>
+	<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">module</span> <span class="o">!==</span> <span class="dl">"</span><span class="s2">undefined</span><span class="dl">"</span> <span class="o">&amp;&amp;</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nf">definition</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">context</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="c1">// 독립형 브라우저 스크립트일 경우</span>
+	<span class="k">else</span> <span class="p">{</span>
+		<span class="nx">context</span><span class="p">[</span><span class="nx">nama</span><span class="p">]</span> <span class="o">=</span> <span class="nf">definition</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">context</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">})(</span><span class="dl">"</span><span class="s2">StudentName</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="kd">function</span> <span class="nf">DEF</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">elems</span> <span class="o">=</span> <span class="p">[];</span>
+
+	<span class="k">return</span> <span class="p">{</span>
+		<span class="nf">renderList</span><span class="p">()</span> <span class="p">{</span>
+			<span class="c1">// ...</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">})</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/study/'>study,</a>, <a href='/categories/ydkjsy/'>YDKJSY</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/study/" class="post-tag no-text-decoration" >#study</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=You don't know JS Yet 2부 - Appendix - 디피의 개발일지&url=https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=You don't know JS Yet 2부 - Appendix - 디피의 개발일지&u=https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=You don't know JS Yet 2부 - Appendix - 디피의 개발일지&url=https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/You-don't-know-JS-Yet-1%EC%9E%A5-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/">You don't know JS Yet - 1장 자바스크립트</a><li><a href="/posts/why-nextjs-sucks/">why-nextjs-sucks</a><li><a href="/posts/the-state-of-es5-on-the-web/">the state of es5 on the web</a><li><a href="/posts/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%9D%98-%EB%87%8C-3%EC%9E%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%AC%B8%EB%B2%95-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">프로그래머의 뇌 3장 프로그래밍 문법 빠르게 배우기</a><li><a href="/posts/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%9D%98-%EB%87%8C-4%EC%9E%A5-%EB%B3%B5%EC%9E%A1%ED%95%9C-%EC%BD%94%EB%93%9C-%EC%9D%BD%EB%8A%94-%EB%B0%A9%EB%B2%95/">프로그래머의 뇌 4장 복잡한 코드 읽는 방법</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/You-don't-know-JS-Yet-2%EC%9E%A5-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%A1%B0%EB%A7%9D%ED%95%98%EA%B8%B0/"><div class="card-body"> <span class="timeago small" > Nov 4 <i class="unloaded">2024-11-04T19:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>You don't know JS Yet - 2장 자바스크립트 조망하기</h3><div class="text-muted small"><p> 2.1 파일은 프로그램입니다 웹사이트 하나, 애플리케이션 하나를 프로그램 하나로 생각하기 쉽지만, JS에서는 파일 각각이 별도의 프로그램이다. 이러한 관점은 오류 처리와 관련이 깊은데, JS는 파일을 프로그램으로 취급하기에 파일 하나에만 오류가 있어도 다음 파일이 처리되지 않을 수 있다. 독립적인 js 파일을 하나의 프로그램으로 작동시키는 방법은 ...</p></div></div></a></div><div class="card"> <a href="/posts/You-don't-know-JS-Yet-3%EC%9E%A5-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EB%BF%8C%EB%A6%AC-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0/"><div class="card-body"> <span class="timeago small" > Nov 17 <i class="unloaded">2024-11-17T19:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>You don't know JS Yet - 3장 자바스크립트 뿌리 파헤치기</h3><div class="text-muted small"><p> 3.1 이터레이션 이터레이터 패턴 : 데이터를 일정 단위로 쪼개고, 이 조각들을 차례로 순회하며 점진적으로 처리하는 표준화된 방법 처리할 데이터를 참조하는 데이터 구조인 이터레이터가 정의되어야함 next() 메서드 : 데이터 조각을 차례로 반환하는 메서드 매 호출마다 value, done 프로퍼티를 제공함. 반...</p></div></div></a></div><div class="card"> <a href="/posts/You-don't-know-JS-Yet-4%EC%9E%A5-%EB%8D%94-%ED%81%B0-%EA%B7%B8%EB%A6%BC/"><div class="card-body"> <span class="timeago small" > Nov 20 <i class="unloaded">2024-11-20T19:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>You don't know JS Yet - 4장 더 큰 그림</h3><div class="text-muted small"><p> 4.1 첫 번째 기둥: 스코프와 클로저 렉시컬 스코프 모델 : 스코프의 기준과 그 경계, 경계 안에서 변수가 어떻게 구성되는지 프로그램을 파싱할때 결정되는 모델. (= 개발자가 스코프를 어디에 배치하냐에 따라 달라지는 모델) JS는 렉시컬 스코프 모델을 채택하고 있지만, 여타 언어와 다른 두 가지 특징을 더 갖는다 호이스팅 var 로 선언...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/You-don't-know-JS-Yet-2%EB%B6%80-8%EC%9E%A5-%EB%AA%A8%EB%93%88-%ED%8C%A8%ED%84%B4/" class="btn btn-outline-primary" prompt="Older"><p>You don't know JS Yet 2부 - 8장 모듈 패턴</p></a> <a href="/posts/next.js-%EC%B5%9C%EB%8C%80-Connection/" class="btn btn-outline-primary" prompt="Newer"><p>Next.js 최대 connection</p></a></div><div id="disqus" class="pt-2 pb-2"><p class="text-center text-muted small pb-5"> Comments powered by <a href="https://disqus.com/">Disqus</a>.</p></div><script src="/assets/js/lib/jquery.disqusloader.min.js"></script> <script> const options = { scriptUrl: '//.disqus.com/embed.js', disqusConfig: function() { this.page.title = 'You don't know JS Yet 2부 - Appendix'; this.page.url = 'https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/'; this.page.identifier = '/posts/You-don't-know-JS-Yet-2%EB%B6%80-Appendix/'; } }; $.disqusLoader('#disqus', options); </script></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/Seongil-Shin">ShinSeongil</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://seongil-shin.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script>

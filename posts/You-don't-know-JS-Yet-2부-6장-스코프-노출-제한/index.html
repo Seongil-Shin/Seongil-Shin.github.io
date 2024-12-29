@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="ko" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.4" /><meta property="og:title" content="You don’t know JS Yet 2부 - 6장 스코프 노출 제한" /><meta name="author" content="신성일" /><meta property="og:locale" content="ko" /><meta name="description" content="어떻게, 왜 함수와 블록을 사용해 프로그램 내 변수를 다양한 스코프로 구성해야하는지" /><meta property="og:description" content="어떻게, 왜 함수와 블록을 사용해 프로그램 내 변수를 다양한 스코프로 구성해야하는지" /><link rel="canonical" href="https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/" /><meta property="og:url" content="https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/" /><meta property="og:site_name" content="디피의 개발일지" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2024-12-02T19:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="You don’t know JS Yet 2부 - 6장 스코프 노출 제한" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"신성일"},"dateModified":"2024-12-02T19:00:00+09:00","datePublished":"2024-12-02T19:00:00+09:00","description":"어떻게, 왜 함수와 블록을 사용해 프로그램 내 변수를 다양한 스코프로 구성해야하는지","headline":"You don’t know JS Yet 2부 - 6장 스코프 노출 제한","mainEntityOfPage":{"@type":"WebPage","@id":"https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/"},"url":"https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/"}</script><title>You don't know JS Yet 2부 - 6장 스코프 노출 제한 | 디피의 개발일지</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-HC9W0NGRV0"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HC9W0NGRV0'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/profile.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">디피의 개발일지</a></div><div class="site-subtitle font-italic">개인 학습 및 프로젝트 기록</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/Seongil-Shin" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['callmeshin75','gmail.com'].join('@')" aria-label="email" class="order-4" > <i class="fas fa-envelope"></i> </a> <a href="https://www.linkedin.com/in/%EC%84%B1%EC%9D%BC-%EC%8B%A0-a9411b237/" aria-label="linkedin" class="order-5" target="_blank" rel="noopener"> <i class="fab fa-linkedin"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>You don't know JS Yet 2부 - 6장 스코프 노출 제한</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>You don't know JS Yet 2부 - 6장 스코프 노출 제한</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> 신성일 </span> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, Dec 2, 2024, 7:00 PM +0900" prep="on" > Dec 2 <i class="unloaded">2024-12-02T19:00:00+09:00</i> </span></div><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2085 words">11 min</span></div></div><div class="post-content"><p>어떻게, 왜 함수와 블록을 사용해 프로그램 내 변수를 다양한 스코프로 구성해야하는지</p><h2 id="61-최소-노출의-원칙-pole">6.1 최소 노출의 원칙 (POLE)</h2><p>정보보안분야의 최소 권한의 원칙(POLP)처럼, 변수를 최소한의 블록에만 노출해야한다는 최소 노출의 원칙(POLE)을 적용할 수 있다.</p><p>만약 모든 변수를 전역 스코프에 등록하게 되면 아래와 같은 문제가 발생한다.</p><ul><li>이름 충돌<li>예기치 않은 동작 : 어떤 변수가 쓰이면 안되는 곳에서 쓰여져 의도치 않게 값을 변경하거나 사용하게 될 수 있음. 개인 정보를 담고 있는 변수나 함수가 제한을 뚫고 사용될 수도 있음.<li>의도하지 않은 종속성 : 변수/함수가 의도하지 않은 곳에서 사용되면 그 곳에서의 의존성이 생김. 추후 유지보수 시 그곳도 신경을 써야함</ul><p>따라서 아래와 같이 가능한 좁은 범위로 스코프를 제한 시키는 것이 좋음</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">diff</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span><span class="p">(</span><span class="nx">x</span> <span class="o">&gt;</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">let</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>   <span class="c1">// var 대신 let을 사용해 if문 안에서만 쓰이도록 제한함</span>
+		<span class="nx">x</span> <span class="o">=</span> <span class="nx">y</span><span class="p">;</span>
+		<span class="nx">y</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">y</span> <span class="o">-</span> <span class="nx">x</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h2 id="62-일반함수-스코프에-숨기기">6.2 일반(함수) 스코프에 숨기기</h2><p>var 나 함수 선언을 숨기기 위해서는 함수 스코프로 감싸는 방법이 있다.</p><ul><li>숨기기 전 : cache라는 변수를 어디에서든 접근할 수 있음<div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">cache</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kd">function</span> <span class="nf">factorial</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">x</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">x</span> <span class="k">in</span> <span class="nx">cache</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">cache</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">*</span> <span class="nf">factorial</span><span class="p">(</span><span class="nx">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">x</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></table></code></div></div><li>숨긴 후 : 선언된 함수 스코프 안에서만 접근 가능함<div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">hideTheCache</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">cache</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">return</span> <span class="nx">factorial</span><span class="p">;</span>
+	
+  <span class="kd">function</span> <span class="nf">factorial</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">x</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">x</span> <span class="k">in</span> <span class="nx">cache</span><span class="p">))</span> <span class="p">{</span>
+          <span class="nx">cache</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">*</span> <span class="nf">factorial</span><span class="p">(</span><span class="nx">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">x</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div></ul><p>함수 표현식으로 감싸서 <code class="language-plaintext highlighter-rouge">hideTheCache</code>라는 이름도 재사용되도록 할 수 있다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">factorial</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="nf">hideTheCache</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">cache</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="k">return</span> <span class="nx">factorial</span><span class="p">;</span>
+	
+	<span class="kd">function</span> <span class="nf">factorial</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">x</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">x</span> <span class="k">in</span> <span class="nx">cache</span><span class="p">))</span> <span class="p">{</span>
+			<span class="nx">cache</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">*</span> <span class="nf">factorial</span><span class="p">(</span><span class="nx">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">x</span><span class="p">];</span>
+	<span class="p">}</span>
+<span class="p">})()</span>
+</pre></table></code></div></div><h3 id="함수-표현식-즉시-호출하기">함수 표현식 즉시 호출하기</h3><p>IIFE : 즉시 실행 함수 표현식</p><ul><li>function 표현식 옆에 <code class="language-plaintext highlighter-rouge">()</code>을 사용하여 표현된 함수를 바로 실행하는 방법<li><code class="language-plaintext highlighter-rouge">hideTheCache</code>와 같이 이름을 붙일 수 있고, 익명으로 지정할수도 있다 (익명이 훨씬 흔하다)<li>function 표현식을 단독으로 쓸 수도 있고, 무언가를 반환하여 다른 구문의 일부가 될 수 있지만, 단독으로 쓰일때는 function 표현식을 <code class="language-plaintext highlighter-rouge">()</code>로 감싸야한다. (일관성을 위해 항상 감싸는 것도 좋은 방법이다)</ul><p>IIFE는 온전한 함수이기에, IIFE를 사용하면 함수 경계가 변경되는데 이는 문이나 구조의 동작을 바꿀 수 있다.</p><ul><li>화살표함수가 아닌 일반 함수 형태로 IIFE를 사용하면 this의 바인딩이 바꾸니다.<li>break, continue는 함수 경계를 넘지 않기에 제어문 안에서 IIFE를 사용하여 IIFE에서 break, continue를 사용한다고 IIFE 밖의 제어문을 통제할 수 있지 않다.</ul><h2 id="63-블록으로-스코프-지정">6.3 블록으로 스코프 지정</h2><p>블록은 let, const 같은 블록 스코프 선언을 포함해야할 필요가 있을때만 스코프로 작용한다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="p">{</span>
+	<span class="p">...</span>
+	<span class="c1">// 아직 스코프 생성이 필요하지 않음</span>
+	<span class="p">...</span>
+
+	<span class="c1">// 이제 스코프가 필요하다고 인지함</span>
+	<span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">123</span><span class="dl">"</span><span class="p">;</span>
+
+	<span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// let i를 위해 스코프를 생성함</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+			<span class="c1">// 여기는 스코프가 아니라 블록일뿐이다.</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+<span class="p">}</span>
+</pre></table></code></div></div><p>이와 같이 모든 중괄호 쌍이 블록스코프를 생성하는 것은 아니다</p><ul><li>객체 리터럴 {}, class 정의 시 {}, switch 문의 {} 로는 블록이나 스코프를 정의할 수 없다<li>function의 본문을 감싸는 {}는 블록이 아니라 함수스코프를 생성한다.</ul><p>블록 스코프를 지원하는 언어에서 명시적으로 블록스코프를 만드는 것은 POLE을 위해 일반적인 패턴이다. 기본 마인드셋으로 POLE을 따르면 의도치않은 버그를 줄이고, TDZ 위험을 최소화할 수 있다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">if</span><span class="p">(</span><span class="nx">somethingistrue</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// ...</span>
+	
+	<span class="p">{</span>
+		<span class="kd">let</span> <span class="nx">msg</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">어떤 메세지</span><span class="dl">"</span>
+		<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="var와-let">var와 let</h3><ul><li>함수 전체에 걸쳐 필요한 변수는 의도에따라 명확하게 var로 선언해야한다.<li>var을 블록 내에서 선언할수도 있지만, 예외적인 상황을 제외하면 함수 전체에 필요한 변수는 함수 최상위 스코프에서 var로 선언하는 것이 좋다.</ul><p>var와 let은 함수/블록 스코프라는 목적에 맞게 사용하는 것이 좋다는게 저자의 의견</p><h3 id="let의-위치">let의 위치</h3><p>최상위 함수 스코프에서만 var를 사용하라는 조언을 따르면 다른 선언문에서는 let을 사용해야만 한다. 구체적으로 어디에 let을 사용해야하는지는 스스로 ‘이 변수를 최소한으로 노출시키면서 요구조건을 만족하는 위치는 어디지’하고 질문해보는 것이다.</p><p>처음에는 블록스코프에 선언하였다가 나중에 함수 스코프에 선언해야한다고 알게되면 그때 선언 위치와 키워드를 바꾸면 된다.</p><h3 id="catch와-스코프">catch와 스코프</h3><p>catch 절에서 선언된 변수는 catch 절 밖에서 사용할 수 없다는 규칙이 있다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">try</span> <span class="p">{</span>
+   <span class="p">...</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">outerVar</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">123</span><span class="dl">"</span><span class="p">;</span>
+	<span class="kd">let</span> <span class="nx">onlyHere</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">outerVar</span><span class="p">);</span> <span class="c1">// "123"</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span> <span class="c1">// ReferenceError: 'e' is not defined</span>
+</pre></table></code></div></div><ul><li>catch 절로 선언한 e 변수는 해당 블록으로 블록 스코프가 지정된다.<li>ES2019 부터는 catch 절 선언시 매개변수를 선언하지 않아도 된다. 이때는 블록 스코프를 형성하지 않고 블록으로 처리된다. 이 패턴을 사용하면 불필요한 스코프를 줄여 약간의 성능 향상을 꾀할 수 있다</ul><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="k">try</span> <span class="p">{</span>
+	<span class="p">...</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">some err</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h2 id="64-블록-내-함수-선언-fib">6.4 블록 내 함수 선언 (FiB)</h2><p>블록 내 함수를 선언하는 패턴은 환경마다 다르게 동작한다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="k">if</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">function</span> <span class="nf">ask</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">run</span><span class="dl">"</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nf">ask</span><span class="p">();</span>
+</pre></table></code></div></div><ul><li>JS 명세서 : ask 는 블록 스코프 안이므로 외부/전역에서는 사용할 수 없어 ReferenceError 예외 발생<li>대부분의 브라우저 : ask 식별자가 존재하지만 if 구문이 실행되지 않아 정의가 되지 않았으므로 실행가능한 상태가 아니기에 TypeError 발생</ul><p>이는 브라우저에서 과거에 사용하던 패턴을 지원하기 위해 만든 예외이다. 아래와 같은 패턴이 예시이다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">if </span><span class="p">(</span><span class="k">typeof</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span> <span class="o">!=</span> <span class="dl">"</span><span class="s2">undefined</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">function</span> <span class="nf">isArray</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nf">isArray</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	<span class="kd">function</span> <span class="nf">isArray</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">[object Array]</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>하지만 이러한 FiB 패턴은 환경에따라 동작이 다르기에 사용하지 않는 것이 좋다. 함수 선언은 항당 함수의 최상위 스코프에서 하라.</p><p>또한 성능이 약간 떨어지더라도 아래와 같은 패턴을 사용하는 것이 좋다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">isArray</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if </span><span class="p">(</span><span class="k">typeof</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span> <span class="o">!=</span> <span class="dl">"</span><span class="s2">undefined</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nf">isArray</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">[object Array]</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>아니면 아래와 같이 함수 표현식을 블록안에 배치할 수 있다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">isArray</span> <span class="o">=</span> <span class="kd">function</span> <span class="nf">isArray</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nf">isArray</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">if </span><span class="p">(</span><span class="k">typeof</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">undefined</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">isArray</span> <span class="o">=</span> <span class="kd">function</span> <span class="nf">isArray</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">[object Array]</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/study/'>study,</a>, <a href='/categories/ydkjsy/'>YDKJSY</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/study/" class="post-tag no-text-decoration" >#study</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=You don't know JS Yet 2부 - 6장 스코프 노출 제한 - 디피의 개발일지&url=https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=You don't know JS Yet 2부 - 6장 스코프 노출 제한 - 디피의 개발일지&u=https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=You don't know JS Yet 2부 - 6장 스코프 노출 제한 - 디피의 개발일지&url=https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/You-don't-know-JS-Yet-1%EC%9E%A5-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/">You don't know JS Yet - 1장 자바스크립트</a><li><a href="/posts/why-nextjs-sucks/">why-nextjs-sucks</a><li><a href="/posts/the-state-of-es5-on-the-web/">the state of es5 on the web</a><li><a href="/posts/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%9D%98-%EB%87%8C-3%EC%9E%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%AC%B8%EB%B2%95-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">프로그래머의 뇌 3장 프로그래밍 문법 빠르게 배우기</a><li><a href="/posts/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%9D%98-%EB%87%8C-4%EC%9E%A5-%EB%B3%B5%EC%9E%A1%ED%95%9C-%EC%BD%94%EB%93%9C-%EC%9D%BD%EB%8A%94-%EB%B0%A9%EB%B2%95/">프로그래머의 뇌 4장 복잡한 코드 읽는 방법</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/You-don't-know-JS-Yet-2%EC%9E%A5-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%A1%B0%EB%A7%9D%ED%95%98%EA%B8%B0/"><div class="card-body"> <span class="timeago small" > Nov 4 <i class="unloaded">2024-11-04T19:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>You don't know JS Yet - 2장 자바스크립트 조망하기</h3><div class="text-muted small"><p> 2.1 파일은 프로그램입니다 웹사이트 하나, 애플리케이션 하나를 프로그램 하나로 생각하기 쉽지만, JS에서는 파일 각각이 별도의 프로그램이다. 이러한 관점은 오류 처리와 관련이 깊은데, JS는 파일을 프로그램으로 취급하기에 파일 하나에만 오류가 있어도 다음 파일이 처리되지 않을 수 있다. 독립적인 js 파일을 하나의 프로그램으로 작동시키는 방법은 ...</p></div></div></a></div><div class="card"> <a href="/posts/You-don't-know-JS-Yet-3%EC%9E%A5-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EB%BF%8C%EB%A6%AC-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0/"><div class="card-body"> <span class="timeago small" > Nov 17 <i class="unloaded">2024-11-17T19:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>You don't know JS Yet - 3장 자바스크립트 뿌리 파헤치기</h3><div class="text-muted small"><p> 3.1 이터레이션 이터레이터 패턴 : 데이터를 일정 단위로 쪼개고, 이 조각들을 차례로 순회하며 점진적으로 처리하는 표준화된 방법 처리할 데이터를 참조하는 데이터 구조인 이터레이터가 정의되어야함 next() 메서드 : 데이터 조각을 차례로 반환하는 메서드 매 호출마다 value, done 프로퍼티를 제공함. 반...</p></div></div></a></div><div class="card"> <a href="/posts/You-don't-know-JS-Yet-4%EC%9E%A5-%EB%8D%94-%ED%81%B0-%EA%B7%B8%EB%A6%BC/"><div class="card-body"> <span class="timeago small" > Nov 20 <i class="unloaded">2024-11-20T19:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>You don't know JS Yet - 4장 더 큰 그림</h3><div class="text-muted small"><p> 4.1 첫 번째 기둥: 스코프와 클로저 렉시컬 스코프 모델 : 스코프의 기준과 그 경계, 경계 안에서 변수가 어떻게 구성되는지 프로그램을 파싱할때 결정되는 모델. (= 개발자가 스코프를 어디에 배치하냐에 따라 달라지는 모델) JS는 렉시컬 스코프 모델을 채택하고 있지만, 여타 언어와 다른 두 가지 특징을 더 갖는다 호이스팅 var 로 선언...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/You-don't-know-JS-Yet-2%EB%B6%80-5%EC%9E%A5-%EB%B3%80%EC%88%98%EC%9D%98-%EB%B9%84%EB%B0%80-%EC%83%9D%EB%AA%85%EC%A3%BC%EA%B8%B0/" class="btn btn-outline-primary" prompt="Older"><p>You don't know JS Yet 2부 - 5장 변수의 비밀 생명주기</p></a> <a href="/posts/%EB%B9%8C%EB%93%9C-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%97%86%EC%9D%B4-%ED%94%84%EB%9F%B0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0/" class="btn btn-outline-primary" prompt="Newer"><p>빌드 시스템 없이 프런트엔드 자바스크립트 라이브러리 불러오기</p></a></div><div id="disqus" class="pt-2 pb-2"><p class="text-center text-muted small pb-5"> Comments powered by <a href="https://disqus.com/">Disqus</a>.</p></div><script src="/assets/js/lib/jquery.disqusloader.min.js"></script> <script> const options = { scriptUrl: '//.disqus.com/embed.js', disqusConfig: function() { this.page.title = 'You don't know JS Yet 2부 - 6장 스코프 노출 제한'; this.page.url = 'https://seongil-shin.github.io/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/'; this.page.identifier = '/posts/You-don't-know-JS-Yet-2%EB%B6%80-6%EC%9E%A5-%EC%8A%A4%EC%BD%94%ED%94%84-%EB%85%B8%EC%B6%9C-%EC%A0%9C%ED%95%9C/'; } }; $.disqusLoader('#disqus', options); </script></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/Seongil-Shin">ShinSeongil</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://seongil-shin.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script>

@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="ko" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.4" /><meta property="og:title" content="useEffect 올바른 사용" /><meta name="author" content="신성일" /><meta property="og:locale" content="ko" /><meta name="description" content="useEffect 올바른 사용" /><meta property="og:description" content="useEffect 올바른 사용" /><link rel="canonical" href="https://seongil-shin.github.io/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/" /><meta property="og:url" content="https://seongil-shin.github.io/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/" /><meta property="og:site_name" content="디피의 개발일지" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-08-24T14:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="useEffect 올바른 사용" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"신성일"},"dateModified":"2022-08-24T14:00:00+09:00","datePublished":"2022-08-24T14:00:00+09:00","description":"useEffect 올바른 사용","headline":"useEffect 올바른 사용","mainEntityOfPage":{"@type":"WebPage","@id":"https://seongil-shin.github.io/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/"},"url":"https://seongil-shin.github.io/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/"}</script><title>useEffect 올바른 사용 | 디피의 개발일지</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-HC9W0NGRV0"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HC9W0NGRV0'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/profile.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">디피의 개발일지</a></div><div class="site-subtitle font-italic">개인 학습 및 프로젝트 기록</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/Seongil-Shin" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['callmeshin75','gmail.com'].join('@')" aria-label="email" class="order-4" > <i class="fas fa-envelope"></i> </a> <a href="https://www.linkedin.com/in/%EC%84%B1%EC%9D%BC-%EC%8B%A0-a9411b237/" aria-label="linkedin" class="order-5" target="_blank" rel="noopener"> <i class="fab fa-linkedin"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>useEffect 올바른 사용</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>useEffect 올바른 사용</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> 신성일 </span> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Wed, Aug 24, 2022, 2:00 PM +0900" prep="on" > Aug 24, 2022 <i class="unloaded">2022-08-24T14:00:00+09:00</i> </span></div><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1886 words">10 min</span></div></div><div class="post-content"><h1 id="useeffect-올바른-사용"><strong>useEffect 올바른 사용</strong></h1><h2 id="props-state-변경에-따라-다른-데이터-state를-업데이트해야할-때"><strong>props, state 변경에 따라 다른 데이터, state를 업데이트해야할 때</strong></h2><p><strong>useEffect를 사용하면 안된다.</strong></p><p>props, state가 변경이 되면 리렌더링이 발생하는데, 리렌더링이 끝난 후 useEffect가 호출되어 다시 리렌더링이 발생하기 때문이다.</p><p>따라서 다음과 같이 코드를 변경해야한다.</p><p><br /></p><h3 id="데이터를-업데이트해야하는-경우"><strong>데이터를 업데이트해야하는 경우</strong></h3><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="c1">// useEffect로 업데이트</span>
+<span class="kd">function</span> <span class="nf">TodoList</span><span class="p">({</span> <span class="nx">todos</span><span class="p">,</span> <span class="nx">filter</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">newTodo</span><span class="p">,</span> <span class="nx">setNewTodo</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+
+  <span class="c1">// Avoid: redundant state and unnecessary Effect</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">visibleTodos</span><span class="p">,</span> <span class="nx">setVisibleTodos</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">([]);</span>
+  <span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">setVisibleTodos</span><span class="p">(</span><span class="nf">getFilteredTodos</span><span class="p">(</span><span class="nx">todos</span><span class="p">,</span> <span class="nx">filter</span><span class="p">));</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">todos</span><span class="p">,</span> <span class="nx">filter</span><span class="p">]);</span>
+
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="c1">// useEffect 사용하지 않음 </span>
+<span class="kd">function</span> <span class="nf">TodoList</span><span class="p">({</span> <span class="nx">todos</span><span class="p">,</span> <span class="nx">filter</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">newTodo</span><span class="p">,</span> <span class="nx">setNewTodo</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+  <span class="c1">// This is fine if getFilteredTodos() is not slow.</span>
+  <span class="kd">const</span> <span class="nx">visibleTodos</span> <span class="o">=</span> <span class="nf">getFilteredTodos</span><span class="p">(</span><span class="nx">todos</span><span class="p">,</span> <span class="nx">filter</span><span class="p">);</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>컴포넌트가 리렌더링할때마다 컴포넌트의 코드가 위에서부터 다시한번씩 실행되며 <code class="language-plaintext highlighter-rouge">getFilteredTodos()</code>도 다시 호출되기 때문에, 최신값으로 업데이트 된다.</p><p>만약 <code class="language-plaintext highlighter-rouge">getFilteredTodos()</code>가 비싼 연산이라면 <code class="language-plaintext highlighter-rouge">useMemo()</code>를 통해 최적화를 하자</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="k">import</span> <span class="p">{</span> <span class="nx">useMemo</span><span class="p">,</span> <span class="nx">useState</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">TodoList</span><span class="p">({</span> <span class="nx">todos</span><span class="p">,</span> <span class="nx">filter</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">newTodo</span><span class="p">,</span> <span class="nx">setNewTodo</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+  <span class="c1">// Does not re-run getFilteredTodos() unless todos or filter change</span>
+  <span class="kd">const</span> <span class="nx">visibleTodos</span> <span class="o">=</span> <span class="nf">useMemo</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nf">getFilteredTodos</span><span class="p">(</span><span class="nx">todos</span><span class="p">,</span> <span class="nx">filter</span><span class="p">),</span> <span class="p">[</span><span class="nx">todos</span><span class="p">,</span> <span class="nx">filter</span><span class="p">]);</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p><br /></p><h3 id="props-변경에-따라-상태를-초기화-해야-하는-경우"><strong>props 변경에 따라 상태를 초기화 해야 하는 경우</strong></h3><p>유저 변경에 따라 comment 상태를 초기화해야하는 경우</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="c1">// useEffect 사용</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">ProfilePage</span><span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">setComment</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+
+  <span class="c1">// 🔴 Avoid: Resetting state on prop change in an Effect</span>
+  <span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">setComment</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">userId</span><span class="p">]);</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>userId 변경 –&gt; 리렌더링 –&gt; comment 변경 –&gt; 리렌더링. 총 2번 리렌더링이 발생한다.</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="c1">// 리팩토링</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">ProfilePage</span><span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">Profile</span>
+      <span class="na">userId</span><span class="p">=</span><span class="si">{</span><span class="nx">userId</span><span class="si">}</span> 
+      <span class="na">key</span><span class="p">=</span><span class="si">{</span><span class="nx">userId</span><span class="si">}</span>
+    <span class="p">/&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">Profile</span><span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="c1">// ✅ This and any other state below will reset on key change automatically</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">setComment</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>key값을 사용하여, userId가 변경될때마다 <code class="language-plaintext highlighter-rouge">Profile</code> 컴포넌트를 초기상태에서 가져오도록 한다.</p><p><br /></p><h3 id="props-변경에-따라-특정-상태만-업데이트-해야하는-경우">props 변경에 따라 특정 상태만 업데이트 해야하는 경우</h3><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="c1">// useEffect 사용</span>
+<span class="kd">function</span> <span class="nf">List</span><span class="p">({</span> <span class="nx">items</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isReverse</span><span class="p">,</span> <span class="nx">setIsReverse</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">selection</span><span class="p">,</span> <span class="nx">setSelection</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+  <span class="c1">// 🔴 Avoid: Adjusting state on prop change in an Effect</span>
+  <span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">setSelection</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">items</span><span class="p">]);</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">List</span><span class="p">({</span> <span class="nx">items</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isReverse</span><span class="p">,</span> <span class="nx">setIsReverse</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">selection</span><span class="p">,</span> <span class="nx">setSelection</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+  <span class="c1">// Better: Adjust the state while rendering</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">prevItems</span><span class="p">,</span> <span class="nx">setPrevItems</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="nx">items</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">items</span> <span class="o">!==</span> <span class="nx">prevItems</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">setPrevItems</span><span class="p">(</span><span class="nx">items</span><span class="p">);</span>
+    <span class="nf">setSelection</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>items의 이전상태를 담는 상태를 생성하여 리렌더링을 하나로 줄였음.</p><p><br /></p><h2 id="useeffect-vs-eventhandler"><strong>useEffect vs EventHandler</strong></h2><p>쇼핑몰에서 카트에 물건을 넣었을 때 모달을 통해 정상적으로 물품을 담았는지 유저에게 노티피케이션을 알려줘야한다.</p><p>다음은 useEffect를 사용한 예시다. product가 카트에 추가되면, <code class="language-plaintext highlighter-rouge">isInCart</code> 상태가 <code class="language-plaintext highlighter-rouge">true</code>가 되어 useEffect에 등록한 콜백이 호출되고, Notification이 뜨는 방식이다.</p><p>모달을 보여줘야하는 버튼이 여러개이면 일일히 각 핸들러에 <code class="language-plaintext highlighter-rouge">showNotification</code> 콜백을 붙이는 것보다 useEffect에 넣는게 바람직하다고 착각할 수 있다.</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">ProductPage</span><span class="p">({</span> <span class="nx">product</span><span class="p">,</span> <span class="nx">addToCart</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="c1">// 🔴 Avoid: Event-specific logic inside an Effect</span>
+  <span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">product</span><span class="p">.</span><span class="nx">isInCart</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nf">showNotification</span><span class="p">(</span><span class="s2">`Added </span><span class="p">${</span><span class="nx">product</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2"> to the shopping cart!`</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">product</span><span class="p">]);</span>
+
+  <span class="kd">function</span> <span class="nf">handleBuyClick</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">addToCart</span><span class="p">(</span><span class="nx">product</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nf">handleCheckoutClick</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">addToCart</span><span class="p">(</span><span class="nx">product</span><span class="p">);</span>
+    <span class="nf">navigateTo</span><span class="p">(</span><span class="dl">'</span><span class="s1">/checkout</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>하지만 아니다.</p><p>페이지 전환 시 전역상태 값인 <code class="language-plaintext highlighter-rouge">product.isInCart</code>가 <code class="language-plaintext highlighter-rouge">true</code>면 예상하지 못한 버그가 생길 수 있기 때문이다.</p><p>또 유저는 상태가 변경되었을 때가 아닌, 버튼을 눌렀을 때 Notification이 뜨기를 기대할 것이다.</p><p>우리의 코드가 상태를 변경했을 때 작동하는 것이 의도인지, 유저의 이벤트에 따라 UI를 변경하는 것이 주 목적인지 생각해볼때, 버그를 양산할 수 있는 useEffect보다 이벤트 핸들러 내부에서 Notification을 호출하는 것이 바람직하다.</p><blockquote><p>useEffect, eventHandler 둘 중 어디에 코드를 작성해야할지 모르겠다면, 코드가 언제 실행되어야하는지 생각해봐라. useEffect는 컴포넌트가 렌더링 되는 시점에 유저에게 표현되어야할 로직을 실행할 때 사용한다.</p></blockquote><p><br /></p><h2 id="data-fetching"><strong>data fetching</strong></h2><blockquote><p>data fetching은 해도 된다. 하지만 race condition을 고려해야한다.</p></blockquote><p>리액트18 strict mode에서 컴포넌트 렌더링 시 useEffect 내부에서 ajax가 일어난다면, 렌더 -&gt; fetch -&gt; 리렌더 - refetch가 일어난다.</p><p>이는 api 서버 비용이 두 배로 든다는 점만 감안하면 괜찮다. 사용자는 fetch/refetch간 동일한 데이터가 응답된다면 UI에 변경점을 느끼지 못하기 때문이다.</p><p>하지만 <strong>특정 상태나 Props 변경에 따라 뷰가 바뀌는 경우</strong>라면 어떨까?</p><h3 id="언마운트에서의-setstate"><strong>언마운트에서의 setState</strong></h3><p>다음의 코드는 userId가 변경될 때마다 <code class="language-plaintext highlighter-rouge">startFetching</code>이 호출된다.</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">ignore</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+  <span class="k">async</span> <span class="kd">function</span> <span class="nf">startFetching</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">json</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetchTodos</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">ignore</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nf">setTodos</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nf">startFetching</span><span class="p">();</span>
+
+  <span class="k">return </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">ignore</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">},</span> <span class="p">[</span><span class="nx">userId</span><span class="p">]);</span>
+</pre></table></code></div></div><p>컴포넌트가 언마운트 되었을 때는 ignore를 true로 만들어, 클로져를 사용하는 <code class="language-plaintext highlighter-rouge">startFetching</code>내부에서 <code class="language-plaintext highlighter-rouge">setTodos</code>는 언마운트 이후에도 호출되지 않는다.</p><p>하지만 이러한 로직을 <strong>매번 따로 작성</strong>해야하는 문제점이 남아있다.</p><h3 id="race-condition"><strong>race condition</strong></h3><p>한 페이지에서 특정 id값을 기준으로 모달같은 공통 ui를 그려주는 경우에는 위의 로직이 도움이 되지 않는다.</p><p>다음처럼 sartFetching이 테이블 컴포넌트에 있는 open modal을 누를때마다 호출된다고 가정해보자.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://velog.velcdn.com/images/jay/post/1719e0bf-4c68-433a-9b5e-f0b8e7c4103f/image.png" alt="img" /></p><p><code class="language-plaintext highlighter-rouge">id 3의 open modal --&gt; close modal --&gt; id 4의 open modal</code> 과 같은 시나리오에서, id 4가 먼저 응답이 올지, id 3가 먼저 응답이 올지 알수가 없다.</p><p>이러한 문제를 <code class="language-plaintext highlighter-rouge">race condition</code>이라고 한다. useEffect 에서 setState를 호출하는 것만으로는 이러한 상황을 방지할 순 없다. 특별한 조치를 취해야 막을 수 있다. (서버에서 온 id와 props으로 온 id가 일치하는지 확인, AbortController 등)</p><h3 id="특정-상태가-변경되었을-때-데이터를-호출하는-상황은"><strong>특정 상태가 변경되었을 때 데이터를 호출하는 상황은?</strong></h3><p>서버자원이 동나지 않도록 조심해야한다.</p><p>어떤 버그상황에도 대비할 수 있게 useEffect를 써야하고, dependencies의 상태 변경이 예측할 수 있는 속도로 변경되는 것을 보장할 수 있어야한다.</p><p>하지만 어려운 일이다.</p><p>따라서 동일한 api로 호출하는 경우 이전에 받아온 데이터를 재사용하는 방법으로 해결할 수 있다. 바로 <code class="language-plaintext highlighter-rouge">캐시</code>를 이용하는 방법이다. 이 캐시를 이용하기 위해 <code class="language-plaintext highlighter-rouge">react-query</code>, <code class="language-plaintext highlighter-rouge">swr</code> 등 data fetch 라이브러리를 사용할 수 있다.</p><p><br /></p><p><br /></p><h2 id="출처"><strong>출처</strong></h2><p>https://velog.io/@jay/you-might-need-useEffect-diet</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/study/'>study</a>, <a href='/categories/react/'>react</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/react/" class="post-tag no-text-decoration" >react</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=useEffect 올바른 사용 - 디피의 개발일지&url=https://seongil-shin.github.io/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=useEffect 올바른 사용 - 디피의 개발일지&u=https://seongil-shin.github.io/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=useEffect 올바른 사용 - 디피의 개발일지&url=https://seongil-shin.github.io/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/You-don't-know-JS-Yet-1%EC%9E%A5-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/">You don't know JS Yet - 1장 자바스크립트</a><li><a href="/posts/why-nextjs-sucks/">why-nextjs-sucks</a><li><a href="/posts/the-state-of-es5-on-the-web/">the state of es5 on the web</a><li><a href="/posts/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%9D%98-%EB%87%8C-3%EC%9E%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%AC%B8%EB%B2%95-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">프로그래머의 뇌 3장 프로그래밍 문법 빠르게 배우기</a><li><a href="/posts/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%9D%98-%EB%87%8C-4%EC%9E%A5-%EB%B3%B5%EC%9E%A1%ED%95%9C-%EC%BD%94%EB%93%9C-%EC%9D%BD%EB%8A%94-%EB%B0%A9%EB%B2%95/">프로그래머의 뇌 4장 복잡한 코드 읽는 방법</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/react-state/"><div class="card-body"> <span class="timeago small" > May 6, 2023 <i class="unloaded">2023-05-06T18:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>useState 원리</h3><div class="text-muted small"><p> State 변경 시 어떤 일이 벌어질까? 리액트의 함수형 컴포넌트는 최초에 한번 실행이 되면서 초기값으로 설정해놓은 상태를 기억한다. 1 const [state, setState] = useState(0); 이후 setState가 호출되어 상태가 변경된다면 다시 함수형 컴포넌트가 실행되고 virtual DOM을 리턴한다. 그리고 이전에 리턴했던...</p></div></div></a></div><div class="card"> <a href="/posts/react-%EB%92%A4%EB%A1%9C%EA%B0%80%EA%B8%B0-%EB%A7%89%EA%B8%B0/"><div class="card-body"> <span class="timeago small" > Jul 29, 2023 <i class="unloaded">2023-07-29T22:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>React 새로고침/뒤로가기 막기</h3><div class="text-muted small"><p> 웹페이지에서 사용자가 무언가를 입력하고 뒤로가기를 눌렀을때 다음과 같은 경고창을 띄우는 걸 본적이 있다. 이러한 스펙을 개발하기위해서는 다음과 같이 두가지 상황으로 나누어야한다. 새로고침/창닫기/링크이동(외부페이지 이동 or 링크 버튼 클릭) 뒤로가기 그렇다면 리액트에서는 구체적으로 어떻게 이 스펙을 구현할 수 있을지 알아보자 ...</p></div></div></a></div><div class="card"> <a href="/posts/reactv18/"><div class="card-body"> <span class="timeago small" > Jan 10, 2022 <i class="unloaded">2022-01-10T00:20:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>React v18 주요 변경점</h3><div class="text-muted small"><p> React v18의 정식 출시가 코앞에 있고, 가장 큰 변경점 중 하나가 서버사이드 렌더링에 관한 내용이라는 소식을 듣고 마침 SSR 에 대해 흥미가 있던 터라 한번 React v18의 주요 변경점이 뭔지 공부해보기로 했다. 먼저 기존의 React v17을 v18로 마이그레이션 하는 것은 문제 없다고 한다. 리액트 팀에서 이 부분을 특히 신경써서 만...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/babel/" class="btn btn-outline-primary" prompt="Older"><p>바벨</p></a> <a href="/posts/java-%EA%B8%B0%EB%B3%B8/" class="btn btn-outline-primary" prompt="Newer"><p>자바 기본</p></a></div><div id="disqus" class="pt-2 pb-2"><p class="text-center text-muted small pb-5"> Comments powered by <a href="https://disqus.com/">Disqus</a>.</p></div><script src="/assets/js/lib/jquery.disqusloader.min.js"></script> <script> const options = { scriptUrl: '//.disqus.com/embed.js', disqusConfig: function() { this.page.title = 'useEffect 올바른 사용'; this.page.url = 'https://seongil-shin.github.io/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/'; this.page.identifier = '/posts/useEffect-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%82%AC%EC%9A%A9/'; } }; $.disqusLoader('#disqus', options); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#main > div.row:first-child > div:first-child img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/Seongil-Shin">ShinSeongil</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://seongil-shin.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script>

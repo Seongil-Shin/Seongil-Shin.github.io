@@ -1,0 +1,39 @@
+<h2 id="렌더링-순서">렌더링 순서</h2>
+
+<p>웹 페이지에 접속하면 브라우저는 제일 먼저 해당 페이지의 <code class="language-plaintext highlighter-rouge">html</code>을 불러온다. 이후 가져온 html을 읽으며 다음과 같은 렌더링 과정을 수행한다.</p>
+
+<ol>
+  <li>Parsing : HTML과 CSS를 파싱해서 각각 Tree(DOM 트리, CSSOM 트리)를 만든다</li>
+  <li>Style : 두 Tree를 결합하여 Rendering Tree를 만든다</li>
+  <li>Layout : Rendering Tree에서 각 노드의 위치와 크기를 계산한다</li>
+  <li>Paint : 각 노드를 화면 상의 실제 픽셀로 변환하고 레이어를 만든다</li>
+  <li>Composite : 레이어를 합성하여 실제 화면에 나타낸다</li>
+</ol>
+
+<p><br /></p>
+
+<h2 id="html-parsing-차단">html parsing 차단</h2>
+
+<p>브라우저가 html을 파싱하다가 <code class="language-plaintext highlighter-rouge">head</code> 태그 내 위치한 <code class="language-plaintext highlighter-rouge">script</code> 태그를 만났을 때 파싱이 차단되는 경우가 있다. 이는 <code class="language-plaintext highlighter-rouge">script</code>로 불러와지는 코드가 html 을 변경시킬 수 있기에 막는 것이다. 이러한 html 파싱 차단을 막기 위해선 다음과 같은 방법이 있다.</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">script</code> 를 <strong><code class="language-plaintext highlighter-rouge">body</code> 태그 아래에 삽입</strong>하여 html 파싱이 종료된 이후 로드</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">async</code>, <code class="language-plaintext highlighter-rouge">defer</code> 속성</strong> 사용</p>
+
+    <ul>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">async</code> : 로드할 때는 차단하지 않음. 실행할땐 차단함</p>
+      </li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">defer</code> : 로드, 실행할 때 모두 차단하지 않음.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>CSS도 간접적으로 차단할 수 있다.</strong>  script가 페이지 스타일에 영향을 줄 수 있기에 css 파싱이 완료되고 js를 실행하도록하여, 간접적으로 html 파싱이 차단되는 시간이 길어질 수 있다. (<a href="https://seongil-shin.github.io/posts/css-%EC%B5%9C%EC%A0%81%ED%99%94/#css-%EC%B5%9C%EC%A0%81%ED%99%94%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%9C-%EC%9D%B4%EC%9C%A0">링크</a>)</p>
+
+<p><img src="https://seongil-shin.github.io/assets/img/2022-07-31-css%20%EC%B5%9C%EC%A0%81%ED%99%94/imageurl=%2Fimages%2Fblog%2Fcss-performance%2Fparser-blocking-css.png" alt="https://web-now-rbviiass9-calibreapp.vercel.app/_next/image?url=%2Fimages%2Fblog%2Fcss-performance%2Fparser-blocking-css.png&amp;w=1920&amp;q=75" /></p>

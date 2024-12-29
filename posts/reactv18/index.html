@@ -1,0 +1,429 @@
+<!DOCTYPE html><html lang="ko" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.4" /><meta property="og:title" content="React v18 주요 변경점" /><meta name="author" content="신성일" /><meta property="og:locale" content="ko" /><meta name="description" content="React v18의 정식 출시가 코앞에 있고, 가장 큰 변경점 중 하나가 서버사이드 렌더링에 관한 내용이라는 소식을 듣고 마침 SSR 에 대해 흥미가 있던 터라 한번 React v18의 주요 변경점이 뭔지 공부해보기로 했다." /><meta property="og:description" content="React v18의 정식 출시가 코앞에 있고, 가장 큰 변경점 중 하나가 서버사이드 렌더링에 관한 내용이라는 소식을 듣고 마침 SSR 에 대해 흥미가 있던 터라 한번 React v18의 주요 변경점이 뭔지 공부해보기로 했다." /><link rel="canonical" href="https://seongil-shin.github.io/posts/reactv18/" /><meta property="og:url" content="https://seongil-shin.github.io/posts/reactv18/" /><meta property="og:site_name" content="디피의 개발일지" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-01-10T00:20:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="React v18 주요 변경점" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"신성일"},"dateModified":"2023-03-01T21:20:35+09:00","datePublished":"2022-01-10T00:20:00+09:00","description":"React v18의 정식 출시가 코앞에 있고, 가장 큰 변경점 중 하나가 서버사이드 렌더링에 관한 내용이라는 소식을 듣고 마침 SSR 에 대해 흥미가 있던 터라 한번 React v18의 주요 변경점이 뭔지 공부해보기로 했다.","headline":"React v18 주요 변경점","mainEntityOfPage":{"@type":"WebPage","@id":"https://seongil-shin.github.io/posts/reactv18/"},"url":"https://seongil-shin.github.io/posts/reactv18/"}</script><title>React v18 주요 변경점 | 디피의 개발일지</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-HC9W0NGRV0"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HC9W0NGRV0'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/profile.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">디피의 개발일지</a></div><div class="site-subtitle font-italic">개인 학습 및 프로젝트 기록</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/Seongil-Shin" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['callmeshin75','gmail.com'].join('@')" aria-label="email" class="order-4" > <i class="fas fa-envelope"></i> </a> <a href="https://www.linkedin.com/in/%EC%84%B1%EC%9D%BC-%EC%8B%A0-a9411b237/" aria-label="linkedin" class="order-5" target="_blank" rel="noopener"> <i class="fab fa-linkedin"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>React v18 주요 변경점</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>React v18 주요 변경점</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> 신성일 </span> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, Jan 10, 2022, 12:20 AM +0900" prep="on" > Jan 10, 2022 <i class="unloaded">2022-01-10T00:20:00+09:00</i> </span></div><div> <span> <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Wed, Mar 1, 2023, 9:20 PM +0900" prefix="Updated " > Mar 1, 2023 <i class="unloaded">2023-03-01T21:20:35+09:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="6602 words">36 min</span></div></div><div class="post-content"><p>React v18의 정식 출시가 코앞에 있고, 가장 큰 변경점 중 하나가 서버사이드 렌더링에 관한 내용이라는 소식을 듣고 마침 SSR 에 대해 흥미가 있던 터라 한번 React v18의 주요 변경점이 뭔지 공부해보기로 했다.</p><p>먼저 기존의 React v17을 v18로 마이그레이션 하는 것은 문제 없다고 한다. 리액트 팀에서 이 부분을 특히 신경써서 만들었다고 하니 믿어도 될 것같다.</p><h2 id="automatic-batching">Automatic batching</h2><p>먼저 리액트의 배치에 대해 알아야한다.</p><h3 id="batching">Batching</h3><p>리액트에서 더 나은 성능과 예상치않는 버그의 방지를 위해 여러 개의 상태 업데이트를 한번의 리렌더링으로 묶는 작업</p><p>아래 예시를 보자</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">flag</span><span class="p">,</span> <span class="nx">setFlag</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+  <span class="kd">function</span> <span class="nf">handleClick</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">setCount</span><span class="p">(</span><span class="nx">c</span> <span class="o">=&gt;</span> <span class="nx">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// 아직 리렌더링 되지 않습니다.</span>
+    <span class="nf">setFlag</span><span class="p">(</span><span class="nx">f</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">f</span><span class="p">);</span> <span class="c1">// 아직 리렌더링 되지 않습니다.</span>
+    <span class="c1">// 리액트는 오직 마지막에만 리렌더링을 한 번 수행합니다. (배치 적용)</span>
+  <span class="p">}</span>
+
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleClick</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">Next</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">h1</span> <span class="nx">style</span><span class="o">=&gt;</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/h1</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>handleClick 에서는 총 두번의 상태 업데이트를 했다. 하지만, 리액트에서는 언제나 배치를 수행하여 이 두번의 상태업데이트를 한번의 리렌더링으로 처리한다.</p><p>하지만 배치가 수행되지 않는 예외가 존재한다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">flag</span><span class="p">,</span> <span class="nx">setFlag</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+  <span class="kd">function</span> <span class="nf">handleClick</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">fetchSomething</span><span class="p">().</span><span class="nf">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="c1">// 리액트 17 및 그 이전 버전에서는 배치가 수행되지 않습니다. 왜냐하면</span>
+      <span class="c1">// 이 코드들은 이벤트 이후의 콜백에서 실행되기 때문입니다.</span>
+      <span class="nf">setCount</span><span class="p">(</span><span class="nx">c</span> <span class="o">=&gt;</span> <span class="nx">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// 리렌더링 </span>
+      <span class="nf">setFlag</span><span class="p">(</span><span class="nx">f</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">f</span><span class="p">);</span> <span class="c1">// 리렌더링</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleClick</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">Next</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">h1</span> <span class="nx">style</span><span class="o">=&gt;</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/h1</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>위처럼 리액트 v17까지는 이벤트 핸들러 안에서의 상태업데이트에서는 배치가 적용되지 않았다.</p><p>하지만 v18부터는 자동배치가 추가되어, 이벤트 핸들러 함수 안에서 상태 업데이트에 대해서도 자동으로 배치를 적용시켜준다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="nf">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">setCount</span><span class="p">(</span><span class="nx">c</span> <span class="o">=&gt;</span> <span class="nx">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nf">setFlag</span><span class="p">(</span><span class="nx">f</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">f</span><span class="p">);</span>
+  <span class="c1">// 리액트는 오직 마지막에만 리렌더링을 한 번 수행합니다. (배치 적용)</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+
+<span class="nf">fetch</span><span class="p">(</span><span class="cm">/*...*/</span><span class="p">).</span><span class="nf">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">setCount</span><span class="p">(</span><span class="nx">c</span> <span class="o">=&gt;</span> <span class="nx">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nf">setFlag</span><span class="p">(</span><span class="nx">f</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">f</span><span class="p">);</span>
+  <span class="c1">// 리액트는 오직 마지막에만 리렌더링을 한 번 수행합니다. (배치 적용)</span>
+<span class="p">})</span>
+
+<span class="nx">elm</span><span class="p">.</span><span class="nf">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">setCount</span><span class="p">(</span><span class="nx">c</span> <span class="o">=&gt;</span> <span class="nx">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nf">setFlag</span><span class="p">(</span><span class="nx">f</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">f</span><span class="p">);</span>
+  <span class="c1">// 리액트는 오직 마지막에만 리렌더링을 한 번 수행합니다. (배치 적용)</span>
+<span class="p">});</span>
+</pre></table></code></div></div><p>이 자동 배치를 사용하기위해서는 리액트앱의 최상단에서 ReactDOM.render 함수 대신에 새로운 <code class="language-plaintext highlighter-rouge">ReactDOM.createRoot</code> 함수를 사용해야한다.</p><p>하지만 자동배치를 하고 싶지 않은 경우도 매우 드물게 있을 것이다. 이때는 다음과 같이 ReactDOM.flushSync라는 함수를 사용하면 해결된다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="k">import</span> <span class="p">{</span> <span class="nx">flushSync</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-dom</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">handleClick</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nf">flushSync</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">setCounter</span><span class="p">(</span><span class="nx">c</span> <span class="o">=&gt;</span> <span class="nx">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">});</span>  <span class="c1">// 리액트는 즉시 DOM을 업데이트합니다.</span>
+
+  <span class="nf">flushSync</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">setFlag</span><span class="p">(</span><span class="nx">f</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">f</span><span class="p">);</span>
+  <span class="p">});</span>  <span class="c1">// 리액트는 즉시 DOM을 업데이트합니다.</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p><br /></p><h2 id="starttransition">startTransition</h2><blockquote><p>startTransition은 동시성(concurrent) API 안에 분류되어있는데, 아직 자세한 내용은 공개되지 않았다고 한다. 추후 조사가 필요함</p></blockquote><p>리액트에서 발생하는 상태업데이트에는 두가지 분류가 있다.</p><ul><li>긴급업데이트 : 직접적인 상호 작용 반영. (타이핑, 오버, 스크롤링 등) 느려질 경우 UX에 안좋은 영향을 줌<li>전환업데이트 : 하나의 뷰에서 다른 뷰로의 UI 전환. 느려도 어느정도 괜찮음</ul><p>중요한 건 전환업데이트때문에 긴급업데이트가 방해되면 안된다.</p><p>React v17까지는 상태 업데이트를 긴급 혹은 전환으로 명시하는 방법은 없었다. 하지만 React v18부터는 startTansition API를 제공함으로써 <strong>전환업데이트</strong>를 명시적으로 구분하여 상태업데이트를 할 수 있게 되었다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre><td class="rouge-code"><pre><span class="k">import</span> <span class="p">{</span> <span class="nx">useTransition</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">SearchBar</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">const</span> <span class="p">[</span><span class="nx">isPending</span><span class="p">,</span> <span class="nx">startTransition</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useTransition</span><span class="p">();</span>
+
+  <span class="c1">// ...</span>
+
+	<span class="kd">function</span> <span class="nf">handleChange</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+
+		<span class="c1">// 긴급 업데이트: 타이핑 결과를 보여준다.</span>
+		<span class="nf">setInputValue</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
+
+		<span class="c1">// 이 안의 모든 상태 업데이트는 전환 업데이트가 된다.</span>
+		<span class="nf">startTransition</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		  <span class="nf">setSearchQuery</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>좀 더 이해를 돕기위해 다음 예시를 보자.</p><p>React v17 까지의 방식대로 아래와 같이 코드짰다고 해보자</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">handleChange</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+
+	<span class="nf">setInputValue</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
+	<span class="nf">setSearchQuery</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>이때, 리액트에서는 배치가 이루어져, setInputValue를 거치고, setSearchQuery를 기다렸다가 한번에 상태업데이트를 했다.</p><p>이는 긴급업데이트를 하는데 전환업데이트까지 기다려야하는 UX의 관점에서 안좋은 영향을 끼친다.</p><p>하지만, startTansition으로 아래와 같이 코드를 짰다고 해보자.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>	<span class="kd">function</span> <span class="nf">handleChange</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+
+		<span class="c1">// 긴급 업데이트: 타이핑 결과를 보여준다.</span>
+		<span class="nf">setInputValue</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
+
+		<span class="c1">// 이 안의 모든 상태 업데이트는 전환 업데이트가 된다.</span>
+		<span class="nf">startTransition</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		  <span class="c1">// 전환 업데이트: 결과를 보여준다.</span>
+		  <span class="nf">setSearchQuery</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+</pre></table></code></div></div><p>setInputValue을 거치고, startTransition가 수행된 후 바로, startTansition 외부에 있는 상태들이 업데이트되고, 내부에 있는 상태업데이트는 pending 상태가 된다. 따라서 긴급업데이트는 바로 되고, 전환업데이트는 기다렸다가 되도록 하여, UX의 관점에서 더 향상된다.</p><p>이때, 소수의 케이스에 대응하기 위해 Hook을 거치지 않고, React.startTransition을 사용할 수도 있다.</p><p>startTransition을 사용하는 2가지 케이스</p><ul><li>느린 렌더링 : 작업량이 많아 결과를 보여주기 위한 UI전환까지 시간이 걸리는 상태업데이트<li>느린 네트워크 : 네트워크로부터 데이터를 기다리기 위한 시간이 걸리는 업데이트 -&gt; Suspense와 연계가능</ul><p><br /></p><h2 id="suspense">Suspense</h2><p>Suspense는 SSR에 관한 컴포넌트이기 때문에 먼저 SSR에 대해서 알아야한다.</p><h3 id="ssr을-사용하는-이유">SSR을 사용하는 이유</h3><p>React는 자바스크립트로 이루어져있고, 따라서 사용자 브라우저로 자바스크립트가 다운이 되고, 이 자바스크립트를 실행하고, 로드가 완료가 되어야 화면에 컴포넌트들이 보여진다. 즉, 이 자바스크립트를 로딩하는 동안 사용자가 볼수 있는 페이지는 빈페이지 뿐이고, 어플리케이션의 크기가 크다면 이 시간은 더 길어지게 된다.</p><p>하지만 SSR을 사용하면, 서버에서 리액트 컴포넌트를 HTML로 렌터링 하여 사용자에게 전송할 수 있다. 이때 자바스크립트는 로딩되지 않았으므로 인터랙션은 불가능하지만, 최소한 사용자가 컨텐츠는 볼 수 있도록 해준다.</p><p>자바스크립트가 모두 로딩되면, 이 HTML을 인터랙션이 가능한 상태로 만든다. 이때 우리는 리액트에게 <code class="language-plaintext highlighter-rouge">서버에서 생성된 페이지가 있다. 여기에 이벤트 핸들러를 붙여</code>라고 명령하고, 리액트는 이미 생성되어있는 HTML에 이밴트핸들러를 연결한다. 이 작업을 <strong>hydration</strong>이라고 한다.</p><p><br /></p><h3 id="기존-react에서의-ssr-문제점">기존 React에서의 SSR 문제점</h3><p>위에서 설명한 SSR 과정을 정리하면 다음과 같다.</p><ol><li>서버에서 앱 전체를 위한 데이터를 불러옴.<li>서버에서 앱 전체를 HTML로 렌터링 한 다음에 이를 응답으로 돌려보내준다.<li>클라이언트에서 앱 전체 자바스크립트 코드를 실행한다.<li>클라이언트에서 서버에서 만들어진 HTML과 자바스크립트 로직을 결합한다.(이를 hydration이라고 함.)</ol><p><strong>문제점 1 : 1번에서의 문제점</strong></p><p>HTML을 렌더할때 필요한 데이터를 모두 가지고 있어야한다.</p><p>예를 들어, 댓글을 서버 HTML 결과물에 포함시킨다고 결정하면 댓글에 필요한 데이터를 API나 데이터베이스를 통해 불러오고 결과 HTML에 포함시켜야한다. 이때 이 댓글 데이터를 불러오는 것 때문에, 이미 작업이 끝난 다른 HTML들도 내려보내지 못한다.</p><p>만약 포함시키지 않으면 자바스크립트를 통해 렌더해야하므로 사용자는 자바스크립트 로딩이 끝날때까지 댓글을 볼 수 없다.</p><p><strong>문제점 2 : hydration에서의 문제점 1</strong></p><p>hydrating 과정에서 리액트는 컴포넌트들을 렌더링하는 동안, 서버에서 생성한 HTML을 순회하면서 이벤트핸들러를 HTML에 연결한다. 이 작업을 수행하려면 브라우저의 컴포넌트에서 생성된 트리가 서버에서 생성된 트리와 일치되어야한다. 그렇지 않으면 React는 이를 맞추지 못하게 된다. 결과적으로 <strong>클라이언트에 있는 모든 컴포넌트의 자바스크립트를 로딩해야 hydrate가 가능</strong>해진다.</p><p>예를 들어 댓글에 복잡한 기능이 포함되어있어 이를 위한 자바스크립트 로딩이 오래걸린다고 해보자.</p><p>서버에서 댓글을 HTML에 포함 시킬 경우, hydration은 한번에 일어나야하기떄문에 댓글 위젯에 있는 코드를 로딩하기 전까지는 다른 컴포넌트(ex : 사이드바, 게시글)에 대해서는 hydration을 할 수가 없다.</p><p>코드 분할을 통해서 해결할 수 있지만, 이때는 서버 HTML에서 댓글을 제거해야한다. 그렇지 않으면 리액트는 이 HTML을 어떻게 해야할지 모르고 hydration 중에 삭제해 버린다.</p><p><strong>문제점 3 : hydration에서의 문제점 2</strong></p><p>현재 리액트는 한번에 모든 트리에 hydration을 진행한다. 즉 일단 hydration을 시작하면, 트리 전체에서 이 작업이 완료할 때까지 멈출 수 없다. 따라서 <strong>모든 컴포넌트가 hydration을 할 때까지 기다려야만 사용자는 컴포넌트와 상호작용할 수 있다.</strong></p><p>만약 사용자가 로딩이 오래 걸려 페이지에서 벗어나고 싶어해도, 브라우저는 hydration 작업으로 바쁘기 때문에 아직 로딩중이고, 다른 페이지로 이동할 수도 없다.</p><p><br /></p><h3 id="suspense-1">Suspense</h3><p>기존 SSR에서의 문제점들의 공통점은 모든 작업들이 전체 앱을 기준으로 일어나고, 한 단계가 끝나야 다음 단계로 넘어가는 방식으로 되어있어 발생한다는 점이다. 따라서 React 18에서는 Suspense를 이용한 두가지 주요 SSR 기능을 제공한다.</p><ul><li>서버에서 HTML을 스트리밍한다. 이를 위해 renderToString 대신 pipeToNodeWritable을 사용해야한다.<li>클라이언트에서 선택적 hydration : 이를 위해 createRoot를 사용하고, &lt;Suspense&gt; 로 감싼다.</ul><h4 id="모든-데이터를-불러오기전에-html을-스트리밍한다"><strong>모든 데이터를 불러오기전에, HTML을 스트리밍한다</strong></h4><div class="language-html highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="nt">&lt;main&gt;</span>
+  <span class="nt">&lt;nav&gt;</span>
+    <span class="c">&lt;!--NavBar --&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/"</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;</span>
+  <span class="nt">&lt;/nav&gt;</span>
+  <span class="nt">&lt;aside&gt;</span>
+    <span class="c">&lt;!-- Sidebar --&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/profile"</span><span class="nt">&gt;</span>Profile<span class="nt">&lt;/a&gt;</span>
+  <span class="nt">&lt;/aside&gt;</span>
+  <span class="nt">&lt;article&gt;</span>
+    <span class="c">&lt;!-- Post --&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Hello world<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+  <span class="nt">&lt;section&gt;</span>
+    <span class="c">&lt;!-- Comments --&gt;</span>
+    <span class="nt">&lt;p&gt;</span>First comment<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Second comment<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/section&gt;</span>
+<span class="nt">&lt;/main&gt;</span>
+</pre></table></code></div></div><p>현재 SSR 체계에서 위 HTML을 밭으면 클라이언트를 아래를 그릴 것이다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2022-01-10-reactv18/1.png" alt="1" /></p><p>그리고 코드를 로딩하고 hydration이 끝나면 아래와 같은 완전한 앱이 완성된다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2022-01-10-reactv18/2.png" alt="2" /></p><p>하지만 React 18에서는 페이지의 일부를 Suspense로 감쌀 수 있다.</p><p>예를들어, 댓글을 Suspense로 감싸고, 로딩되기전까지는 Spinner를 보여지게 할 수 있다.</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="p">&lt;</span><span class="nc">Layout</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NavBar</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nc">Sidebar</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nc">RightPane</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">Post</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nc">Suspense</span> <span class="na">fallback</span><span class="p">=</span><span class="si">{</span><span class="p">&lt;</span><span class="nc">Spinner</span> <span class="p">/&gt;</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Comments</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">Suspense</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nc">RightPane</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nc">Layout</span><span class="p">&gt;</span>
+</pre></table></code></div></div><p>&lt;Comments&gt;를 &lt;Suspense&gt;로 감싼 덕분에, 리액트는 댓글 컴포넌트를 기다리지 않고, HTML을 스트리밍할 수 있다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2022-01-10-reactv18/3.png" alt="3" /></p><p>클라이언트가 받은 최초의 HTML은 다음과 같을 것이다.</p><div class="language-html highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="nt">&lt;main&gt;</span>
+  <span class="nt">&lt;nav&gt;</span>
+    <span class="c">&lt;!--NavBar --&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/"</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;</span>
+  <span class="nt">&lt;/nav&gt;</span>
+  <span class="nt">&lt;aside&gt;</span>
+    <span class="c">&lt;!-- Sidebar --&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/profile"</span><span class="nt">&gt;</span>Profile<span class="nt">&lt;/a&gt;</span>
+  <span class="nt">&lt;/aside&gt;</span>
+  <span class="nt">&lt;article&gt;</span>
+    <span class="c">&lt;!-- Post --&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Hello world<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+  <span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">"comments-spinner"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Spinner --&gt;</span>
+    <span class="nt">&lt;img</span> <span class="na">width=</span><span class="s">"400"</span> <span class="na">src=</span><span class="s">"spinner.gif"</span> <span class="na">alt=</span><span class="s">"Loading..."</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/section&gt;</span>
+<span class="nt">&lt;/main&gt;</span>
+</pre></table></code></div></div><p>그리고 댓글 데이터가 준비 된다면, 리액트는 같은 스트림으로 추가적인 HTML을 보낼 텐데, 여기에는 HTML을 올바른 위치에 삽입하기 위한 최소한의 인라인 script 태그가 포함되어있다.</p><div class="language-html highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="nt">&lt;div</span> <span class="na">hidden</span> <span class="na">id=</span><span class="s">"comments"</span><span class="nt">&gt;</span>
+  <span class="c">&lt;!-- Comments --&gt;</span>
+  <span class="nt">&lt;p&gt;</span>First comment<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Second comment<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="c1">// This implementation is slightly simplified</span>
+  <span class="nb">document</span>
+    <span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">sections-spinner</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">replaceChildren</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">comments</span><span class="dl">'</span><span class="p">))</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></table></code></div></div><p>그 결과 리액트 자체가 클라이언트에 로드되기 이전에, 뒤늦게 댓글용 HTML 코드가 삽입될 것이다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2022-01-10-reactv18/1.png" alt="4213" /></p><p>이로써 첫번째 문제를 해결할 수 있다. 더이상 모든 데이터를 fetch할 때까지 기다릴 필요가 없다. 화면 일부분이 초기 HTML을 지연시킨다면, 모든 HTML을 지연시키거나 HTML에서 일부를 제외시킬 필요가 없다. HTML 스트림에서 나중에 해당 부분을 별도로 삽입할 수 있다.</p><p><br /></p><h4 id="모든-코드가-로드되기-전에-페이지를-hydration-하기"><strong>모든 코드가 로드되기 전에 페이지를 hydration 하기</strong></h4><p>초기 HTML은 일찍 보낼 수 있지만, 아직 전체 hydration이 끝나야 사용자가 인터랙션할 수 있다는 것에는 변함이 없다.</p><p>따라서 큰 번들을 피하기 위해 “코드 스플릿”을 통해 코드의 일부를 동기적으로 로딩하지 않게하거나, 혹은 번들러가 별도의 script 태그로 분할하는 방법도 있다.</p><p>이때 React.lazy 로 코드를 분할하여 메인번들에서 댓글 코드를 아래처럼 분리할 수 있다.</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">import</span> <span class="p">{</span> <span class="nx">lazy</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span>
+
+<span class="kd">const</span> <span class="nx">Comments</span> <span class="o">=</span> <span class="nf">lazy</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">import</span><span class="p">(</span><span class="dl">'</span><span class="s1">./Comments.js</span><span class="dl">'</span><span class="p">));</span>
+
+<span class="c1">// ...</span>
+
+<span class="p">&lt;</span><span class="nc">Suspense</span> <span class="na">fallback</span><span class="p">=</span><span class="si">{</span><span class="p">&lt;</span><span class="nc">Spinner</span> <span class="p">/&gt;</span><span class="si">}</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">Comments</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nc">Suspense</span><span class="p">&gt;</span>
+</pre></table></code></div></div><p>과거에는 이 방법은 동작하지 않았다. 왜냐하면, 기존의 SSR에서는 코드스플릿 컴포넌트를 제외하거나 코드를 모둔 로딩한 후 hydration을 하거나 둘 중 하나일뿐이었다. 따라서 코드스플릿의 목적이 다소 손상되었다. 하지만 React v18에서는 Suspense을 통해 댓글 위젯이 로드되기 전에 애플리케이션을 hydration 할 수 있다.</p><p>즉, &lt;Comments&gt;를 &lt;Suspense&gt;로 감쌈으로써, 리액트에 페이지의 나머지 부분을 스트리밍하는 것을 차단하지 않게하고, hydration 과정 또한 차단하지 않게 할 수 있다. 이로써 첫번째 두번째 문제점은 해결되었다.</p><p><br /></p><h4 id="모든-컴포넌트가-hydrate-되기-전에-페이지와의-상호작용"><strong>모든 컴포넌트가 hydrate 되기 전에 페이지와의 상호작용</strong></h4><p>그럼 세번째 문제점인, 전체 앱이 hydration 되기 전까지는 다른 컴포넌트와 인터랙션 할 수 없다는 문제는 어떻게 될까?</p><p>React 18에서는 hydration 작업이 브라우저의 다른 작업을 하는 것을 막지 않음으로써 해결된다.</p><p>React 18에서는, Suspense 바운더리 내에 있는 hydration 콘텐츠는 브라우저가 이벤트를 처리할 수 있는 한에서만 수행된다. 따라서 사용자가 다른 부분을 클릭하면 그것이 먼저 처리되고, 페이지에서 벗어나고 싶을때도 바로 처리된다.</p><p><br /></p><h4 id="여러개의-suspense가-있을-때"><strong>여러개의 Suspense가 있을 때</strong></h4><p>만약 한 페이지에 여러개의 Suspense로 감싸진 컴포넌트가 있으면 어떻게 동작할까?</p><p>예를들어, sidebar와 comments가 Suspense로 감싸져 있다고 해보자. 그러면 sidebar와 comments를 제외한 부분의 작업이 hydration까지 모두 마쳐 다음과 같은 모습을 보이게 될 것이다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2022-01-10-reactv18/4.png" alt="4" /></p><p>그 다음, sidebar와 comments를 모두 포함하는 번들이 로딩되고, 두 컴포넌트에 대해 hydration을 시도 할 것이다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2022-01-10-reactv18/5.png" alt="step2" /></p><p>이때 만약, 사용자가 댓글위젯에 인터랙션을 시도했다고 해보자. 그럼 아래와 같이 hydration의 우선순위가 바뀌어서 리액트는 comments 부분을 먼저 hydration 하도록 하게된다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2022-01-10-reactv18/6.png" alt="6" /></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/assets/img/2022-01-10-reactv18/7.png" alt="7" /></p><p>아래와 같이 Suspense를 사용하게 되면 어떻게 될까?</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="p">&lt;</span><span class="nc">Layout</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NavBar</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nc">Suspense</span> <span class="na">fallback</span><span class="p">=</span><span class="si">{</span><span class="p">&lt;</span><span class="nc">BigSpinner</span> <span class="p">/&gt;</span><span class="si">}</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">Suspense</span> <span class="na">fallback</span><span class="p">=</span><span class="si">{</span><span class="p">&lt;</span><span class="nc">SidebarGlimmer</span> <span class="p">/&gt;</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Sidebar</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">Suspense</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">RightPane</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Post</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Suspense</span> <span class="na">fallback</span><span class="p">=</span><span class="si">{</span><span class="p">&lt;</span><span class="nc">CommentsGlimmer</span> <span class="p">/&gt;</span><span class="si">}</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">Comments</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nc">Suspense</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">RightPane</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nc">Suspense</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nc">Layout</span><span class="p">&gt;</span>
+</pre></table></code></div></div><p>초기 HTML은 &lt;NavBar&gt;만을 포함하지만, 나머지는 사용자가 상호작용한 부분을 우선시하여 관련 코드가 로딩되는 즉시 스트리밍하여 컴포넌트에서 hydration을 할 것이다.</p><blockquote><p>“어떻게 애플리케이션이 전체적으로 hydration 되지 않았는데 동작할 수 있는걸까? 리액트는 개별 컴포넌트에 개별적으로 hydration 하는 것이 아닌 <code class="language-plaintext highlighter-rouge">&lt;Suspense&gt;</code> 바운더리에 대해 hydration을 발생시킨다<code class="language-plaintext highlighter-rouge">&lt;Suspense&gt;</code>는 당장 나타나지 않는 컨텐츠에 사용되므로, 코드는 이 자식 컨텐츠가 즉시 이용할 수 없는 상태에 대해 탄력적으로 대처할 수 있다. 리액트는 항상 부모 컴포넌트를 우선순위로 hydration 하므로, 컴포넌트는 항상 props set을 가지고 있을 수 있다. 리액트는 이벤트가 발생될 때 이벤트 지점에서 전체 상위 트리에 hydration이 진행될 때 까지 이를 보류 시켜 둔다. 마지막으로 상위 항목이 그럼에도 hydration이 되지 않는다면, 리액트는 이를 숨기고 코드가 로드 될 때 까지 <code class="language-plaintext highlighter-rouge">fallback</code>으로 화면을 바꿔 둔다. 이렇게 하면 트리가 일관되게 유지된다.”</p></blockquote><p><br /></p><h4 id="데모">데모</h4><p>https://codesandbox.io/s/festive-star-9hfqt?file=/src/App.js</p><p>위 데모코드에서 sever/delays.js을 조작함으로써 React 18의 SSR을 확인할 수 있다.</p><ul><li>APP_DELAY : 댓글을 가져오는 시간을 오래걸리게 하여 HTML의 나머지 부분을 초기에 전송하는 것을 보여줌<li>JS_BUNDLE_DELAY : script 태그가 로딩되는 것을 지연하여 댓글 HTML이 나중에 삽입되는 것을 볼 수 있음.<li>ABORT_DELAY :서버에서 가져오는 시간이 너무 길어질 경우, 서버가 렌더링을 포기하고 클라이언트에서 렌더링하는 것을 볼수 있음.</ul><p><br /></p><h4 id="요약">요약</h4><p>리액트 18은 SSR을 위한 두가지 주요 기능을 제공한다.</p><ul><li><strong>HTML 스트리밍</strong>: 개발자가 원하는 만큼 HTML을 조기에 스트리밍 할 수 있게 해주며, 나중에 로딩된 HTML을 올바른 위치에 놓아주는 <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code>태그와 함께 추가적으로 스트리밍할 수 있다.<li><strong>선택적 hydration</strong>: HTML과 자바스크립트 코드의 나머지 부분이 완전히 다운로드 되기전에 가능한 빨리 애플리케이션이 hydration 할 수 있도록 한다. 또한 사용자가 상호작용하는 컴포넌트에 hydration 하는 것을 우선시하여, 즉각적으로 hydration 되는 것과 같은 착각을 불러일으킨다.</ul><p>이 두가지 기능은 SSR과 관련된 아래 세가지 문제를 해결해준다.</p><ul><li><strong>HTML을 내보내기전에 서버에서 모든 데이터가 로딩될 때 까지 기다릴 필요가 없다.</strong> HTML을 보낼 수 있는 상황이라면 바로 HTML을 보내고, 나머지부분은 준비되는 대로 스트리밍 할 수 있다.<li><strong>hydration을 하기 위해 모든 자바스크립트 코드가 로드 될 때 까지 기다릴 필요가 없다.</strong> SSR과 함께 코드 스플릿을 사용할 수 있다. 이렇게 하면 서버 HTML은 그대로 보존할 수 있고, 리액트는 관련 코드가 로드될 때 추가로 hydration 한다.<li><strong>페이지와 상호작용하기 위해 모든 컴포넌트가 hydration 되는 것을 기다릴 필요가 없다.</strong> 대신 선택석 hydration을 사용하여 사용자가 상호작용하는 컴포넌트에 우선순위를 지정하고 조기에 hydration을 수행할 수 있다.</ul><p><code class="language-plaintext highlighter-rouge">&lt;Suspense&gt;</code>는 이러한 모든 기능에 대한 옵트인 역할을 한다. 이 개선사항은 리액트 내부에서 자동으로 수행되며, 기존 리액트 코드의 대부분과 함께 작동 될 것으로 보인다. 이는 로딩중 상태를 선언적으로 표현하는 역할을 한다. <code class="language-plaintext highlighter-rouge">if (isLoading)</code>과 크게 달라보이지 않을 수 있지만, <code class="language-plaintext highlighter-rouge">&lt;Suspense&gt;</code>는 이러한 모든 개선사항을 실현해낸다.</p><p><br /></p><p><br /></p><h2 id="new-hooks">New Hooks</h2><h3 id="useid">useId</h3><p>클라이언트와 서버 사이의 hydraton missmatch를 피하면서 unique ID를 생성해주는 Hook. SSR을 할때 사용함. 물론 그냥 Id 를 사용하고 싶을때 사용해도 됨.</p><p><br /></p><h3 id="usetransition">useTransition</h3><p>startTransition을 만들기 위한 Hook</p><p><br /></p><h3 id="usedeferredvalue">useDeferredValue</h3><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="kd">const</span> <span class="nx">deferredValue</span> <span class="o">=</span> <span class="nf">useDeferredValue</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+</pre></table></code></div></div><p>value를 받고, 그 복사본을 반환함. 이 복사본은 좀 더 긴급한 업데이트가 끝날때까지 연기하기위해 사용됨.</p><p>user input 같은 긴급한 업데이트가 있다면, deferredValue는 이전의 값을 가리키고, 긴급 업데이트가 끝난 후에 업데이트 됨.</p><p>긴급한 업데이트가 진행중일때 자식 컴포넌트가 리렌더링되는 것을 막으려면 useMemo 등과 함께 사용되어야한다.</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nf">Typeahead</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">query</span> <span class="o">=</span> <span class="nf">useSearchQuery</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">deferredQuery</span> <span class="o">=</span> <span class="nf">useDeferredValue</span><span class="p">(</span><span class="nx">query</span><span class="p">);</span>
+
+  <span class="c1">// Memoizing tells React to only re-render when deferredQuery changes,</span>
+  <span class="c1">// not when query changes.</span>
+  <span class="kd">const</span> <span class="nx">suggestions</span> <span class="o">=</span> <span class="nf">useMemo</span><span class="p">(()</span> <span class="o">=&gt;</span>
+    <span class="p">&lt;</span><span class="nc">SearchSuggestions</span> <span class="na">query</span><span class="p">=</span><span class="si">{</span><span class="nx">deferredQuery</span><span class="si">}</span> <span class="p">/&gt;,</span>
+    <span class="p">[</span><span class="nx">deferredQuery</span><span class="p">]</span>
+  <span class="p">);</span>
+
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;&gt;</span>
+      <span class="p">&lt;</span><span class="nc">SearchInput</span> <span class="na">query</span><span class="p">=</span><span class="si">{</span><span class="nx">query</span><span class="si">}</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Suspense</span> <span class="na">fallback</span><span class="p">=</span><span class="s">"Loading results..."</span><span class="p">&gt;</span>
+        <span class="si">{</span><span class="nx">suggestions</span><span class="si">}</span>
+      <span class="p">&lt;/</span><span class="nc">Suspense</span><span class="p">&gt;</span>
+    <span class="p">&lt;/&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><ul><li>suggestions는 query가 아니라 deferredQuery가 업데이트 되었을때 업데이트 된다.</ul><p><br /></p><h3 id="usesyncexternalstore">useSyncExternalStore</h3><p>redux store, 글로벌 변수, dom 상태 등 external store를 구독하여 concurrent read를 지원함.</p><p>React 18부터는 렌더링이 렌더링을 잠시 중단할 수 있게된다. 그러면서 각 컴포넌트별로 업데이트 속도가 달라서 발생하는 Tearing(시각적 불일치) 문제가 발생했는데 이를 해결하기 위한 Hook이다.</p><p>external data를 구독할때 useEffect 대신에 사용할 수 있다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="kd">const</span> <span class="nx">state</span> <span class="o">=</span> <span class="nf">useSyncExternalStore</span><span class="p">(</span><span class="nx">subscribe</span><span class="p">,</span> <span class="nx">getSnapshot</span><span class="p">[,</span> <span class="nx">getServerSnapshot</span><span class="p">]);</span>
+</pre></table></code></div></div><ul><li>subscribe : 변화가 생겼을때 호출되는 callback<li>getSnapshot : 구독할 store의 값</ul><p><br /></p><h3 id="useinsertioneffect">useInsertionEffect</h3><p>css-in-js 라이브러리가 렌더링 도중에 스타일을 삽입할때 성능문제를 해결할 수 있는 새로운 Hook</p><p>모든 DOM mutation이 발생하기 전에 동기적으로 호출됨.</p><p>DOM에 스타일을 삽입할때 사용함.</p><p>한정된 영역에서 사용되므로, refs나 schedule update가 불가능하다.</p><div class="language-js highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="nf">useInsertionEffect</span><span class="p">(</span><span class="nx">didUpdate</span><span class="p">)</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">useLayoutEffect</code> 로 dom-layout를 읽기 전에 사용한다.</p><p><br /></p><p><br /></p><h2 id="그외-변경점">그외 변경점</h2><h3 id="일관된-useeffect-타이밍">일관된 useEffect 타이밍</h3><p>클릭, 키다운과 같은 이벤트 중에 업데이트가 발생할때, useEffect가 일관된 타이밍에 호출되도록 함.</p><p>이전에는 일관되지 않았음.</p><h3 id="new-js-environment-requirements">New js environment requirements</h3><p>이제 React는 <code class="language-plaintext highlighter-rouge">Promise</code>, <code class="language-plaintext highlighter-rouge">Symbol</code>, <code class="language-plaintext highlighter-rouge">Object.assign</code>과 같은 최신JS에 의존한다. 따라서 IE와 같은 오래된 브라우저에 대응하려면 bundled application에 polyfill를 사용해야한다.</p><h3 id="컴포넌트가-undefined를-렌더할-수-있게-됨">컴포넌트가 undefined를 렌더할 수 있게 됨.</h3><p>이전에는 undefined를 렌더할 경우 throw가 발생했으나, 이제는 undefined도 된다.(null은 원래 됐음)</p><p><br /></p><p><br /></p><h2 id="react-v18로의-업데이트-방법">React v18로의 업데이트 방법</h2><h3 id="클라이언트">클라이언트</h3><p>React 18부터는 react-dom의 render함수는 deprecated 되고, createRoot 가 사용됨.</p><div class="language-react highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="c1">// ~React 17</span>
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nf">render</span><span class="p">(&lt;</span><span class="nc">App</span> <span class="p">/&gt;,</span> <span class="nx">container</span><span class="p">);</span>
+
+<span class="c1">// React 18</span>
+<span class="kd">const</span> <span class="nx">root</span> <span class="o">=</span> <span class="nx">ReactDOM</span><span class="p">.</span><span class="nf">createRoot</span><span class="p">(</span><span class="nx">container</span><span class="p">);</span>
+<span class="nx">root</span><span class="p">.</span><span class="nf">render</span><span class="p">(&lt;</span><span class="nc">App</span> <span class="p">/&gt;);</span>
+</pre></table></code></div></div><p>기존의 redner 함수를 사용하게 되면, 컴포넌트 트리를 React 17과 그 이전의 동작과 동일한 레거시 모드로 동작하도록 함.</p><p>새로운 createRoot 함수는 컴포넌트 트리를 동시성 기능들과 자동배치 등 React 18의 기능들이 동작하도록 함.</p><h3 id="서버">서버</h3><p>React 18에서는 렌더링을 위한 3가지 API가 존재함</p><ul><li>renderToString : 유지 (제한된 Suspense 지원)<li>renderToNodeStream : Deprecated (Full suspence를 지원하나, 스트리밍 되지 않음)<li>pipeToNodeWritable : 신규 API, 사용추천. (스트리밍으로 Full Suspense 지원)</ul><h2 id="출처">출처</h2><p>https://medium.com/naver-place-dev/react-18%EC%9D%84-%EC%A4%80%EB%B9%84%ED%95%98%EC%84%B8%EC%9A%94-8603c36ddb25</p><p>https://yceffort.kr/2021/09/react-18-ssr-architecture#%EC%98%A4%EB%8A%98%EB%82%A0-ssr%EC%9D%98-%EB%AC%B8%EC%A0%9C%EC%A0%90%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80</p><p>https://velog.io/@moonelysian/React-18-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/study/'>study</a>, <a href='/categories/react/'>react</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/react/" class="post-tag no-text-decoration" >react</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=React v18 주요 변경점 - 디피의 개발일지&url=https://seongil-shin.github.io/posts/reactv18/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=React v18 주요 변경점 - 디피의 개발일지&u=https://seongil-shin.github.io/posts/reactv18/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=React v18 주요 변경점 - 디피의 개발일지&url=https://seongil-shin.github.io/posts/reactv18/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/You-don't-know-JS-Yet-1%EC%9E%A5-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/">You don't know JS Yet - 1장 자바스크립트</a><li><a href="/posts/why-nextjs-sucks/">why-nextjs-sucks</a><li><a href="/posts/the-state-of-es5-on-the-web/">the state of es5 on the web</a><li><a href="/posts/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%9D%98-%EB%87%8C-3%EC%9E%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%AC%B8%EB%B2%95-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">프로그래머의 뇌 3장 프로그래밍 문법 빠르게 배우기</a><li><a href="/posts/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%9D%98-%EB%87%8C-4%EC%9E%A5-%EB%B3%B5%EC%9E%A1%ED%95%9C-%EC%BD%94%EB%93%9C-%EC%9D%BD%EB%8A%94-%EB%B0%A9%EB%B2%95/">프로그래머의 뇌 4장 복잡한 코드 읽는 방법</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/react-state/"><div class="card-body"> <span class="timeago small" > May 6, 2023 <i class="unloaded">2023-05-06T18:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>useState 원리</h3><div class="text-muted small"><p> State 변경 시 어떤 일이 벌어질까? 리액트의 함수형 컴포넌트는 최초에 한번 실행이 되면서 초기값으로 설정해놓은 상태를 기억한다. 1 const [state, setState] = useState(0); 이후 setState가 호출되어 상태가 변경된다면 다시 함수형 컴포넌트가 실행되고 virtual DOM을 리턴한다. 그리고 이전에 리턴했던...</p></div></div></a></div><div class="card"> <a href="/posts/react-%EB%92%A4%EB%A1%9C%EA%B0%80%EA%B8%B0-%EB%A7%89%EA%B8%B0/"><div class="card-body"> <span class="timeago small" > Jul 29, 2023 <i class="unloaded">2023-07-29T22:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>React 새로고침/뒤로가기 막기</h3><div class="text-muted small"><p> 웹페이지에서 사용자가 무언가를 입력하고 뒤로가기를 눌렀을때 다음과 같은 경고창을 띄우는 걸 본적이 있다. 이러한 스펙을 개발하기위해서는 다음과 같이 두가지 상황으로 나누어야한다. 새로고침/창닫기/링크이동(외부페이지 이동 or 링크 버튼 클릭) 뒤로가기 그렇다면 리액트에서는 구체적으로 어떻게 이 스펙을 구현할 수 있을지 알아보자 ...</p></div></div></a></div><div class="card"> <a href="/posts/virtual-Dom/"><div class="card-body"> <span class="timeago small" > Jul 17, 2022 <i class="unloaded">2022-07-17T14:00:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>virtual DOM와 리렌더링</h3><div class="text-muted small"><p> Virtual DOM은 DOM을 추상화한 가상의 객체이다. DOM 이란? HTML 문서를 파싱하여 문서의 구성요소들을 객체로 구조화하여 나타낸 것. HTML Elements, 속성, CSS style, Events, Methods 를 구조화해서 나타낸 객체고, 이 객체를 이용해서 웹페이지 구성요소를 제어할 수 있다. Virtual DOM...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/%EC%A2%8B%EC%9D%80%EC%BD%94%EB%93%9C%EB%9E%80/" class="btn btn-outline-primary" prompt="Older"><p>좋은 코드란 무엇인가?</p></a> <a href="/posts/oop/" class="btn btn-outline-primary" prompt="Newer"><p>Object Oriented Programming</p></a></div><div id="disqus" class="pt-2 pb-2"><p class="text-center text-muted small pb-5"> Comments powered by <a href="https://disqus.com/">Disqus</a>.</p></div><script src="/assets/js/lib/jquery.disqusloader.min.js"></script> <script> const options = { scriptUrl: '//.disqus.com/embed.js', disqusConfig: function() { this.page.title = 'React v18 주요 변경점'; this.page.url = 'https://seongil-shin.github.io/posts/reactv18/'; this.page.identifier = '/posts/reactv18/'; } }; $.disqusLoader('#disqus', options); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#main > div.row:first-child > div:first-child img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/Seongil-Shin">ShinSeongil</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/study/">#study</a> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/next-js/">next.js</a> <a class="post-tag" href="/tags/web/">web</a> <a class="post-tag" href="/tags/db/">db</a> <a class="post-tag" href="/tags/react/">react</a> <a class="post-tag" href="/tags/kubernetes/">kubernetes</a> <a class="post-tag" href="/tags/architecture/">architecture</a> <a class="post-tag" href="/tags/java/">java</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://seongil-shin.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script>

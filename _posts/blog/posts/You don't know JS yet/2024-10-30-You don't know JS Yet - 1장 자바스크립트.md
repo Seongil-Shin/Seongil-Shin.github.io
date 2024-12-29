@@ -4,7 +4,7 @@ author: 신성일
 date: 2024-10-30 19:00:00 +0900
 categories: study, YDKJSY
 tags:
-  - "#study"
+  - study
 ---
 
 ## 1.2 자바스크립트 이름의 유래

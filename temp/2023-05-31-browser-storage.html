@@ -1,0 +1,30 @@
+<p>브라우저에서 웹페이지를 위해 제공하는 저장소과 특징은 다음과 같다.</p>
+
+<ul>
+  <li>Localstorage
+    <ul>
+      <li>직접 지울 때까지 남아있다.</li>
+      <li>같은 도메인은 같은 localstorage를 가짐</li>
+    </ul>
+  </li>
+  <li>SessionStorage
+    <ul>
+      <li>session 기간에만 데이터를 저장함.(보안에 유리).</li>
+      <li>같은 도메인을 여러개 열어도 다른 탭에 있으면 별도의 storage를 가짐</li>
+    </ul>
+  </li>
+  <li>Cookie
+    <ul>
+      <li>서버에서 set-cookie를 통해 저장한 값. (js로도 값 접근/저장 가능)</li>
+      <li>credential 옵션을 주면 API 요청 시에 헤더에 담겨 보내진다.</li>
+      <li>옵션
+        <ul>
+          <li>httpOnly : js로는 접근 불가.</li>
+          <li>secure : https 통신에서만 사용가능</li>
+          <li>expire : 만료일을 정해 스스로 사라지게 설정가능함.</li>
+          <li>path : 특정 path에서만 사용가능하게 설정</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
